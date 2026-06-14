@@ -10,34 +10,34 @@ This file defines the active modules, substrates, and agent capabilities of Fran
 ## Interconnected Modules
 
 ### agentic-business-os (`business`)
-- Path: `C:\Users\frank\agentic-business-os`
-- Status: `live`
+- Path: `C:\Users\frank\agentic-life-os\packages\business`
+- Status: `in-development`
 - Risk Level: `production`
-- Health Command: `pnpm test`
+- Health Command: `vitest run`
 - Active Agents: Claude Code, Codex
 - Description: Business operations, legal corporate compliance, Dutch BV ops (Arcanea Labs BV), and claim safeguards.
 
 ### agentic-creator-os (`creator`)
-- Path: `C:\Users\frank\agentic-creator-os`
-- Status: `live`
+- Path: `C:\Users\frank\agentic-life-os\packages\creator`
+- Status: `in-development`
 - Risk Level: `production`
-- Health Command: `pnpm test`
+- Health Command: `vitest run`
 - Active Agents: Claude Code, Cursor, Antigravity
 - Description: Multi-agent content engine, workshops OS, visual assets design, and Suno AI music production pipelines.
 
 ### second-brain-os (`memory`)
-- Path: `C:\Users\frank\second-brain-os`
-- Status: `live`
+- Path: `C:\Users\frank\agentic-life-os\packages\memory`
+- Status: `in-development`
 - Risk Level: `private`
-- Health Command: `pytest -v`
+- Health Command: `vitest run`
 - Active Agents: Claude Code, Codex
 - Description: Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations.
 
-### Arcanea (`orchestration`)
-- Path: `C:\Users\frank\Arcanea`
-- Status: `live`
+### agentic-orchestration-os (`orchestration`)
+- Path: `C:\Users\frank\agentic-life-os\packages\orchestration`
+- Status: `in-development`
 - Risk Level: `production`
-- Health Command: `pnpm run ops:health`
+- Health Command: `vitest run`
 - Active Agents: Claude Code, Antigravity
 - Description: Ecosystem orchestration, package dependency checks, custom ZSH/PowerShell toolkits, and command grids.
 

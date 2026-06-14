@@ -1,0 +1,24 @@
+{
+  "name": "@frankx-ai/agentic-orchestration-os",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@frankx-ai/alos-core": "workspace:^",
+    "@frankx-ai/agentic-business-os": "workspace:^",
+    "@frankx-ai/agentic-creator-os": "workspace:^",
+    "@frankx-ai/second-brain-os": "workspace:^",
+    "@frankx-ai/agentic-investor-os": "workspace:^",
+    "@frankx-ai/agentic-health-os": "workspace:^",
+    "@frankx-ai/agentic-family-os": "workspace:^"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  }
+}

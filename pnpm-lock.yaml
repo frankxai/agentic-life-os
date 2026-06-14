@@ -18,6 +18,12 @@ importers:
         specifier: 2.1.1
         version: 2.1.1(@types/node@24.0.0)
 
+  packages/business:
+    devDependencies:
+      typescript:
+        specifier: ^5.6.2
+        version: 5.6.2
+
   packages/core:
     dependencies:
       js-yaml:
@@ -30,6 +36,12 @@ importers:
       '@types/js-yaml':
         specifier: ^4.0.9
         version: 4.0.9
+      typescript:
+        specifier: ^5.6.2
+        version: 5.6.2
+
+  packages/creator:
+    devDependencies:
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
@@ -47,6 +59,40 @@ importers:
         version: 5.6.2
 
   packages/investor:
+    devDependencies:
+      typescript:
+        specifier: ^5.6.2
+        version: 5.6.2
+
+  packages/memory:
+    devDependencies:
+      typescript:
+        specifier: ^5.6.2
+        version: 5.6.2
+
+  packages/orchestration:
+    dependencies:
+      '@frankx-ai/agentic-business-os':
+        specifier: workspace:^
+        version: link:../business
+      '@frankx-ai/agentic-creator-os':
+        specifier: workspace:^
+        version: link:../creator
+      '@frankx-ai/agentic-family-os':
+        specifier: workspace:^
+        version: link:../family
+      '@frankx-ai/agentic-health-os':
+        specifier: workspace:^
+        version: link:../health
+      '@frankx-ai/agentic-investor-os':
+        specifier: workspace:^
+        version: link:../investor
+      '@frankx-ai/alos-core':
+        specifier: workspace:^
+        version: link:../core
+      '@frankx-ai/second-brain-os':
+        specifier: workspace:^
+        version: link:../memory
     devDependencies:
       typescript:
         specifier: ^5.6.2

@@ -8,10 +8,10 @@ workstation:
 modules:
   business:
     repoName: "agentic-business-os"
-    path: "C:\\Users\\frank\\agentic-business-os"
-    status: "live"
+    path: "C:\\Users\\frank\\agentic-life-os\\packages\\business"
+    status: "in-development"
     riskLevel: "production"
-    healthCommand: "pnpm test"
+    healthCommand: "vitest run"
     activeAgents:
       - "Claude Code"
       - "Codex"
@@ -19,10 +19,10 @@ modules:
 
   creator:
     repoName: "agentic-creator-os"
-    path: "C:\\Users\\frank\\agentic-creator-os"
-    status: "live"
+    path: "C:\\Users\\frank\\agentic-life-os\\packages\\creator"
+    status: "in-development"
     riskLevel: "production"
-    healthCommand: "pnpm test"
+    healthCommand: "vitest run"
     activeAgents:
       - "Claude Code"
       - "Cursor"
@@ -31,21 +31,21 @@ modules:
 
   memory:
     repoName: "second-brain-os"
-    path: "C:\\Users\\frank\\second-brain-os"
-    status: "live"
+    path: "C:\\Users\\frank\\agentic-life-os\\packages\\memory"
+    status: "in-development"
     riskLevel: "private"
-    healthCommand: "pytest -v"
+    healthCommand: "vitest run"
     activeAgents:
       - "Claude Code"
       - "Codex"
     purpose: "Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations."
 
   orchestration:
-    repoName: "Arcanea"
-    path: "C:\\Users\\frank\\Arcanea"
-    status: "live"
+    repoName: "agentic-orchestration-os"
+    path: "C:\\Users\\frank\\agentic-life-os\\packages\\orchestration"
+    status: "in-development"
     riskLevel: "production"
-    healthCommand: "pnpm run ops:health"
+    healthCommand: "vitest run"
     activeAgents:
       - "Claude Code"
       - "Antigravity"

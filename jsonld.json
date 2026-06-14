@@ -27,7 +27,7 @@
     },
     {
       "@type": "SoftwareApplication",
-      "name": "Arcanea",
+      "name": "agentic-orchestration-os",
       "description": "Ecosystem orchestration, package dependency checks, custom ZSH/PowerShell toolkits, and command grids."
     },
     {
