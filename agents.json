@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.0.0",
+  "systemName": "Agentic Life OS (ALOS)",
+  "version": "1.0.0",
+  "sip": "1.1.1",
+  "workstation": {
+    "machineName": "Yoga Laptop Workstation",
+    "os": "Windows"
+  },
+  "modules": [
+    {
+      "key": "business",
+      "repo": "agentic-business-os",
+      "status": "live",
+      "risk": "production",
+      "verify": "pnpm test",
+      "purpose": "Business operations, legal corporate compliance, Dutch BV ops (Arcanea Labs BV), and claim safeguards."
+    },
+    {
+      "key": "creator",
+      "repo": "agentic-creator-os",
+      "status": "live",
+      "risk": "production",
+      "verify": "pnpm test",
+      "purpose": "Multi-agent content engine, workshops OS, visual assets design, and Suno AI music production pipelines."
+    },
+    {
+      "key": "memory",
+      "repo": "second-brain-os",
+      "status": "live",
+      "risk": "private",
+      "verify": "pytest -v",
+      "purpose": "Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations."
+    },
+    {
+      "key": "orchestration",
+      "repo": "Arcanea",
+      "status": "live",
+      "risk": "production",
+      "verify": "pnpm run ops:health",
+      "purpose": "Ecosystem orchestration, package dependency checks, custom ZSH/PowerShell toolkits, and command grids."
+    },
+    {
+      "key": "investor",
+      "repo": "agentic-investor-os",
+      "status": "in-development",
+      "risk": "private",
+      "verify": "vitest run",
+      "purpose": "Sovereign wealth calculation, capital allocation, deal scouting, due diligence, and investment tracking."
+    },
+    {
+      "key": "health",
+      "repo": "agentic-health-os",
+      "status": "in-development",
+      "risk": "private",
+      "verify": "vitest run",
+      "purpose": "Biomedical research query gateways integrating OpenFDA, dbSNP, ChEMBL, ClinicalTrials, and AlphaFold structure lookups."
+    },
+    {
+      "key": "family",
+      "repo": "agentic-family-os",
+      "status": "in-development",
+      "risk": "private",
+      "verify": "vitest run",
+      "purpose": "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
+    }
+  ]
+}

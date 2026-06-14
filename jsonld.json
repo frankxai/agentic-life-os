@@ -1,0 +1,49 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Agentic Life OS (ALOS)",
+  "description": "Unified multi-agent operating system.",
+  "operatingSystem": "Windows",
+  "applicationCategory": "DeveloperApplication",
+  "creator": {
+    "@type": "Person",
+    "name": "Frank Riemer"
+  },
+  "hasPart": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "agentic-business-os",
+      "description": "Business operations, legal corporate compliance, Dutch BV ops (Arcanea Labs BV), and claim safeguards."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "agentic-creator-os",
+      "description": "Multi-agent content engine, workshops OS, visual assets design, and Suno AI music production pipelines."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "second-brain-os",
+      "description": "Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arcanea",
+      "description": "Ecosystem orchestration, package dependency checks, custom ZSH/PowerShell toolkits, and command grids."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "agentic-investor-os",
+      "description": "Sovereign wealth calculation, capital allocation, deal scouting, due diligence, and investment tracking."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "agentic-health-os",
+      "description": "Biomedical research query gateways integrating OpenFDA, dbSNP, ChEMBL, ClinicalTrials, and AlphaFold structure lookups."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "agentic-family-os",
+      "description": "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
+    }
+  ]
+}

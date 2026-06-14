@@ -1,0 +1,83 @@
+systemName: "Agentic Life OS (ALOS)"
+version: "1.0.0"
+sipVersion: "1.1.1"
+workstation:
+  machineName: "Yoga Laptop Workstation"
+  os: "Windows"
+
+modules:
+  business:
+    repoName: "agentic-business-os"
+    path: "C:\\Users\\frank\\agentic-business-os"
+    status: "live"
+    riskLevel: "production"
+    healthCommand: "pnpm test"
+    activeAgents:
+      - "Claude Code"
+      - "Codex"
+    purpose: "Business operations, legal corporate compliance, Dutch BV ops (Arcanea Labs BV), and claim safeguards."
+
+  creator:
+    repoName: "agentic-creator-os"
+    path: "C:\\Users\\frank\\agentic-creator-os"
+    status: "live"
+    riskLevel: "production"
+    healthCommand: "pnpm test"
+    activeAgents:
+      - "Claude Code"
+      - "Cursor"
+      - "Antigravity"
+    purpose: "Multi-agent content engine, workshops OS, visual assets design, and Suno AI music production pipelines."
+
+  memory:
+    repoName: "second-brain-os"
+    path: "C:\\Users\\frank\\second-brain-os"
+    status: "live"
+    riskLevel: "private"
+    healthCommand: "pytest -v"
+    activeAgents:
+      - "Claude Code"
+      - "Codex"
+    purpose: "Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations."
+
+  orchestration:
+    repoName: "Arcanea"
+    path: "C:\\Users\\frank\\Arcanea"
+    status: "live"
+    riskLevel: "production"
+    healthCommand: "pnpm run ops:health"
+    activeAgents:
+      - "Claude Code"
+      - "Antigravity"
+    purpose: "Ecosystem orchestration, package dependency checks, custom ZSH/PowerShell toolkits, and command grids."
+
+  investor:
+    repoName: "agentic-investor-os"
+    path: "C:\\Users\\frank\\agentic-life-os\\packages\\investor"
+    status: "in-development"
+    riskLevel: "private"
+    healthCommand: "vitest run"
+    activeAgents:
+      - "Claude Code"
+    purpose: "Sovereign wealth calculation, capital allocation, deal scouting, due diligence, and investment tracking."
+
+  health:
+    repoName: "agentic-health-os"
+    path: "C:\\Users\\frank\\agentic-life-os\\packages\\health"
+    status: "in-development"
+    riskLevel: "private"
+    healthCommand: "vitest run"
+    activeAgents:
+      - "Claude Code"
+      - "Gemini"
+    purpose: "Biomedical research query gateways integrating OpenFDA, dbSNP, ChEMBL, ClinicalTrials, and AlphaFold structure lookups."
+
+  family:
+    repoName: "agentic-family-os"
+    path: "C:\\Users\\frank\\agentic-life-os\\packages\\family"
+    status: "in-development"
+    riskLevel: "private"
+    healthCommand: "vitest run"
+    activeAgents:
+      - "Claude Code"
+    purpose: "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
