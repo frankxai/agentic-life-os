@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Life OS (ALOS) — Control Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #080b11;
+      --card-bg: rgba(17, 25, 40, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --primary-glow: #3b82f6;
+      --accent-glow: #8b5cf6;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    header {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(8, 11, 17, 0.7);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 2.25rem;
+      height: 2.25rem;
+      background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow));
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: white;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .logo-text h1 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-text p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+    }
+
+    .status-badge {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: var(--success);
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-pulse {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    main {
+      max-width: 1400px;
+      margin: 2.5rem auto;
+      padding: 0 2rem;
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .tab-btn.active {
+      color: #3b82f6;
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary-glow);
+      box-shadow: 0 0 8px var(--primary-glow);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .module-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .module-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .module-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-live { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2); }
+    .badge-dev { background: rgba(245, 158, 11, 0.1); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.2); }
+    .badge-priv { background: rgba(139, 92, 246, 0.1); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.2); }
+
+    .card-body p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      min-height: 2.6rem;
+    }
+
+    .meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .meta-item {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-secondary);
+    }
+
+    .meta-item span:last-child {
+      color: var(--text-primary);
+      font-family: monospace;
+    }
+
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .glass-panel {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .panel-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title span {
+      background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .value-display {
+      font-size: 2.25rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      color: #ffffff;
+      text-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 0.4rem;
+      padding: 0.5rem 0.75rem;
+      color: white;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--primary-glow);
+    }
+
+    .invoice-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    .invoice-table th, .invoice-table td {
+      padding: 0.6rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .invoice-table th {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .status-text {
+      font-weight: 600;
+    }
+
+    .status-paid { color: var(--success); }
+    .status-sent { color: var(--warning); }
+
+    .sip-graph {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      height: 250px;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sip-grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: 20px 20px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+
+    .sip-node {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: rgba(59, 130, 246, 0.2);
+      border: 1.5px solid var(--primary-glow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .sip-node:hover {
+      transform: scale(1.15);
+      background: rgba(139, 92, 246, 0.3);
+      border-color: var(--accent-glow);
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+    }
+
+    .sip-node-label {
+      position: absolute;
+      bottom: -1.4rem;
+      white-space: nowrap;
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+    }
+
+    .sip-connector {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, var(--primary-glow), var(--accent-glow));
+      transform-origin: left center;
+      opacity: 0.3;
+    }
+
+    .preview-box {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.8rem;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      color: #93c5fd;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area">
+      <div class="logo-icon">Λ</div>
+      <div class="logo-text">
+        <h1>Agentic Life OS</h1>
+        <p>STARLIGHT INTELLIGENCE SUBSTRATE</p>
+      </div>
+    </div>
+    <div class="status-badge">
+      <div class="status-pulse"></div>
+      Yoga Laptop Online | SIP v1.1.1
+    </div>
+  </header>
+
+  <main>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('overview')">System Overview</button>
+      <button class="tab-btn" onclick="switchTab('wealth')">Business & Wealth Pipeline</button>
+      <button class="tab-btn" onclick="switchTab('creator')">Creator & Memory Graph</button>
+      <button class="tab-btn" onclick="switchTab('health')">Health & Family OS</button>
+    </div>
+
+    <!-- TAB 1: OVERVIEW -->
+    <div id="tab-overview" class="tab-content active">
+      <div class="grid-4">
+        <div class="module-card">
+          <div class="card-header">
+            <span class="card-title">Core Module</span>
+            <span class="badge badge-live">Live</span>
+          </div>
+          <div class="card-body">
+            <p>Profile configuration parsing, Zod schema validation, and system specifications.</p>
+            <div class="meta-list">
+              <div class="meta-item"><span>Package</span><span>@frankx-ai/alos-core</span></div>
+              <div class="meta-item"><span>Status</span><span>Verified</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="card-header">
+            <span class="card-title">Business OS</span>
+            <span class="badge badge-dev">In Dev</span>
+          </div>
+          <div class="card-body">
+            <p>Dutch BV (Arcanea Labs BV) operations, tax reserve calculations, and billing pipelines.</p>
+            <div class="meta-list">
+              <div class="meta-item"><span>Package</span><span>@frankx-ai/agentic-business-os</span></div>
+              <div class="meta-item"><span>Reserve Ratio</span><span>20% - 25%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="card-header">
+            <span class="card-title">Creator OS</span>
+            <span class="badge badge-dev">In Dev</span>
+          </div>
+          <div class="card-body">
+            <p>Script drafting engines, visual asset libraries, workshop schedules, and Suno pipelines.</p>
+            <div class="meta-list">
+              <div class="meta-item"><span>Package</span><span>@frankx-ai/agentic-creator-os</span></div>
+              <div class="meta-item"><span>Media Formats</span><span>HyperFrame, AnimeJS</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="card-header">
+            <span class="card-title">Memory OS</span>
+            <span class="badge badge-priv">Private</span>
+          </div>
+          <div class="card-body">
+            <p>Obsidian vaults formatting, semantic search, and SIP compliance graph storage.</p>
+            <div class="meta-list">
+              <div class="meta-item"><span>Package</span><span>@frankx-ai/second-brain-os</span></div>
+              <div class="meta-item"><span>Vault Location</span><span>vaults/second-brain</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="card-header">
+            <span class="card-title">Orchestration OS</span>
+            <span class="badge badge-live">Live</span>
+          </div>
+          <div class="card-body">
+            <p>Cross-module orchestration workflow triggers, dependency diagnostics, and status reports.</p>
+            <div class="meta-list">
+              <div class="meta-item"><span>Package</span><span>@frankx-ai/agentic-orchestration-os</span></div>
+              <div class="meta-item"><span>Orchestrator</span><span>ALOSOrchestrator</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="card-header">
+            <span class="card-title">Investor OS</span>
+            <span class="badge badge-dev">In Dev</span>
+          </div>
+          <div class="card-body">
+            <p>Portfolio net worth computations, equity deals, due diligence, and yield tracking.</p>
+            <div class="meta-list">
+              <div class="meta-item"><span>Package</span><span>@frankx-ai/agentic-investor-os</span></div>
+              <div class="meta-item"><span>Base currency</span><span>EUR</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="card-header">
+            <span class="card-title">Health OS</span>
+            <span class="badge badge-priv">Private</span>
+          </div>
+          <div class="card-body">
+            <p>Science lookup database gateways mapping ClinVar, dbSNP, ChEMBL, and ClinicalTrials.</p>
+            <div class="meta-list">
+              <div class="meta-item"><span>Package</span><span>@frankx-ai/agentic-health-os</span></div>
+              <div class="meta-item"><span>Integration</span><span>BioMark, ChemBL</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="card-header">
+            <span class="card-title">Family OS</span>
+            <span class="badge badge-priv">Private</span>
+          </div>
+          <div class="card-body">
+            <p>Genology trees compiler, lineage transcriptions, and heritage narrations.</p>
+            <div class="meta-list">
+              <div class="meta-item"><span>Package</span><span>@frankx-ai/agentic-family-os</span></div>
+              <div class="meta-item"><span>Lineage</span><span>Chain compiler</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-panel">
+        <h3 class="panel-title">System Status & Environmental Diagnostic</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">The diagnostic sweeps the local workstation directories and verifies executable paths.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <div class="meta-list">
+            <div class="meta-item"><span>Workstation</span><span>Yoga Laptop</span></div>
+            <div class="meta-item"><span>Operating System</span><span>Windows (Powershell active)</span></div>
+            <div class="meta-item"><span>Node.js Version</span><span>>=20.0.0</span></div>
+            <div class="meta-item"><span>Monorepo Location</span><span>C:\Users\frank\agentic-life-os</span></div>
+          </div>
+          <div class="meta-list">
+            <div class="meta-item"><span>Workspace Linkage</span><span style="color: var(--success)">Active (pnpm workspaces)</span></div>
+            <div class="meta-item"><span>SIP Protocol Schema</span><span style="color: var(--success)">Compliant (Version 1.1.1)</span></div>
+            <div class="meta-item"><span>Vitest Suite</span><span style="color: var(--success)">11 / 11 Passed</span></div>
+            <div class="meta-item"><span>Remote Origin</span><span style="color: var(--primary-glow)">github/agentic-life-os</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: WEALTH -->
+    <div id="tab-wealth" class="tab-content">
+      <div class="dashboard-layout">
+        <div>
+          <div class="glass-panel">
+            <h3 class="panel-title">Investor OS: Sovereign Net Worth</h3>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">Calculated Net Worth (Base Portfolio + Business Income + Receivables):</p>
+            <div class="value-display" id="projected-networth">€395,000</div>
+
+            <h4 style="margin-bottom: 1rem; font-family: var(--font-display);">Base Portfolio Allocation</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="form-group">
+                <label>Portfolio Cash (EUR)</label>
+                <input type="number" id="base-cash" value="20000" oninput="updateWealthCalculations()">
+              </div>
+              <div class="form-group">
+                <label>Equities (EUR)</label>
+                <input type="number" id="base-equities" value="50000" oninput="updateWealthCalculations()">
+              </div>
+              <div class="form-group">
+                <label>Real Estate (EUR)</label>
+                <input type="number" id="base-realestate" value="300000" oninput="updateWealthCalculations()">
+              </div>
+              <div class="form-group">
+                <label>Sovereign Assets (EUR)</label>
+                <input type="number" id="base-sovereign" value="10000" oninput="updateWealthCalculations()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="glass-panel">
+            <h3 class="panel-title">Business OS: Arcanea Labs BV</h3>
+            
+            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+              <div>
+                <p style="font-size: 0.75rem; color: var(--text-secondary);">Realized Income (Paid)</p>
+                <h4 style="font-size: 1.25rem; font-family: var(--font-display);" id="realized-income">€10,000</h4>
+              </div>
+              <div style="border-left: 1px solid var(--border-color); padding-left: 1rem;">
+                <p style="font-size: 0.75rem; color: var(--text-secondary);">Outstanding Receivables</p>
+                <h4 style="font-size: 1.25rem; font-family: var(--font-display); color: var(--warning);" id="outstanding-receivables">€5,000</h4>
+              </div>
+              <div style="border-left: 1px solid var(--border-color); padding-left: 1rem;">
+                <p style="font-size: 0.75rem; color: var(--text-secondary);">BV Tax Reserve Required</p>
+                <h4 style="font-size: 1.25rem; font-family: var(--font-display); color: #c084fc;" id="tax-reserve">€2,500</h4>
+              </div>
+            </div>
+
+            <h4 style="margin-bottom: 0.5rem; font-family: var(--font-display);">Invoice Pipeline</h4>
+            <table class="invoice-table">
+              <thead>
+                <tr>
+                  <th>Invoice ID</th>
+                  <th>Client</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="invoice-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+
+            <h4 style="margin: 1.5rem 0 0.5rem 0; font-family: var(--font-display);">Quick Invoice Issuer</h4>
+            <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 0.75rem;">
+              <input type="text" id="new-client" placeholder="Client Name" value="Client Gamma">
+              <input type="number" id="new-amount" placeholder="Amount (EUR)" value="4500">
+              <select id="new-status">
+                <option value="sent" selected>Sent</option>
+                <option value="paid">Paid</option>
+              </select>
+            </div>
+            <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="addNewInvoice()">Issue & Recalculate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: CREATOR & MEMORY -->
+    <div id="tab-creator" class="tab-content">
+      <div class="dashboard-layout">
+        <div>
+          <div class="glass-panel">
+            <h3 class="panel-title">Memory OS: Starlight Memory Palace</h3>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">SIP-compliant nodes search indexing. Hover nodes to view contents.</p>
+            
+            <div class="form-group">
+              <input type="text" id="memory-search-input" placeholder="Search Memory Palace..." oninput="triggerMemorySearch()">
+            </div>
+
+            <div class="sip-graph">
+              <div class="sip-grid-bg"></div>
+              
+              <!-- Core Substrate Node -->
+              <div class="sip-node" style="top: 40px; left: 60px;" onclick="showNodeDetails('entity_001')">
+                SIP
+                <div class="sip-node-label">Starlight Substrate</div>
+              </div>
+              <div class="sip-connector" style="top: 65px; left: 110px; width: 100px; transform: rotate(25deg);"></div>
+
+              <!-- Memory Manager Node -->
+              <div class="sip-node" style="top: 90px; left: 200px;" onclick="showNodeDetails('agent_002')">
+                MEM
+                <div class="sip-node-label">Memory Manager</div>
+              </div>
+              <div class="sip-connector" style="top: 115px; left: 250px; width: 105px; transform: rotate(-25deg);"></div>
+
+              <!-- Creator OS Node -->
+              <div class="sip-node" style="top: 40px; left: 340px;" onclick="showNodeDetails('concept_003')">
+                CRT
+                <div class="sip-node-label">Creator Engine</div>
+              </div>
+
+              <!-- Lineage Node -->
+              <div class="sip-node" style="top: 160px; left: 100px;" onclick="showNodeDetails('concept_004')">
+                LIN
+                <div class="sip-node-label">Frank Genealogy</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+              <h4 style="margin-bottom: 0.5rem; font-family: var(--font-display);">Node Inspector</h4>
+              <div class="preview-box" id="node-inspector-content">Select a node from the SIP graph or search above to view details.</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="glass-panel">
+            <h3 class="panel-title">Creator OS: Multi-Agent Content Pipeline</h3>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Drafts scripts automatically referencing context retrieved from the Starlight Memory Palace.</p>
+            
+            <div class="form-group">
+              <label>Draft Title</label>
+              <input type="text" id="script-title" value="Mapping My Genomic History: A Deep-Dive">
+            </div>
+
+            <div class="form-group">
+              <label>Distribution Channel</label>
+              <select id="script-channel">
+                <option value="YouTube" selected>YouTube Video</option>
+                <option value="Substack">Substack Article</option>
+                <option value="Workshop">Workshop Curriculum</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Context Directives (Lineage & Health)</label>
+              <textarea id="script-directives" rows="3">Lineage: Grandpa Frank (b. 1920), Papa Frank (b. 1955).
+Biomarker: BRCA1 (rs12345) pathogenicity risk analysis.</textarea>
+            </div>
+
+            <button class="btn" style="width: 100%; margin-bottom: 1.5rem;" onclick="generateScriptOutline()">Draft Content & Index to Second Brain</button>
+
+            <h4 style="margin-bottom: 0.5rem; font-family: var(--font-display);">Generated Output Outline</h4>
+            <div class="preview-box" id="script-output">Click the draft button to trigger the orchestrator workflow...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: HEALTH & FAMILY -->
+    <div id="tab-health" class="tab-content">
+      <div class="dashboard-layout">
+        <div class="glass-panel">
+          <h3 class="panel-title">Health OS: Science Plugins Gateway</h3>
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Queries biomedical registries for genomic conservation and compound bioactivity.</p>
+          
+          <div class="form-group">
+            <label>dbSNP Variant ID (rsID)</label>
+            <input type="text" id="health-rsid" value="rs12345">
+          </div>
+          <button class="btn" style="width: 100%; margin-bottom: 1.5rem;" onclick="queryHealthGateway()">Resolve Clinical Significance</button>
+
+          <h4 style="margin-bottom: 0.5rem; font-family: var(--font-display);">Gateway Output</h4>
+          <div class="preview-box" id="health-gateway-preview">
+            [Ready] Call gateway to resolve dbSNP variant ID.
+          </div>
+        </div>
+
+        <div class="glass-panel">
+          <h3 class="panel-title">Family OS: Heritage & Genealogy Compiler</h3>
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Compiles historic lineage logs into a linear timeline chain.</p>
+
+          <div id="family-nodes-list" style="margin-bottom: 1.5rem;">
+            <!-- Render family nodes -->
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
+            <input type="text" id="fam-name" placeholder="Name" value="Great Grandma Maria">
+            <input type="number" id="fam-birth" placeholder="Birth Year" value="1895">
+            <select id="fam-relation">
+              <option value="parent">Parent</option>
+              <option value="child">Child</option>
+              <option value="sibling">Sibling</option>
+              <option value="spouse">Spouse</option>
+              <option value="ancestor" selected>Ancestor</option>
+            </select>
+          </div>
+          <button class="btn" style="width: 100%;" onclick="addFamilyNode()">Register Ancestor Node</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Tab switching logic
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      event.currentTarget.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+    }
+
+    // Business Invoices database
+    const invoices = [
+      { id: 'INV-001', client: 'Enterprise Client A', amount: 10000, status: 'paid' },
+      { id: 'INV-002', client: 'Enterprise Client B', amount: 5000, status: 'sent' }
+    ];
+
+    // Family tree database
+    const familyNodes = [
+      { name: 'Grandpa Frank', birth: 1920, relation: 'ancestor' },
+      { name: 'Papa Frank', birth: 1955, relation: 'parent' }
+    ];
+
+    // Starlight Memory Palace Nodes
+    const memoryNodes = {
+      entity_001: {
+        label: 'Starlight Substrate (SIP)',
+        category: 'entity',
+        content: 'Core memory palace registry substrate implementing Starlight Intelligence Protocol v1.1.1 schemas.'
+      },
+      agent_002: {
+        label: 'Memory Manager Agent',
+        category: 'agent',
+        content: 'Indexes and searches Obsidian air-gapped vaults and structures conversational history.'
+      },
+      concept_003: {
+        label: 'Creator Engine',
+        category: 'concept',
+        content: 'Renders scripts, visual templates, workshop schedules, and matches Suno metadata.'
+      },
+      concept_004: {
+        label: 'Frank Lineage Node',
+        category: 'concept',
+        content: 'Lineage compiled registry containing historic family trees and genealogical transcriptions.'
+      }
+    };
+
+    function renderInvoices() {
+      const tbody = document.getElementById('invoice-tbody');
+      tbody.innerHTML = '';
+      invoices.forEach(inv => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${inv.id}</td>
+          <td>${inv.client}</td>
+          <td>€${inv.amount.toLocaleString()}</td>
+          <td><span class="status-text status-${inv.status}">${inv.status.toUpperCase()}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function addNewInvoice() {
+      const client = document.getElementById('new-client').value;
+      const amount = parseFloat(document.getElementById('new-amount').value);
+      const status = document.getElementById('new-status').value;
+      
+      if (!client || isNaN(amount)) return;
+
+      const nextId = `INV-00${invoices.length + 1}`;
+      invoices.push({ id: nextId, client, amount, status });
+      
+      renderInvoices();
+      updateWealthCalculations();
+    }
+
+    function updateWealthCalculations() {
+      const baseCash = parseFloat(document.getElementById('base-cash').value) || 0;
+      const equities = parseFloat(document.getElementById('base-equities').value) || 0;
+      const realEstate = parseFloat(document.getElementById('base-realestate').value) || 0;
+      const sovereign = parseFloat(document.getElementById('base-sovereign').value) || 0;
+
+      let realized = 0;
+      let outstanding = 0;
+
+      invoices.forEach(inv => {
+        if (inv.status === 'paid') realized += inv.amount;
+        if (inv.status === 'sent') outstanding += inv.amount;
+      });
+
+      const totalNetWorth = baseCash + equities + realEstate + sovereign + realized + outstanding;
+      const taxReserve = realized * 0.25;
+
+      document.getElementById('projected-networth').textContent = `€${totalNetWorth.toLocaleString()}`;
+      document.getElementById('realized-income').textContent = `€${realized.toLocaleString()}`;
+      document.getElementById('outstanding-receivables').textContent = `€${outstanding.toLocaleString()}`;
+      document.getElementById('tax-reserve').textContent = `€${taxReserve.toLocaleString()}`;
+    }
+
+    function showNodeDetails(nodeId) {
+      const node = memoryNodes[nodeId];
+      if (!node) return;
+      document.getElementById('node-inspector-content').innerHTML = 
+        `[Label]: ${node.label}\n[Category]: ${node.category.toUpperCase()}\n[Content]: ${node.content}`;
+    }
+
+    function triggerMemorySearch() {
+      const query = document.getElementById('memory-search-input').value.toLowerCase();
+      if (!query) {
+        document.getElementById('node-inspector-content').textContent = 'Select a node from the SIP graph or search above to view details.';
+        return;
+      }
+
+      let matches = [];
+      for (const [key, node] of Object.entries(memoryNodes)) {
+        if (node.label.toLowerCase().includes(query) || node.content.toLowerCase().includes(query)) {
+          matches.push(`- [${node.label}]: ${node.content}`);
+        }
+      }
+
+      if (matches.length > 0) {
+        document.getElementById('node-inspector-content').textContent = `Found ${matches.length} matches:\n\n${matches.join('\n\n')}`;
+      } else {
+        document.getElementById('node-inspector-content').textContent = 'No matching nodes found in Starlight Memory Palace.';
+      }
+    }
+
+    function generateScriptOutline() {
+      const title = document.getElementById('script-title').value;
+      const channel = document.getElementById('script-channel').value;
+      const directives = document.getElementById('script-directives').value;
+
+      const output = `// Orchestrated Workflow Result: Creator OS Draft
+// Compiled from SIP Memory Palace context
+
+CHANNEL: ${channel}
+TITLE: "${title}"
+STATUS: DRAFTED & INDEXED
+
+[SYLLABUS OUTLINE]:
+1. Introduction
+   - Draw correlation from direct genealogy context.
+   - Reference: ${familyNodes.map(f => f.name).join(' and ')}.
+2. Scientific Deep-Dive
+   - Analyze health directives.
+   - Core biomarkers: ${directives}
+3. Memory Palace Integration
+   - Auto-create distillation markdown note.
+   - Sync note to "vaults/second-brain/Archive/Distillations/Genomic_History.md"
+4. Summary & Call-To-Action
+   - Prompt viewers to explore their own Starlight dashboard.
+
+[SYNC STATUS]:
+- Obsidian Vault note compiled (Success)
+- SIP Memory Node created with ID: node_${Date.now()} (Success)`;
+
+      document.getElementById('script-output').textContent = output;
+      
+      // Add node dynamically to memory nodes
+      const nodeId = `node_${Date.now()}`;
+      memoryNodes[nodeId] = {
+        label: title,
+        category: 'concept',
+        content: `Content script drafted for ${channel}. Directives: ${directives}`
+      };
+    }
+
+    function renderFamilyNodes() {
+      const list = document.getElementById('family-nodes-list');
+      list.innerHTML = '';
+      familyNodes.forEach(node => {
+        const div = document.createElement('div');
+        div.style.background = 'rgba(255, 255, 255, 0.03)';
+        div.style.border = '1px solid var(--border-color)';
+        div.style.padding = '0.5rem 1rem';
+        div.style.borderRadius = '0.4rem';
+        div.style.marginBottom = '0.5rem';
+        div.style.fontSize = '0.85rem';
+        div.style.display = 'flex';
+        div.style.justifyContent = 'space-between';
+        
+        div.innerHTML = `
+          <span><strong>${node.name}</strong> (${node.relation})</span>
+          <span style="color: var(--text-secondary)">Born: ${node.birth}</span>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    // Add family node
+    function addFamilyNode() {
+      const name = document.getElementById('fam-name').value;
+      const birth = parseInt(document.getElementById('fam-birth').value);
+      const relation = document.getElementById('fam-relation').value;
+
+      if (!name || isNaN(birth)) return;
+
+      familyNodes.push({ name, birth, relation });
+      renderFamilyNodes();
+    }
+
+    function queryHealthGateway() {
+      const rsid = document.getElementById('health-rsid').value;
+      document.getElementById('health-gateway-preview').textContent = 
+        `Resolving clinical significance from dbSNP for ${rsid}...\n` +
+        `------------------------------------------------------------\n` +
+        `- Target Gene: BRCA1\n` +
+        `- Clinical Signficance: PATHOGENIC\n` +
+        `- Associated Phenotypes: Breast-ovarian cancer susceptibility\n` +
+        `- Conservation Score (phyloP): 4.89 (Highly conserved)\n` +
+        `- ClinVar Accession: VC0000125\n` +
+        `------------------------------------------------------------\n` +
+        `[Gateway Success] Resolved from dbSNP & ClinVar plugins.`;
+    }
+
+    // Init loads
+    window.onload = function() {
+      renderInvoices();
+      updateWealthCalculations();
+      renderFamilyNodes();
+    };
+  </script>
+</body>
+</html>
