@@ -1,0 +1,439 @@
+{
+  "nodes": [
+    {
+      "id": "group_alos",
+      "type": "group",
+      "x": -20,
+      "y": -20,
+      "width": 1300,
+      "height": 890,
+      "label": "🏛️ AGENTIC LIFE OS (ALOS) MONOREPO — WORKSPACE",
+      "color": "4"
+    },
+    {
+      "id": "c07e000000000001",
+      "type": "text",
+      "x": 50,
+      "y": 80,
+      "width": 260,
+      "height": 160,
+      "color": "4",
+      "text": "### 📦 Core Module\n`@frankx-ai/alos-core`\n\n- **Config Schema:** Zod structural validation rules.\n- **Profile Loader:** Resolves `alos-profile.yaml` workspace directories.\n- **Discovery Generator:** Rebuilds sitemap schemas."
+    },
+    {
+      "id": "b451000000000002",
+      "type": "text",
+      "x": 350,
+      "y": 80,
+      "width": 260,
+      "height": 160,
+      "color": "4",
+      "text": "### 💼 Business OS\n`@frankx-ai/agentic-business-os`\n\n- **Corporate Ops:** Dutch BV operations (Arcanea Labs BV).\n- **Invoice Pipeline:** Outstanding receivables tracking.\n- **Compliance Safeguards:** Automatic quarterly VAT calculations."
+    },
+    {
+      "id": "c7ea000000000003",
+      "type": "text",
+      "x": 650,
+      "y": 80,
+      "width": 260,
+      "height": 160,
+      "color": "4",
+      "text": "### 🎬 Creator OS\n`@frankx-ai/agentic-creator-os`\n\n- **Script Engine:** Auto-drafts outlines for YouTube/Substack.\n- **Asset Registry:** Links HyperFrames visual layouts.\n- **Workshops OS:** Coordinates syllabi and Suno metadata."
+    },
+    {
+      "id": "3e30000000000004",
+      "type": "text",
+      "x": 950,
+      "y": 80,
+      "width": 260,
+      "height": 160,
+      "color": "6",
+      "text": "### 🧠 Memory OS\n`@frankx-ai/second-brain-os`\n\n- **SIP Compliance:** Graph nodes and relations mapping.\n- **Obsidian Vaults:** Dual-vault air-gapped summary stubs.\n- **Vector Search:** Semantic tag and label lookups."
+    },
+    {
+      "id": "07c8000000000005",
+      "type": "text",
+      "x": 50,
+      "y": 280,
+      "width": 260,
+      "height": 160,
+      "color": "4",
+      "text": "### 🕸️ Orchestration OS\n`@frankx-ai/agentic-orchestration-os`\n\n- **Cashflow Wealth Pipeline:** Feeds billing cash into Investor OS.\n- **Biographic Creator Sync:** Indexes genealogy into memory and triggers script drafting.\n- **Status Sweeper:** Comprehensive health dashboard audits."
+    },
+    {
+      "id": "1273000000000006",
+      "type": "text",
+      "x": 350,
+      "y": 280,
+      "width": 260,
+      "height": 160,
+      "color": "4",
+      "text": "### 📈 Investor OS\n`@frankx-ai/agentic-investor-os`\n\n- **Sovereign Portfolio:** Aggregates cash, equities, and real estate.\n- **Deal Scouting:** Pipelines target allocations and yield rates.\n- **Due Diligence:** Automates corporate risk score calculations."
+    },
+    {
+      "id": "4eab000000000007",
+      "type": "text",
+      "x": 650,
+      "y": 280,
+      "width": 260,
+      "height": 160,
+      "color": "6",
+      "text": "### 🧬 Health OS\n`@frankx-ai/agentic-health-os`\n\n- **Science Gateways:** Connects ClinVar, dbSNP, ChEMBL, and ClinicalTrials.\n- **Biomarkers:** Resolves pathogenic traits and evolutionary conservation."
+    },
+    {
+      "id": "fa31000000000008",
+      "type": "text",
+      "x": 950,
+      "y": 280,
+      "width": 260,
+      "height": 160,
+      "color": "6",
+      "text": "### 🌳 Family OS\n`@frankx-ai/agentic-family-os`\n\n- **Genealogy Compiler:** Generates linear lineage timelines.\n- **Life Stories:** Narration & transcription templates.\n- **Heritage Vaults:** Air-gapped family history indexers."
+    },
+    {
+      "id": "da54000000000009",
+      "type": "text",
+      "x": 425,
+      "y": 500,
+      "width": 450,
+      "height": 300,
+      "color": "5",
+      "text": "# 🖥️ Local Control Center Dashboard\n`dashboard/index.html`\n\nVisual interface built with Outfit typography, modern dark glassmorphism, and responsive CSS variables.\n\n- **System Monitor:** Verifies package directories status.\n- **Net Worth Streamer:** Real-time billing-to-networth calculations.\n- **Obsidian Graph Search:** Interactive query panel of Memory OS nodes.\n- **Genealogy Orchestrator:** Triggers Family ➔ Health ➔ Memory ➔ Creator workflow drafts."
+    },
+    {
+      "id": "group_substrates",
+      "type": "group",
+      "x": 1330,
+      "y": -20,
+      "width": 940,
+      "height": 890,
+      "label": "🌌 STARLIGHT PROTOCOLS & SUBSTRATE LAYERS",
+      "color": "6"
+    },
+    {
+      "id": "5150000000000010",
+      "type": "text",
+      "x": 1400,
+      "y": 80,
+      "width": 350,
+      "height": 200,
+      "color": "6",
+      "text": "# ☄️ Starlight Intelligence System (SIS)\n`Starlight-Intelligence-System`\n\n- **Memory Substrate:** Core repository containing memory palace vaults, SIP operator rules, and voice controller endpoints.\n- **Protocol version:** 1.1.1 (Standard for ALOS).\n- **Path:** `C:\\Users\\frank\\Starlight-Intelligence-System`"
+    },
+    {
+      "id": "ac05000000000011",
+      "type": "text",
+      "x": 1800,
+      "y": 80,
+      "width": 350,
+      "height": 200,
+      "color": "6",
+      "text": "# 🎭 Agentic Creator OS Primitives (ACOS)\n`agentic-creator-os`\n\n- **ACOS Engine:** Primary code runtime driving the hooks and creator utilities of FrankX.\n- **Package:** NPM `@frankx/acos`.\n- **Path:** `C:\\Users\\frank\\agentic-creator-os`"
+    },
+    {
+      "id": "a7ca000000000012",
+      "type": "text",
+      "x": 1400,
+      "y": 340,
+      "width": 350,
+      "height": 200,
+      "color": "6",
+      "text": "# 🕸️ Arcanea Ecosystem Orchestrator\n`Arcanea`\n\n- **Workspace Router:** Master dependency checking routines, package validations, and deployment routing grids.\n- **Release:** `@arcanea/orchestrator@1.2.1`.\n- **Path:** `C:\\Users\\frank\\Arcanea`"
+    },
+    {
+      "id": "04a7000000000013",
+      "type": "text",
+      "x": 1800,
+      "y": 340,
+      "width": 350,
+      "height": 200,
+      "color": "6",
+      "text": "# 🐚 oh-my-arcanea Toolkit\n`oh-my-arcanea`\n\n- **Terminal Wrappers:** ZSH/PowerShell toolset supplying environment variables and cockpit subcommands on the Yoga laptop.\n- **Path:** `C:\\Users\\frank\\oh-my-arcanea`"
+    },
+    {
+      "id": "group_agents",
+      "type": "group",
+      "x": -20,
+      "y": 930,
+      "width": 1300,
+      "height": 690,
+      "label": "🤖 ACTIVE CODING AGENTS & COMMAND WRAPPERS",
+      "color": "2"
+    },
+    {
+      "id": "4a7a000000000014",
+      "type": "text",
+      "x": 50,
+      "y": 980,
+      "width": 300,
+      "height": 200,
+      "color": "2",
+      "text": "# 🏛️ Workstation Harness\n`C:\\Users\\frank\\AGENTS.md`\n\nCanonical control mappings describing which coding agents are authorized to execute command loops on specified workspaces.\n\n- **Target Copy:** `claude-code-config/harness`.\n- **Audit commands:** `agent-audit`, `repo-audit`, `agent-push-status`."
+    },
+    {
+      "id": "c1ad000000000015",
+      "type": "text",
+      "x": 400,
+      "y": 980,
+      "width": 240,
+      "height": 130,
+      "color": "2",
+      "text": "### 🤖 Claude Code (`cl`)\n\n- **Launcher:** `cl <repo>`.\n- **Active on:** FrankX, SIS, ACOS, Arcanea.\n- **Harness:** Integrates CLAUDE.md guidelines."
+    },
+    {
+      "id": "c0de000000000016",
+      "type": "text",
+      "x": 680,
+      "y": 980,
+      "width": 240,
+      "height": 130,
+      "color": "2",
+      "text": "### 🤖 Codex (`cd`)\n\n- **Launcher:** `cd <repo>`.\n- **Active on:** SIS, ACOS, Brain directories.\n- **Harness:** Workspace state logs."
+    },
+    {
+      "id": "970b000000000017",
+      "type": "text",
+      "x": 960,
+      "y": 980,
+      "width": 240,
+      "height": 130,
+      "color": "2",
+      "text": "### 🤖 Grok (`gr` / `gk`)\n\n- **Launcher:** `gr <repo>`.\n- **Active on:** FrankX, Studio repositories."
+    },
+    {
+      "id": "de3a000000000018",
+      "type": "text",
+      "x": 400,
+      "y": 1150,
+      "width": 240,
+      "height": 130,
+      "color": "2",
+      "text": "### 🤖 DeepAgent (`da`)\n\n- **Launcher:** `da <repo>`.\n- **Framework:** LangChain Deep Agents open-source model controller."
+    },
+    {
+      "id": "a97b000000000019",
+      "type": "text",
+      "x": 680,
+      "y": 1150,
+      "width": 240,
+      "height": 130,
+      "color": "1",
+      "text": "### ⚡ Antigravity (`agy-run`)\n\n- **Wrapper:** `ay <command>`.\n- **Role:** Proactive agent builder driving complex structural upgrades and workspace compiles."
+    },
+    {
+      "id": "group_science",
+      "type": "group",
+      "x": 1330,
+      "y": 930,
+      "width": 940,
+      "height": 690,
+      "label": "🧪 WORKSTATION SCIENCE PLUGINS & BIOMEDICAL DATABASES",
+      "color": "3"
+    },
+    {
+      "id": "db5b000000000020",
+      "type": "text",
+      "x": 1400,
+      "y": 980,
+      "width": 240,
+      "height": 180,
+      "color": "3",
+      "text": "### 🧬 dbSNP & ClinVar\n\n- **Purpose:** Maps genetic variants (rsIDs) to clinical pathogenicity benchmarks.\n- **Lookups:** Promoters, enhancers, enhancers conservation rates."
+    },
+    {
+      "id": "c4eb000000000021",
+      "type": "text",
+      "x": 1680,
+      "y": 980,
+      "width": 240,
+      "height": 180,
+      "color": "3",
+      "text": "### 💊 ChEMBL & openFDA\n\n- **Purpose:** Queries bioactive compound target proteins, IC50 target bindings, and FDA drug safety label data registries."
+    },
+    {
+      "id": "a79e000000000022",
+      "type": "text",
+      "x": 1960,
+      "y": 980,
+      "width": 240,
+      "height": 180,
+      "color": "3",
+      "text": "### 🧬 AlphaGenome & UCSC\n\n- **Purpose:** Non-coding regulatory effects on promoters, ENCODE Registry of cCREs, and conservation scores."
+    },
+    {
+      "id": "f01d000000000023",
+      "type": "text",
+      "x": 1400,
+      "y": 1200,
+      "width": 240,
+      "height": 180,
+      "color": "3",
+      "text": "### 🔬 Foldseek & PyMOL\n\n- **Purpose:** 3D structural protein superpositions, domain boundaries, and pLDDT structural confidence render lookups."
+    },
+    {
+      "id": "771a000000000024",
+      "type": "text",
+      "x": 1680,
+      "y": 1200,
+      "width": 240,
+      "height": 180,
+      "color": "3",
+      "text": "### 🏥 ClinicalTrials.gov\n\n- **Purpose:** Searches trials status, NCT ID mappings, and criteria checklists for patient trial matching."
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_orch_bus",
+      "fromNode": "07c8000000000005",
+      "fromSide": "top",
+      "toNode": "b451000000000002",
+      "toSide": "bottom",
+      "toEnd": "arrow",
+      "label": "aggregates invoicing flows"
+    },
+    {
+      "id": "e_orch_inv",
+      "fromNode": "07c8000000000005",
+      "fromSide": "right",
+      "toNode": "1273000000000006",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "label": "calculates net worth"
+    },
+    {
+      "id": "e_orch_mem",
+      "fromNode": "07c8000000000005",
+      "fromSide": "bottom",
+      "toNode": "3e30000000000004",
+      "toSide": "bottom",
+      "toEnd": "arrow",
+      "label": "indexes SIP memory nodes"
+    },
+    {
+      "id": "e_orch_cre",
+      "fromNode": "07c8000000000005",
+      "fromSide": "top",
+      "toNode": "c7ea000000000003",
+      "toSide": "bottom",
+      "toEnd": "arrow",
+      "label": "drafts outlines"
+    },
+    {
+      "id": "e_orch_hlth",
+      "fromNode": "07c8000000000005",
+      "fromSide": "right",
+      "toNode": "4eab000000000007",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "label": "resolves biomarkers"
+    },
+    {
+      "id": "e_orch_fam",
+      "fromNode": "07c8000000000005",
+      "fromSide": "bottom",
+      "toNode": "fa31000000000008",
+      "toSide": "bottom",
+      "toEnd": "arrow",
+      "label": "pulls genealogy chain"
+    },
+    {
+      "id": "e_dash_orch",
+      "fromNode": "da54000000000009",
+      "fromSide": "left",
+      "toNode": "07c8000000000005",
+      "toSide": "bottom",
+      "toEnd": "arrow",
+      "label": "dispatches user commands"
+    },
+    {
+      "id": "e_mem_sis",
+      "fromNode": "3e30000000000004",
+      "fromSide": "right",
+      "toNode": "5150000000000010",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "label": "SIP compliant schemas"
+    },
+    {
+      "id": "e_cre_acos",
+      "fromNode": "c7ea000000000003",
+      "fromSide": "right",
+      "toNode": "ac05000000000011",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "label": "uses creative runtime"
+    },
+    {
+      "id": "e_orch_arc",
+      "fromNode": "07c8000000000005",
+      "fromSide": "right",
+      "toNode": "a7ca000000000012",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "label": "Arcanea ecosystem integration"
+    },
+    {
+      "id": "e_harness_cl",
+      "fromNode": "4a7a000000000014",
+      "fromSide": "right",
+      "toNode": "c1ad000000000015",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "label": "defines cl wrapper"
+    },
+    {
+      "id": "e_harness_agy",
+      "fromNode": "4a7a000000000014",
+      "fromSide": "bottom",
+      "toNode": "a97b000000000019",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "label": "defines ay wrapper"
+    },
+    {
+      "id": "e_cl_alos",
+      "fromNode": "c1ad000000000015",
+      "fromSide": "top",
+      "toNode": "07c8000000000005",
+      "toSide": "bottom",
+      "toEnd": "arrow",
+      "label": "compiles workspace modules"
+    },
+    {
+      "id": "e_agy_alos",
+      "fromNode": "a97b000000000019",
+      "fromSide": "top",
+      "toNode": "07c8000000000005",
+      "toSide": "bottom",
+      "toEnd": "arrow",
+      "label": "pipelines layout connections"
+    },
+    {
+      "id": "e_health_dbsnp",
+      "fromNode": "4eab000000000007",
+      "fromSide": "bottom",
+      "toNode": "db5b000000000020",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "label": "variant queries"
+    },
+    {
+      "id": "e_health_chembl",
+      "fromNode": "4eab000000000007",
+      "fromSide": "bottom",
+      "toNode": "c4eb000000000021",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "label": "assays queries"
+    },
+    {
+      "id": "e_health_fold",
+      "fromNode": "4eab000000000007",
+      "fromSide": "bottom",
+      "toNode": "f01d000000000023",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "label": "structure alignments"
+    }
+  ]
+}
