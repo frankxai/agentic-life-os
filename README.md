@@ -66,6 +66,7 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
 * **[`packages/investor`](file:///C:/Users/frank/agentic-life-os/packages/investor/README.md)**: Sovereign wealth calculations.
 * **[`packages/health`](file:///C:/Users/frank/agentic-life-os/packages/health/README.md)**: Biomedical lookup gateways.
 * **[`packages/family`](file:///C:/Users/frank/agentic-life-os/packages/family/README.md)**: Genealogy lineage compiler.
+* **`Agentic_Ecosystem.canvas`**: Visual whiteboard connecting workspace modules, substrates, agent command wrappers, and science database plugins.
 * **`scripts/generate-alos-assets.mjs`**: Compiles discovery sitemaps (`llms.txt`, `agents.json`, and `jsonld.json`).
 
 ---
