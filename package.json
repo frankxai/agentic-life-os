@@ -10,7 +10,8 @@
   "scripts": {
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run",
-    "build": "pnpm -r build && node scripts/generate-alos-assets.mjs"
+    "build": "pnpm -r build && node scripts/generate-alos-assets.mjs",
+    "health": "node scripts/alos-health.mjs"
   },
   "devDependencies": {
     "typescript": "5.6.2",
