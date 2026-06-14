@@ -45,23 +45,37 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
 
 | Module | Purpose | Status | Stance & Verification |
 | :--- | :--- | :--- | :--- |
-| **`business`** | **Corporate Ops:** Legal compliance, Dutch BV ops (Arcanea Labs BV), claims-guard pre-publish checks. | **Live** | Strong harness. Health: `pnpm test` |
-| **`creator`** | **Creative Substrate:** Content compilation pipelines, workshops OS, visual assets design, and Suno AI prompts. | **Live** | Product harness. Health: `pnpm test` |
-| **`memory`** | **Double-Vault Ingestion:** Summarizes chats in a private Obsidian vault and outputs non-sensitive stubs to the public index. | **Live** | Private. Health: `pytest -v` |
-| **`orchestration`** | **Control Grid:** Manages package dependencies, ZSH/PowerShell toolkits, and cross-agent launch aliases. | **Live** | Tooling harness. Health: `pnpm run ops:health` |
-| **`investor`** | **Sovereign Wealth:** Deals pipeline, capital allocation, valuations, due diligence, and target tracking. | **WIP** | Private. Health: `vitest run` |
-| **`health`** | **Biomedical Intelligence:** Interfaces scientific databases (ChEMBL, dbSNP, UCSC TFBS, OpenFDA, and AlphaFold). | **WIP** | Private. Health: `vitest run` |
-| **`family`** | **Heritage Vault:** Lineage charts, life story transcripts, diary nodes, and family tree compilation. | **WIP** | Private. Health: `vitest run` |
+| **`core`** | **System Configuration:** Core schema rules, Zod models, YAML loaders. | **Active** | Core harness. Health: `vitest run` |
+| **`business`** | **Corporate Ops:** Legal compliance, Dutch BV ops (Arcanea Labs BV), claims-guard checks, invoice balances. | **Active** | Billing harness. Health: `vitest run` |
+| **`creator`** | **Creative Substrate:** Content compilation pipelines, YouTube drafts, workshops, and asset registries. | **Active** | Creator harness. Health: `vitest run` |
+| **`memory`** | **Starlight Memory Palace:** Obsidian vault stubs, semantic vector search, and SIP compliance graph storage. | **Active** | Memory harness. Health: `vitest run` |
+| **`orchestration`** | **Control Grid:** Aggregates cashflow to investor portfolio, coordinates health audits and lineage creators. | **Active** | Orchestration harness. Health: `vitest run` |
+| **`investor`** | **Sovereign Wealth:** Deals pipeline, capital allocation, valuations, due diligence, and net worth calculations. | **Active** | Wealth harness. Health: `vitest run` |
+| **`health`** | **Biomedical Intelligence:** Interfaces scientific databases (ChEMBL, dbSNP, UCSC TFBS, OpenFDA, and AlphaFold). | **Active** | Science gateway. Health: `vitest run` |
+| **`family`** | **Heritage Vault:** Lineage charts, genealogy timelines, and family tree compilation. | **Active** | Family harness. Health: `vitest run` |
 
 ---
 
 ## 📦 Monorepo Structure
 
 * **[`packages/core`](file:///C:/Users/frank/agentic-life-os/packages/core/README.md)**: Parses and validates the unified [alos-profile.yaml](file:///C:/Users/frank/agentic-life-os/alos-profile.yaml) configuration.
-* **[`packages/investor`](file:///C:/Users/frank/agentic-life-os/packages/investor/README.md)**: Bootstrapped sovereign capital allocator tracking valuation pipelines.
-* **[`packages/health`](file:///C:/Users/frank/agentic-life-os/packages/health/README.md)**: A scientific gateway wrapper routing variant analysis, trial metadata, and chemical assays.
-* **[`packages/family`](file:///C:/Users/frank/agentic-life-os/packages/family/README.md)**: Genealogy manager generating family lineage charts.
-* **`scripts/generate-alos-assets.mjs`**: Compiles discovery outputs (`llms.txt`, `agents.json`, and `jsonld.json`) on builds.
+* **[`packages/business`](file:///C:/Users/frank/agentic-life-os/packages/business)**: Manages invoicing status and BV compliance limits.
+* **[`packages/creator`](file:///C:/Users/frank/agentic-life-os/packages/creator)**: Powers script generation and visual media templates.
+* **[`packages/memory`](file:///C:/Users/frank/agentic-life-os/packages/memory)**: Implements Starlight Intelligence Protocol (SIP) semantic nodes.
+* **[`packages/orchestration`](file:///C:/Users/frank/agentic-life-os/packages/orchestration)**: Cross-module pipeline triggers linking cashflow and heritage databases.
+* **[`packages/investor`](file:///C:/Users/frank/agentic-life-os/packages/investor/README.md)**: Sovereign wealth calculations.
+* **[`packages/health`](file:///C:/Users/frank/agentic-life-os/packages/health/README.md)**: Biomedical lookup gateways.
+* **[`packages/family`](file:///C:/Users/frank/agentic-life-os/packages/family/README.md)**: Genealogy lineage compiler.
+* **`scripts/generate-alos-assets.mjs`**: Compiles discovery sitemaps (`llms.txt`, `agents.json`, and `jsonld.json`).
+
+---
+
+## 🖥️ Local Control Center Dashboard
+
+A premium, glassmorphic visual interface is available directly inside the repository. To access the control center:
+
+1. Open [dashboard/index.html](file:///C:/Users/frank/agentic-life-os/dashboard/index.html) in your browser.
+2. Monitor all 8 active packages, run real-time net worth calculations, query search nodes in the Starlight Memory Palace, and compile automated creator draft outlines from family nodes.
 
 ---
 
@@ -69,7 +83,7 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
 
 ### Prerequisites
 
-* Node.js >= 24
+* Node.js >= 20
 * PNPM 9.x
 
 ### Setup
@@ -85,7 +99,7 @@ pnpm install
 # Build the TS packages & compile discovery formats
 pnpm build
 
-# Run unit tests across packages
+# Run unit & integration tests across all packages
 pnpm test
 ```
 
