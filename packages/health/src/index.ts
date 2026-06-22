@@ -1,1 +1,1 @@
-export * from './science-gateway.js';
+export * from './personal-health-os.js';

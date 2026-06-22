@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "systemName": "Agentic Life OS (ALOS)",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "sip": "1.1.1",
   "workstation": {
     "machineName": "Yoga Laptop Workstation",
@@ -54,7 +54,15 @@
       "status": "in-development",
       "risk": "private",
       "verify": "vitest run",
-      "purpose": "Biomedical research query gateways integrating OpenFDA, dbSNP, ChEMBL, ClinicalTrials, and AlphaFold structure lookups."
+      "purpose": "Private personal-health operating system for nutrition, training, sleep, recovery, medical-record prep, clinician handoff, and Health Intelligence System protocol packets."
+    },
+    {
+      "key": "lifeSciencesResearcher",
+      "repo": "life-sciences-researcher-is",
+      "status": "in-development",
+      "risk": "private",
+      "verify": "vitest run",
+      "purpose": "Research-only biomedical gateway for OpenFDA, dbSNP, ClinVar, ChEMBL, ClinicalTrials, AlphaFold, and literature lookup. Never patient-specific medical advice."
     },
     {
       "key": "family",

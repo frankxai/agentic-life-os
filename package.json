@@ -1,8 +1,8 @@
 {
   "name": "@frankx-ai/agentic-life-os",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Agentic Life OS (ALOS) — The unified multi-agent operating system for Business, Creator, Memory, Orchestration, Investor, Health, and Family modules. Built on the Starlight Intelligence Protocol (SIP).",
+  "description": "Agentic Life OS (ALOS) — The private multi-agent operating system for Business, Creator, Memory, Orchestration, Investor, Health, Life Sciences Research, and Family modules. Built on the Starlight Intelligence Protocol (SIP).",
   "license": "MIT",
   "type": "module",
   "engines": { "node": ">=24" },

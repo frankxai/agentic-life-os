@@ -491,7 +491,7 @@
       <button class="tab-btn active" onclick="switchTab('overview')">System Overview</button>
       <button class="tab-btn" onclick="switchTab('wealth')">Business & Wealth Pipeline</button>
       <button class="tab-btn" onclick="switchTab('creator')">Creator & Memory Graph</button>
-      <button class="tab-btn" onclick="switchTab('health')">Health & Family OS</button>
+      <button class="tab-btn" onclick="switchTab('health')">Health, Research & Family</button>
     </div>
 
     <!-- TAB 1: OVERVIEW -->
@@ -583,14 +583,28 @@
 
         <div class="module-card">
           <div class="card-header">
-            <span class="card-title">Health OS</span>
+            <span class="card-title">Agentic Health OS</span>
             <span class="badge badge-priv">Private</span>
           </div>
           <div class="card-body">
-            <p>Science lookup database gateways mapping ClinVar, dbSNP, ChEMBL, and ClinicalTrials.</p>
+            <p>Private personal-health loops for nutrition, training, sleep, recovery, records, and clinician handoff.</p>
             <div class="meta-list">
               <div class="meta-item"><span>Package</span><span>@frankx-ai/agentic-health-os</span></div>
-              <div class="meta-item"><span>Integration</span><span>BioMark, ChemBL</span></div>
+              <div class="meta-item"><span>Boundary</span><span>No diagnosis</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="card-header">
+            <span class="card-title">Life Sciences Researcher</span>
+            <span class="badge badge-dev">Research</span>
+          </div>
+          <div class="card-body">
+            <p>Research-only gateway for ClinVar, dbSNP, ChEMBL, ClinicalTrials, and structure/literature lookup.</p>
+            <div class="meta-list">
+              <div class="meta-item"><span>Package</span><span>@frankx-ai/life-sciences-researcher-is</span></div>
+              <div class="meta-item"><span>Boundary</span><span>No patient advice</span></div>
             </div>
           </div>
         </div>
@@ -797,8 +811,8 @@ Biomarker: BRCA1 (rs12345) pathogenicity risk analysis.</textarea>
     <div id="tab-health" class="tab-content">
       <div class="dashboard-layout">
         <div class="glass-panel">
-          <h3 class="panel-title">Health OS: Science Plugins Gateway</h3>
-          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Queries biomedical registries for genomic conservation and compound bioactivity.</p>
+          <h3 class="panel-title">Life Sciences Researcher: Research Gateway</h3>
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Queries research-only biomedical fixtures for source-attributed evidence envelopes.</p>
           
           <div class="form-group">
             <label>dbSNP Variant ID (rsID)</label>
@@ -808,7 +822,7 @@ Biomarker: BRCA1 (rs12345) pathogenicity risk analysis.</textarea>
 
           <h4 style="margin-bottom: 0.5rem; font-family: var(--font-display);">Gateway Output</h4>
           <div class="preview-box" id="health-gateway-preview">
-            [Ready] Call gateway to resolve dbSNP variant ID.
+            [Ready] Call research gateway to resolve a synthetic dbSNP-style variant fixture.
           </div>
         </div>
 
@@ -1040,15 +1054,15 @@ STATUS: DRAFTED & INDEXED
     function queryHealthGateway() {
       const rsid = document.getElementById('health-rsid').value;
       document.getElementById('health-gateway-preview').textContent = 
-        `Resolving clinical significance from dbSNP for ${rsid}...\n` +
+        `Resolving research-only variant evidence for ${rsid}...\n` +
         `------------------------------------------------------------\n` +
-        `- Target Gene: BRCA1\n` +
-        `- Clinical Signficance: PATHOGENIC\n` +
-        `- Associated Phenotypes: Breast-ovarian cancer susceptibility\n` +
-        `- Conservation Score (phyloP): 4.89 (Highly conserved)\n` +
-        `- ClinVar Accession: VC0000125\n` +
+        `- Target Gene: TEST1\n` +
+        `- Clinical Significance: synthetic-fixture-only\n` +
+        `- Source: synthetic ClinVar/dbSNP fixture\n` +
+        `- Boundary: research only; not patient-specific advice\n` +
+        `- Limitation: verify live records and care-team context\n` +
         `------------------------------------------------------------\n` +
-        `[Gateway Success] Resolved from dbSNP & ClinVar plugins.`;
+        `[Gateway Success] Research envelope resolved with safety boundary.`;
     }
 
     // Init loads

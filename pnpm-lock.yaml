@@ -64,6 +64,12 @@ importers:
         specifier: ^5.6.2
         version: 5.6.2
 
+  packages/life-sciences-researcher:
+    devDependencies:
+      typescript:
+        specifier: ^5.6.2
+        version: 5.6.2
+
   packages/memory:
     devDependencies:
       typescript:
@@ -90,6 +96,9 @@ importers:
       '@frankx-ai/alos-core':
         specifier: workspace:^
         version: link:../core
+      '@frankx-ai/life-sciences-researcher-is':
+        specifier: workspace:^
+        version: link:../life-sciences-researcher
       '@frankx-ai/second-brain-os':
         specifier: workspace:^
         version: link:../memory

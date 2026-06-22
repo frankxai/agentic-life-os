@@ -43,6 +43,47 @@ modules:
     }
   });
 
+  it('should accept separate personal health and research-only life sciences modules', () => {
+    const profileContent = `
+systemName: "Agentic Life OS"
+version: "1.1.0"
+sipVersion: "1.1.1"
+workstation:
+  machineName: "Yoga Laptop"
+  os: "Windows"
+modules:
+  health:
+    repoName: "agentic-health-os"
+    path: "C:\\\\Users\\\\frank\\\\starlight\\\\repos\\\\agentic-life-os\\\\packages\\\\health"
+    status: "in-development"
+    riskLevel: "private"
+    healthCommand: "vitest run"
+    activeAgents:
+      - "Claude Code"
+    purpose: "Private personal health workflows"
+  lifeSciencesResearcher:
+    repoName: "life-sciences-researcher-is"
+    path: "C:\\\\Users\\\\frank\\\\starlight\\\\repos\\\\agentic-life-os\\\\packages\\\\life-sciences-researcher"
+    status: "in-development"
+    riskLevel: "private"
+    healthCommand: "vitest run"
+    activeAgents:
+      - "Claude Code"
+    purpose: "Research-only biomedical lookup"
+`;
+    fs.writeFileSync(mockYamlPath, profileContent);
+
+    try {
+      const profile = loadLifeOSProfile(mockYamlPath);
+      expect(profile.modules['health']?.repoName).toBe('agentic-health-os');
+      expect(profile.modules['lifeSciencesResearcher']?.repoName).toBe('life-sciences-researcher-is');
+    } finally {
+      if (fs.existsSync(mockYamlPath)) {
+        fs.unlinkSync(mockYamlPath);
+      }
+    }
+  });
+
   it('should throw an error on invalid schema data', () => {
     const invalidProfileContent = `
 systemName: "Agentic Life OS"

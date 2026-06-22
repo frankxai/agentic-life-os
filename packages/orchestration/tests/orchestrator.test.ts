@@ -51,7 +51,7 @@ describe('Agentic Life OS (ALOS) Interconnectivity', () => {
     expect(projectedWealth).toBe(395000);
   });
 
-  it('should run a biographic + health study, sync it to Memory OS (SIP), and generate Creator OS outlines', async () => {
+  it('should run a biographic + research-only study, sync it to Memory OS (SIP), and generate Creator OS outlines', async () => {
     const businessManager = new BusinessOSManager(entity);
     const orchestrator = new ALOSOrchestrator(businessManager);
 
@@ -74,7 +74,8 @@ describe('Agentic Life OS (ALOS) Interconnectivity', () => {
     expect(memoryNode).toBeDefined();
     expect(memoryNode?.label).toContain('The Frank Lineage Trait');
     expect(memoryNode?.content).toContain('Grandpa Frank');
-    expect(memoryNode?.content).toContain('BRCA1');
+    expect(memoryNode?.content).toContain('TEST1');
+    expect(memoryNode?.content.toLowerCase()).toContain('research-only');
 
     // Verify creator outline
     const creatorAssets = orchestrator.getCreatorManager().getAssets();

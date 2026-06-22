@@ -16,6 +16,7 @@
     "@frankx-ai/second-brain-os": "workspace:^",
     "@frankx-ai/agentic-investor-os": "workspace:^",
     "@frankx-ai/agentic-health-os": "workspace:^",
+    "@frankx-ai/life-sciences-researcher-is": "workspace:^",
     "@frankx-ai/agentic-family-os": "workspace:^"
   },
   "devDependencies": {

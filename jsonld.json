@@ -38,7 +38,12 @@
     {
       "@type": "SoftwareApplication",
       "name": "agentic-health-os",
-      "description": "Biomedical research query gateways integrating OpenFDA, dbSNP, ChEMBL, ClinicalTrials, and AlphaFold structure lookups."
+      "description": "Private personal-health operating system for nutrition, training, sleep, recovery, medical-record prep, clinician handoff, and Health Intelligence System protocol packets."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "life-sciences-researcher-is",
+      "description": "Research-only biomedical gateway for OpenFDA, dbSNP, ClinVar, ChEMBL, ClinicalTrials, AlphaFold, and literature lookup. Never patient-specific medical advice."
     },
     {
       "@type": "SoftwareApplication",

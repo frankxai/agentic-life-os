@@ -1,6 +1,6 @@
 # 🏛️ Agentic Life OS (ALOS)
 
-> The unified multi-agent operating system for Business, Creator, Memory, Orchestration, Investor, Health, and Family modules. Built on the Starlight Intelligence Protocol (SIP).
+> The private multi-agent operating system for Business, Creator, Memory, Orchestration, Investor, Health, Life Sciences Research, and Family modules. Built on the Starlight Intelligence Protocol (SIP).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Built on SIP](https://img.shields.io/badge/Built%20on-SIP%20v1.1.1-blue.svg)](https://github.com/frankxai/Starlight-Intelligence-System)
@@ -29,8 +29,13 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
                    ▼                     ▼                     ▼
 ┌─────────────────────────────┐ ┌───────────────────┐ ┌─────────────────────────────┐
 │      agentic-investor-os    │ │  agentic-health-os│ │      agentic-family-os      │
-│  (Sovereign Wealth Fund, DL)│ │(Biomedical, FDA)  │ │ (Genealogy, Heritage Vault) │
+│  (Sovereign Wealth Fund, DL)│ │(Personal Health)  │ │ (Genealogy, Heritage Vault) │
 └─────────────────────────────┘ └───────────────────┘ └─────────────────────────────┘
+                              ┌───────────────────────┐
+                              │ life-sciences-        │
+                              │ researcher-is         │
+                              │ (Research Only)       │
+                              └───────────────────────┘
                                          ▲
                                          │
                      ┌───────────────────┴────────────────────┐
@@ -51,7 +56,8 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
 | **`memory`** | **Starlight Memory Palace:** Obsidian vault stubs, semantic vector search, and SIP compliance graph storage. | **Active** | Memory harness. Health: `vitest run` |
 | **`orchestration`** | **Control Grid:** Aggregates cashflow to investor portfolio, coordinates health audits and lineage creators. | **Active** | Orchestration harness. Health: `vitest run` |
 | **`investor`** | **Sovereign Wealth:** Deals pipeline, capital allocation, valuations, due diligence, and net worth calculations. | **Active** | Wealth harness. Health: `vitest run` |
-| **`health`** | **Biomedical Intelligence:** Interfaces scientific databases (ChEMBL, dbSNP, UCSC TFBS, OpenFDA, and AlphaFold). | **Active** | Science gateway. Health: `vitest run` |
+| **`health`** | **Agentic Health OS:** Private personal-health loops for nutrition, training, sleep, recovery, records, clinician handoff, and protocol packets. | **Active** | Safety-gated personal health harness. Health: `vitest run` |
+| **`lifeSciencesResearcher`** | **Life Sciences Researcher IS:** Research-only gateway for biomedical databases and literature. | **Active** | Research envelope harness. Health: `vitest run` |
 | **`family`** | **Heritage Vault:** Lineage charts, genealogy timelines, and family tree compilation. | **Active** | Family harness. Health: `vitest run` |
 
 ---
@@ -64,7 +70,8 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
 * **[`packages/memory`](file:///C:/Users/frank/agentic-life-os/packages/memory)**: Implements Starlight Intelligence Protocol (SIP) semantic nodes.
 * **[`packages/orchestration`](file:///C:/Users/frank/agentic-life-os/packages/orchestration)**: Cross-module pipeline triggers linking cashflow and heritage databases.
 * **[`packages/investor`](file:///C:/Users/frank/agentic-life-os/packages/investor/README.md)**: Sovereign wealth calculations.
-* **[`packages/health`](file:///C:/Users/frank/agentic-life-os/packages/health/README.md)**: Biomedical lookup gateways.
+* **[`packages/health`](file:///C:/Users/frank/starlight/repos/agentic-life-os/packages/health/README.md)**: Private Agentic Health OS for personal health workflows.
+* **[`packages/life-sciences-researcher`](file:///C:/Users/frank/starlight/repos/agentic-life-os/packages/life-sciences-researcher/README.md)**: Research-only biomedical lookup gateway.
 * **[`packages/family`](file:///C:/Users/frank/agentic-life-os/packages/family/README.md)**: Genealogy lineage compiler.
 * **`Agentic_Ecosystem.canvas`**: Visual whiteboard connecting workspace modules, substrates, agent command wrappers, and science database plugins.
 * **`scripts/generate-alos-assets.mjs`**: Compiles discovery sitemaps (`llms.txt`, `agents.json`, and `jsonld.json`).

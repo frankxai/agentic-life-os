@@ -1,5 +1,5 @@
 systemName: "Agentic Life OS (ALOS)"
-version: "1.0.0"
+version: "1.1.0"
 sipVersion: "1.1.1"
 workstation:
   machineName: "Yoga Laptop Workstation"
@@ -8,7 +8,7 @@ workstation:
 modules:
   business:
     repoName: "agentic-business-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\business"
+    path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\business"
     status: "in-development"
     riskLevel: "production"
     healthCommand: "vitest run"
@@ -19,7 +19,7 @@ modules:
 
   creator:
     repoName: "agentic-creator-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\creator"
+    path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\creator"
     status: "in-development"
     riskLevel: "production"
     healthCommand: "vitest run"
@@ -31,7 +31,7 @@ modules:
 
   memory:
     repoName: "second-brain-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\memory"
+    path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\memory"
     status: "in-development"
     riskLevel: "private"
     healthCommand: "vitest run"
@@ -42,7 +42,7 @@ modules:
 
   orchestration:
     repoName: "agentic-orchestration-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\orchestration"
+    path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\orchestration"
     status: "in-development"
     riskLevel: "production"
     healthCommand: "vitest run"
@@ -53,7 +53,7 @@ modules:
 
   investor:
     repoName: "agentic-investor-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\investor"
+    path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\investor"
     status: "in-development"
     riskLevel: "private"
     healthCommand: "vitest run"
@@ -63,18 +63,29 @@ modules:
 
   health:
     repoName: "agentic-health-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\health"
+    path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\health"
     status: "in-development"
     riskLevel: "private"
     healthCommand: "vitest run"
     activeAgents:
       - "Claude Code"
       - "Gemini"
-    purpose: "Biomedical research query gateways integrating OpenFDA, dbSNP, ChEMBL, ClinicalTrials, and AlphaFold structure lookups."
+    purpose: "Private personal-health operating system for nutrition, training, sleep, recovery, medical-record prep, clinician handoff, and Health Intelligence System protocol packets."
+
+  lifeSciencesResearcher:
+    repoName: "life-sciences-researcher-is"
+    path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\life-sciences-researcher"
+    status: "in-development"
+    riskLevel: "private"
+    healthCommand: "vitest run"
+    activeAgents:
+      - "Claude Code"
+      - "Gemini"
+    purpose: "Research-only biomedical gateway for OpenFDA, dbSNP, ClinVar, ChEMBL, ClinicalTrials, AlphaFold, and literature lookup. Never patient-specific medical advice."
 
   family:
     repoName: "agentic-family-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\family"
+    path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\family"
     status: "in-development"
     riskLevel: "private"
     healthCommand: "vitest run"

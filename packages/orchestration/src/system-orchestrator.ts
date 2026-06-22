@@ -2,7 +2,8 @@ import { BusinessOSManager, type Invoice } from '@frankx-ai/agentic-business-os'
 import { CreatorOSManager } from '@frankx-ai/agentic-creator-os';
 import { MemoryOSManager, type MemoryNode } from '@frankx-ai/second-brain-os';
 import { calculateNetWorth, type WealthPortfolio } from '@frankx-ai/agentic-investor-os';
-import { HealthScienceGateway } from '@frankx-ai/agentic-health-os';
+import { AgenticHealthOS } from '@frankx-ai/agentic-health-os';
+import { LifeSciencesResearchGateway } from '@frankx-ai/life-sciences-researcher-is';
 import { compileLineageChain, type FamilyNode } from '@frankx-ai/agentic-family-os';
 import { type LifeOSProfile } from '@frankx-ai/alos-core';
 
@@ -19,13 +20,15 @@ export class ALOSOrchestrator {
   private businessManager: BusinessOSManager;
   private creatorManager: CreatorOSManager;
   private memoryManager: MemoryOSManager;
-  private healthGateway: HealthScienceGateway;
+  private healthOS: AgenticHealthOS;
+  private lifeSciencesGateway: LifeSciencesResearchGateway;
 
   constructor(businessManager: BusinessOSManager) {
     this.businessManager = businessManager;
     this.creatorManager = new CreatorOSManager();
     this.memoryManager = new MemoryOSManager();
-    this.healthGateway = new HealthScienceGateway();
+    this.healthOS = new AgenticHealthOS();
+    this.lifeSciencesGateway = new LifeSciencesResearchGateway();
   }
 
   getBusinessManager(): BusinessOSManager {
@@ -40,8 +43,12 @@ export class ALOSOrchestrator {
     return this.memoryManager;
   }
 
-  getHealthGateway(): HealthScienceGateway {
-    return this.healthGateway;
+  getHealthOS(): AgenticHealthOS {
+    return this.healthOS;
+  }
+
+  getLifeSciencesGateway(): LifeSciencesResearchGateway {
+    return this.lifeSciencesGateway;
   }
 
   /**
@@ -62,8 +69,8 @@ export class ALOSOrchestrator {
   }
 
   /**
-   * Pipeline 2: Sync Family heritage transcripts and Health gateway results to Memory OS (Obsidian)
-   * and Creator OS (YouTube script outline drafting).
+   * Pipeline 2: Sync family heritage transcripts and research-only science results
+   * to Memory OS and Creator OS without turning research fixtures into medical advice.
    */
   async syncBiographicResearchToCreator(
     familyNodes: FamilyNode[],
@@ -73,11 +80,15 @@ export class ALOSOrchestrator {
     // 1. Compile family chain
     const lineage = compileLineageChain(familyNodes);
     
-    // 2. Query biomarker significance
-    const biomarker = await this.healthGateway.resolveVariantSignificance(rsId);
+    // 2. Query research-only variant evidence.
+    const biomarker = await this.lifeSciencesGateway.resolveVariantSignificance(rsId);
 
     // 3. Construct unified narrative content
-    const narrativeText = `Lineage Chain:\n${lineage.join('\n')}\n\nGenetic Health Marker (${rsId}): ${biomarker.geneSymbol} status: ${biomarker.clinicalSignificance}`;
+    const narrativeText = [
+      `Lineage Chain:\n${lineage.join('\n')}`,
+      `Research-only Variant Fixture (${rsId}): ${biomarker.data.geneSymbol} status: ${biomarker.data.clinicalSignificance}`,
+      `Boundary: ${biomarker.limitations.join(' ')}`,
+    ].join('\n\n');
 
     // 4. Index as a SIP node in Memory OS
     const nodeId = `heritage_node_${Date.now()}`;
@@ -98,8 +109,8 @@ export class ALOSOrchestrator {
       [
         'Introduction to the Family Lineage',
         'How genetic traits trace back generations',
-        `Analyzing biomarker ${biomarker.geneSymbol} (${rsId})`,
-        'Future outlook & health conservation',
+        `Research-only variant fixture ${biomarker.data.geneSymbol} (${rsId})`,
+        'Boundaries: no patient-specific medical interpretation',
       ]
     );
 
