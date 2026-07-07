@@ -40,6 +40,64 @@ This file defines the active modules, substrates, and agent capabilities of Fran
 `;
     }
 
+    if (profile.offering) {
+      llmsText += `
+## Master Offering
+- Name: ${profile.offering.name}
+- Audience: ${profile.offering.audience}
+- Promise: ${profile.offering.promise}
+- Status: ${profile.offering.status}
+- Delivery Mode: ${profile.offering.deliveryMode}
+- Public Boundary: ${profile.offering.publicBoundary}
+`;
+
+      for (const pkg of profile.offering.packages) {
+        llmsText += `
+### Package: ${pkg.name}
+- Audience: ${pkg.audience}
+- Promise: ${pkg.promise}
+- Delivery Mode: ${pkg.deliveryMode}
+- Commercial Status: ${pkg.commercialStatus}
+- Support Boundary: ${pkg.supportBoundary}
+`;
+      }
+    }
+
+    if (profile.intelligenceSystems.length > 0) {
+      llmsText += `
+## Intelligence Systems
+`;
+
+      for (const system of profile.intelligenceSystems) {
+        llmsText += `
+### ${system.name}
+- Repo: \`${system.repoName}\`
+- Layer: \`${system.layer}\`
+- Public Status: \`${system.publicStatus}\`
+- Purpose: ${system.purpose}
+- Proof Gate: ${system.proofGate}
+`;
+      }
+    }
+
+    if (profile.operatingLoops.length > 0) {
+      llmsText += `
+## Operating Loops
+`;
+
+      for (const loop of profile.operatingLoops) {
+        llmsText += `
+### ${loop.name}
+- Cadence: ${loop.cadence}
+- Owner: ${loop.owner}
+- Purpose: ${loop.purpose}
+- Inputs: ${loop.inputs.join(', ')}
+- Outputs: ${loop.outputs.join(', ')}
+- Safety Gate: ${loop.safetyGate}
+`;
+      }
+    }
+
     const llmsPath = path.join(ROOT_DIR, 'llms.txt');
     fs.writeFileSync(llmsPath, llmsText, 'utf8');
     console.log(`✅ Generated: llms.txt -> ${llmsPath}`);
@@ -60,6 +118,10 @@ This file defines the active modules, substrates, and agent capabilities of Fran
           verify: m.healthCommand,
           purpose: m.purpose,
         })),
+        offering: profile.offering ?? null,
+        intelligenceSystems: profile.intelligenceSystems,
+        estateRepos: profile.estateRepos,
+        operatingLoops: profile.operatingLoops,
       },
       null,
       2
@@ -81,11 +143,19 @@ This file defines the active modules, substrates, and agent capabilities of Fran
           '@type': 'Person',
           name: 'Frank Riemer',
         },
-        hasPart: Object.entries(profile.modules).map(([name, m]) => ({
-          '@type': 'SoftwareApplication',
-          name: m.repoName,
-          description: m.purpose,
-        })),
+        hasPart: [
+          ...Object.entries(profile.modules).map(([name, m]) => ({
+            '@type': 'SoftwareApplication',
+            name: m.repoName,
+            description: m.purpose,
+          })),
+          ...profile.intelligenceSystems.map((system) => ({
+            '@type': 'SoftwareApplication',
+            name: system.name,
+            description: system.purpose,
+            applicationSubCategory: system.layer,
+          })),
+        ],
       },
       null,
       2

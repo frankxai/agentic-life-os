@@ -46,6 +46,14 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
 
 ---
 
+## Ultimate Offering Spine
+
+The current packaging map lives in [`docs/ultimate-offering-spine.md`](docs/ultimate-offering-spine.md). It defines the master offer, public/private boundary, intelligence-system substrate, repo lanes, operating loops, swarm lanes, validation gates, and next execution wave.
+
+The machine-readable source is [`alos-profile.yaml`](alos-profile.yaml). `pnpm build` regenerates [`llms.txt`](llms.txt), [`agents.json`](agents.json), and [`jsonld.json`](jsonld.json) from that profile.
+
+---
+
 ## 🏛️ Interconnected Modules & Visions
 
 | Module | Purpose | Status | Stance & Verification |

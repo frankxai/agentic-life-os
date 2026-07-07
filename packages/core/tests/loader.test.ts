@@ -84,6 +84,78 @@ modules:
     }
   });
 
+  it('should load offering, intelligence systems, repo lanes, and operating loops', () => {
+    const profileContent = `
+systemName: "Agentic Life OS"
+version: "1.2.0"
+sipVersion: "1.1.1"
+workstation:
+  machineName: "Yoga Laptop"
+  os: "Windows"
+modules:
+  business:
+    repoName: "agentic-business-os"
+    path: "C:\\\\Users\\\\frank\\\\starlight\\\\repos\\\\agentic-life-os\\\\packages\\\\business"
+    status: "in-development"
+    riskLevel: "production"
+    healthCommand: "vitest run"
+    activeAgents:
+      - "Claude Code"
+    purpose: "Business ops"
+offering:
+  name: "Agentic Life OS"
+  audience: "Founder-operators"
+  promise: "One private command spine for work and life"
+  status: "private-operator-suite"
+  deliveryMode: "Git-backed repo package plus guided implementation"
+  publicBoundary: "Public wrappers exclude private memory, health, finance, and unreleased strategy."
+  packages:
+    - name: "Public Blueprint"
+      audience: "Builders evaluating the model"
+      promise: "Understand the stack"
+      deliveryMode: "Docs"
+      commercialStatus: "free"
+      supportBoundary: "Self-serve only"
+intelligenceSystems:
+  - name: "Starlight Intelligence System"
+    repoName: "Starlight-Intelligence-System"
+    layer: "substrate"
+    publicStatus: "hybrid"
+    purpose: "Memory, provenance, and validation"
+    proofGate: "Health command plus evidence path"
+estateRepos:
+  - name: "agentic-life-os"
+    lane: "master-offer"
+    role: "Master operating shell"
+    source: "verified"
+    status: "primary"
+operatingLoops:
+  - name: "Daily Command Loop"
+    cadence: "daily"
+    owner: "chief-operator"
+    purpose: "Select and verify the day's work"
+    inputs:
+      - "progress ledger"
+    outputs:
+      - "bounded queue"
+    safetyGate: "No production or billing mutation without approval"
+`;
+    fs.writeFileSync(mockYamlPath, profileContent);
+
+    try {
+      const profile = loadLifeOSProfile(mockYamlPath);
+      expect(profile.offering?.name).toBe('Agentic Life OS');
+      expect(profile.offering?.packages[0]?.commercialStatus).toBe('free');
+      expect(profile.intelligenceSystems[0]?.repoName).toBe('Starlight-Intelligence-System');
+      expect(profile.estateRepos[0]?.lane).toBe('master-offer');
+      expect(profile.operatingLoops[0]?.cadence).toBe('daily');
+    } finally {
+      if (fs.existsSync(mockYamlPath)) {
+        fs.unlinkSync(mockYamlPath);
+      }
+    }
+  });
+
   it('should throw an error on invalid schema data', () => {
     const invalidProfileContent = `
 systemName: "Agentic Life OS"

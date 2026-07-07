@@ -49,6 +49,54 @@
       "@type": "SoftwareApplication",
       "name": "agentic-family-os",
       "description": "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Starlight Intelligence System",
+      "description": "Memory, provenance, taxonomy, validation, release artifacts, and proof for agentic systems.",
+      "applicationSubCategory": "substrate"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Starlight Agent Config",
+      "description": "Cross-agent skills, policies, task ledgers, install projection, and machine-local operating rules.",
+      "applicationSubCategory": "agent-governance"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Agentic Ops Hub",
+      "description": "Agent instruction control plane, coordination rules, ASPH handoffs, and repo fleet operating doctrine.",
+      "applicationSubCategory": "agent-governance"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Starlight Swarm Runtime",
+      "description": "Queen-worker topology, dry-run safety spine, escalation ladders, and bounded loop execution.",
+      "applicationSubCategory": "swarm-runtime"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "AI Capability Registry",
+      "description": "Index of skills, plugins, activation routes, and agent capability surfaces.",
+      "applicationSubCategory": "capability-index"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Hermes Cockpit",
+      "description": "Operational cockpit for progress reports, Railway-aware estate state, and agent work evidence.",
+      "applicationSubCategory": "orchestration"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Health Intelligence System",
+      "description": "Safety-gated personal health and clinician-prep patterns separated from research-only workflows.",
+      "applicationSubCategory": "domain-vertical"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Design and Visual Intelligence",
+      "description": "Design taste, visual QA, motion rubrics, and premium experience validation.",
+      "applicationSubCategory": "quality-gate"
     }
   ]
 }
