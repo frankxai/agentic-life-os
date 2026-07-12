@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agentic Life OS starter map</title>
+    <style>
+      :root { color-scheme: dark; --bg: #07100f; --surface: #10211d; --text: #edf7ef; --soft: #b4c6ba; --signal: #a6e7cc; --line: rgba(237, 247, 239, .15); }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
+      main { width: min(960px, calc(100% - 32px)); margin: 0 auto; padding: 72px 0; }
+      h1 { max-width: 720px; margin: 0 0 16px; font-family: Georgia, serif; font-size: clamp(2.5rem, 7vw, 5.4rem); line-height: .95; letter-spacing: -.06em; }
+      .lede { max-width: 660px; color: var(--soft); font-size: 1.1rem; line-height: 1.6; }
+      .map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 42px 0; border: 1px solid var(--line); background: var(--line); }
+      article { min-height: 170px; padding: 18px; background: var(--surface); }
+      article span { color: var(--signal); font-size: .8rem; }
+      article h2 { margin: 26px 0 8px; font-size: 1rem; }
+      article p { margin: 0; color: var(--soft); font-size: .88rem; line-height: 1.5; }
+      footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--soft); font-size: .9rem; line-height: 1.55; }
+      @media (max-width: 680px) { .map { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>Agentic Life OS starter</p>
+      <h1>Build one practice loop before building a second dashboard.</h1>
+      <p class="lede">This static map teaches the shared command vocabulary. Use the private LiveOS app for real interactions; do not enter private records into this page.</p>
+      <section class="map" aria-label="Agentic Life OS commands">
+        <article><span>/liveos today</span><h2>Set a focus</h2><p>Choose one practice and a visible next action.</p></article>
+        <article><span>/liveos practice</span><h2>Give it time</h2><p>Use your chosen source, tradition context, or personal rule of life.</p></article>
+        <article><span>/liveos palace</span><h2>Leave a trace</h2><p>Link a reflection to a source, project, person, or prior insight.</p></article>
+        <article><span>/liveos weekly</span><h2>Review gently</h2><p>Propose the next commitment; confirm changes yourself.</p></article>
+      </section>
+      <footer>Health preparation stays non-diagnostic. Spiritual packs stay source-aware. The current sync boundary is local-only and ciphertext-first by design.</footer>
+    </main>
+  </body>
+</html>

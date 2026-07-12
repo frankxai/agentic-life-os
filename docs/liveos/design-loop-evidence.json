@@ -1,0 +1,104 @@
+{
+  "version": "2026-07-12",
+  "task": "Build the private Agentic Life OS Today to Practice to Palace product shell.",
+  "surface": "Private Next.js LiveOS dashboard",
+  "audience": "Private high-agency operators and future self-adopting builders",
+  "first_read": "Choose one deliberate practice, record an honest trace, and create a durable memory anchor without exposing private data.",
+  "standards": [
+    "DESIGN_TASTE.md",
+    "WEB_EXPERIENCE_STANDARD.md",
+    "PREMIUM_ASSET_STANDARD.md",
+    "AGENTIC_DESIGN_LOOP.md",
+    "OUTCOMES.md"
+  ],
+  "references": [
+    {
+      "label": "Starlight SIS design pack",
+      "source": "starlight-design-intelligence/brand-packs/sis/DESIGN.md",
+      "reason": "Use dense, calm, evidence-rich operational UI without generic sci-fi decoration."
+    },
+    {
+      "label": "LiveOS scene brief",
+      "source": "docs/liveos/scene-brief.md",
+      "reason": "Defines the real product loop, source context, privacy boundary, and signature practice map."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "calm operational density",
+      "real action receipts",
+      "visible source and safety context",
+      "editorial first read"
+    ],
+    "avoid": [
+      "generic SaaS gradients",
+      "fake dashboard data",
+      "spiritual authority claims",
+      "decorative 3D or generated art"
+    ],
+    "signature": "A code-rendered practice map that advances from intention through review and exposes a real action receipt.",
+    "system": [
+      "Tier C code-authored UI",
+      "dark operational base with restrained mint signal",
+      "CSS-only state feedback",
+      "reduced-motion immediate state"
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "vector-diagram",
+    "provenance": "owned",
+    "why_premium": "The primary visual is an inspectable product state map rather than decorative filler.",
+    "shortcut_risk": "low",
+    "context_tested": false
+  },
+  "artifacts": [
+    {
+      "path_or_url": "apps/liveos/app/page.tsx",
+      "kind": "ui",
+      "inspected": false,
+      "notes": "Code complete; browser inspection is blocked by the current PP build/browser admission hold."
+    },
+    {
+      "path_or_url": "apps/liveos/components/domain-workbench.tsx",
+      "kind": "ui",
+      "inspected": false,
+      "notes": "Body, Fitness, Health preparation, Intellectual, Palace, and Review states use the same restrained UI system and await browser inspection."
+    },
+    {
+      "path_or_url": "starter/liveos-command-map.html",
+      "kind": "static-starter-ui",
+      "inspected": false,
+      "notes": "Sanitized Tier C teaching surface; it shares the source-aware, local-only boundaries and awaits the same browser inspection gate."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier C exact UI and interactive state map selected before implementation."
+    },
+    {
+      "name": "export-inspection",
+      "status": "blocked",
+      "evidence": "No local server or browser QA may start while PP admission is HOLD."
+    },
+    {
+      "name": "visual-qa",
+      "status": "blocked",
+      "evidence": "Desktop, mobile, and reduced-motion screenshots require a fresh browser-qa allow decision."
+    }
+  ],
+  "score": {
+    "total": 0,
+    "max": 30,
+    "notes": "Scoring is intentionally deferred until actual product output is inspected."
+  },
+  "decision": "blocked",
+  "known_risks": [
+    "The workspace lockfile cannot be synchronized while the machine build/install gate is held.",
+    "The UI has not yet been rendered in a browser.",
+    "Encrypted sync is an interface contract only and must not be represented as enabled.",
+    "The inherited root lockfile contains reported Vitest/Vite/esbuild advisories that are outside this scoped foundation change."
+  ]
+}

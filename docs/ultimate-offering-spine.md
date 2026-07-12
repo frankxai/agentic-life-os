@@ -1,7 +1,7 @@
 # Agentic Life OS Ultimate Offering Spine
 
 Status: private operator draft
-Updated: 2026-06-22
+Updated: 2026-07-12
 Related work item: `alos-ultimate-offering-spine`
 
 This document turns the local repo estate into one operating product: Agentic Life OS, powered by Starlight intelligence systems and bounded agent swarm loops. It is an internal architecture and packaging map. Public copy requires a sanitizer pass before release.
@@ -78,6 +78,13 @@ Core components:
 - `packages/orchestration`: cross-module code that already connects business cashflow, memory, creator, health/research, family, and investor modules.
 - `docs/ultimate-offering-spine.md`: this operating spine.
 
+LiveOS foundation:
+- `apps/liveos`: the private Next.js cockpit for Today → Practice → Palace.
+- `packages/core/src/liveos.ts`: shared action, receipt, consent, evidence, practice, memory-anchor, and ciphertext-envelope contracts.
+- `packages/practice`: modular practice registry and source-aware spiritual, body, fitness, intellectual, and review routes.
+- `packages/sync`: local-only ciphertext-envelope and conflict contracts; it is not an enabled remote sync service.
+- `docs/liveos/`: privacy boundary, command contract, scene brief, starter strategy, and sync-beta gate.
+
 Supporting systems:
 - `global-progress-ledger.json`: cross-repo work item and evidence tracking.
 - `hermes-cockpit/.starlight/progress/latest.md`: progress collector output.
@@ -141,6 +148,7 @@ Current gaps:
 - Evals: release-grade ALOS needs a repeatable scorecard for schema validity, privacy boundary, first workflow, and proof quality.
 - Website distribution: public download or router pages should be updated only after the public wrapper is sanitized.
 - Swarm queue: the Queen inbox can run bounded tasks, but this pass does not enqueue workers or start long-running loops.
+- LiveOS runtime: the private cockpit is scaffolded, but dependency installation, build, visual inspection, and encrypted-sync beta remain gated by machine capacity and separate security review.
 
 ## Ranked Execution Wave
 

@@ -1,6 +1,6 @@
 # 🏛️ Agentic Life OS (ALOS)
 
-> The private multi-agent operating system for Business, Creator, Memory, Orchestration, Investor, Health, Life Sciences Research, and Family modules. Built on the Starlight Intelligence Protocol (SIP).
+> The private multi-agent operating system for business, creator work, practice, memory, health preparation, learning, and family modules. Built on the Starlight Intelligence Protocol (SIP).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Built on SIP](https://img.shields.io/badge/Built%20on-SIP%20v1.1.1-blue.svg)](https://github.com/frankxai/Starlight-Intelligence-System)
@@ -62,6 +62,7 @@ The machine-readable source is [`alos-profile.yaml`](alos-profile.yaml). `pnpm b
 | **`business`** | **Corporate Ops:** Legal compliance, Dutch BV ops (Arcanea Labs BV), claims-guard checks, invoice balances. | **Active** | Billing harness. Health: `vitest run` |
 | **`creator`** | **Creative Substrate:** Content compilation pipelines, YouTube drafts, workshops, and asset registries. | **Active** | Creator harness. Health: `vitest run` |
 | **`memory`** | **Starlight Memory Palace:** Obsidian vault stubs, semantic vector search, and SIP compliance graph storage. | **Active** | Memory harness. Health: `vitest run` |
+| **`practice`** | **LiveOS Practice Engine:** private daily practice, plural source-aware spiritual packs, body/fitness observations, intellectual sessions, reflections, and Palace handoffs. | **In development** | Local-first and user-confirmed. Health: `vitest run` |
 | **`orchestration`** | **Control Grid:** Aggregates cashflow to investor portfolio, coordinates health audits and lineage creators. | **Active** | Orchestration harness. Health: `vitest run` |
 | **`investor`** | **Sovereign Wealth:** Deals pipeline, capital allocation, valuations, due diligence, and net worth calculations. | **Active** | Wealth harness. Health: `vitest run` |
 | **`health`** | **Agentic Health OS:** Private personal-health loops for nutrition, training, sleep, recovery, records, clinician handoff, and protocol packets. | **Active** | Safety-gated personal health harness. Health: `vitest run` |
@@ -76,6 +77,8 @@ The machine-readable source is [`alos-profile.yaml`](alos-profile.yaml). `pnpm b
 * **[`packages/business`](file:///C:/Users/frank/agentic-life-os/packages/business)**: Manages invoicing status and BV compliance limits.
 * **[`packages/creator`](file:///C:/Users/frank/agentic-life-os/packages/creator)**: Powers script generation and visual media templates.
 * **[`packages/memory`](file:///C:/Users/frank/agentic-life-os/packages/memory)**: Implements Starlight Intelligence Protocol (SIP) semantic nodes.
+* **`packages/practice`**: Shared LiveOS modules, command registry, practice packs, action receipts, and first-win Today → Practice → Palace loop.
+* **`packages/sync`**: Ciphertext-envelope boundary and local-only sync gate. It does not implement or enable remote sync.
 * **[`packages/orchestration`](file:///C:/Users/frank/agentic-life-os/packages/orchestration)**: Cross-module pipeline triggers linking cashflow and heritage databases.
 * **[`packages/investor`](file:///C:/Users/frank/agentic-life-os/packages/investor/README.md)**: Sovereign wealth calculations.
 * **[`packages/health`](file:///C:/Users/frank/starlight/repos/agentic-life-os/packages/health/README.md)**: Private Agentic Health OS for personal health workflows.
@@ -86,12 +89,17 @@ The machine-readable source is [`alos-profile.yaml`](alos-profile.yaml). `pnpm b
 
 ---
 
-## 🖥️ Local Control Center Dashboard
+## 🖥️ LiveOS private cockpit
 
-A premium, glassmorphic visual interface is available directly inside the repository. To access the control center:
+`apps/liveos` is the new private Next.js cockpit. Its first useful loop is Today → Practice → Palace: choose an intention, complete one bounded practice, capture a reflection, link it to a memory anchor, and review a reversible next step.
 
-1. Open [dashboard/index.html](file:///C:/Users/frank/agentic-life-os/dashboard/index.html) in your browser.
-2. Monitor all 8 active packages, run real-time net worth calculations, query search nodes in the Starlight Memory Palace, and compile automated creator draft outlines from family nodes.
+- The dashboard and `/liveos` commands consume the same action/receipt contracts.
+- The prototype keeps raw private reflections, health-preparation artifacts, and memory content in browser session memory only; no remote send or persistence path is enabled.
+- The Body file picker references only the selected file's name and size in the active session; it never reads or uploads file contents.
+- Remote sync is intentionally blocked until the encrypted-projection beta passes its separate threat-model and approval gate.
+- The older `dashboard/index.html` remains a legacy prototype and is not the LiveOS source of truth.
+
+Read [`docs/liveos/README.md`](docs/liveos/README.md) before installing or exposing the cockpit.
 
 ---
 

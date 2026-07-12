@@ -40,6 +40,17 @@ modules:
       - "Codex"
     purpose: "Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations."
 
+  practice:
+    repoName: "agentic-life-os-practice"
+    path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\practice"
+    status: "in-development"
+    riskLevel: "private"
+    healthCommand: "vitest run"
+    activeAgents:
+      - "Codex"
+      - "Claude Code"
+    purpose: "Private daily practice, plural source-aware spiritual packs, body and fitness observations, intellectual sessions, reflection, and Memory Palace handoff."
+
   orchestration:
     repoName: "agentic-orchestration-os"
     path: "C:\\Users\\frank\\starlight\\repos\\agentic-life-os\\packages\\orchestration"
@@ -293,6 +304,19 @@ operatingLoops:
       - "skill update"
       - "evidence-backed notes"
     safetyGate: "Separate source-backed learning from unsupported claims."
+  - name: "Practice And Palace Loop"
+    cadence: "daily private session plus weekly review"
+    owner: "lifeos-practice"
+    purpose: "Turn an intention into a bounded practice, observation, reflection, evidence-linked memory anchor, and user-confirmed next commitment."
+    inputs:
+      - "private practice packs"
+      - "user-authored reflections"
+      - "scoped memory references"
+    outputs:
+      - "action receipt"
+      - "memory anchor"
+      - "proposed next commitment"
+    safetyGate: "No raw private data leaves the local vault; spiritual packs preserve source context; health work remains under Health Intelligence System boundaries."
   - name: "Growth And Distribution Loop"
     cadence: "weekly"
     owner: "growth-ops"
