@@ -1,0 +1,1413 @@
+diff --git a/.asph-wip/asph-2026-07-07T23-35-35.patch b/.asph-wip/asph-2026-07-07T23-35-35.patch
+new file mode 100644
+index 0000000..848e951
+--- /dev/null
++++ b/.asph-wip/asph-2026-07-07T23-35-35.patch
+@@ -0,0 +1,1407 @@
++diff --git a/README.md b/README.md
++index 593fdc8..a58a65d 100644
++--- a/README.md
+++++ b/README.md
++@@ -46,6 +46,14 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
++ 
++ ---
++ 
+++## Ultimate Offering Spine
+++
+++The current packaging map lives in [`docs/ultimate-offering-spine.md`](docs/ultimate-offering-spine.md). It defines the master offer, public/private boundary, intelligence-system substrate, repo lanes, operating loops, swarm lanes, validation gates, and next execution wave.
+++
+++The machine-readable source is [`alos-profile.yaml`](alos-profile.yaml). `pnpm build` regenerates [`llms.txt`](llms.txt), [`agents.json`](agents.json), and [`jsonld.json`](jsonld.json) from that profile.
+++
+++---
+++
++ ## 🏛️ Interconnected Modules & Visions
++ 
++ | Module | Purpose | Status | Stance & Verification |
++diff --git a/agents.json b/agents.json
++index 8871811..5b8f702 100644
++--- a/agents.json
+++++ b/agents.json
++@@ -1,7 +1,7 @@
++ {
++   "schemaVersion": "1.0.0",
++   "systemName": "Agentic Life OS (ALOS)",
++-  "version": "1.1.0",
+++  "version": "1.2.0",
++   "sip": "1.1.1",
++   "workstation": {
++     "machineName": "Yoga Laptop Workstation",
++@@ -72,5 +72,358 @@
++       "verify": "vitest run",
++       "purpose": "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
++     }
+++  ],
+++  "offering": {
+++    "name": "Agentic Life OS",
+++    "audience": "Founder-operators, creators, and high-agency teams who want one AI-native command spine for work, learning, growth, success, and personal excellence.",
+++    "promise": "Turn the repo estate into a private operating system that routes decisions, memories, proof, agent swarms, and recurring loops into visible outcomes.",
+++    "status": "private-operator-suite",
+++    "deliveryMode": "Git-backed system package, implementation sprint, agent runbooks, and proof-gated operating cadence.",
+++    "publicBoundary": "Public wrappers may describe the model and starter workflows. Private memory, health, finance, family, unreleased IP, strategy, credentials, and client data stay out of public assets.",
+++    "packages": [
+++      {
+++        "name": "Public Blueprint",
+++        "audience": "Builders evaluating the Agentic Life OS model.",
+++        "promise": "Understand the architecture, module map, and first workflow without exposing private operating data.",
+++        "deliveryMode": "Sanitized docs, examples, and install notes.",
+++        "commercialStatus": "free",
+++        "supportBoundary": "Self-serve only."
+++      },
+++      {
+++        "name": "Starter Operator Kit",
+++        "audience": "Solo founders and creators who want a local command spine.",
+++        "promise": "Fork the core profile, run the health checks, and start the daily command loop.",
+++        "deliveryMode": "Template repo plus setup checklist.",
+++        "commercialStatus": "proposed-not-priced",
+++        "supportBoundary": "Setup support only; no private-data handling."
+++      },
+++      {
+++        "name": "Private Life OS Implementation",
+++        "audience": "Frank's own operating layer and selected high-trust clients.",
+++        "promise": "Connect business, creator, memory, health, wealth, family, and learning loops with bounded agent execution.",
+++        "deliveryMode": "Guided implementation sprint with private runbooks.",
+++        "commercialStatus": "private-only",
+++        "supportBoundary": "Explicit scope, approval gates, and privacy boundaries required."
+++      },
+++      {
+++        "name": "Enterprise Intelligence System",
+++        "audience": "Teams needing agent governance, memory, evals, and repo-operating discipline.",
+++        "promise": "Deploy the Starlight intelligence substrate and operating doctrine without personal-life modules.",
+++        "deliveryMode": "Architecture engagement, repo harness, and validation gates.",
+++        "commercialStatus": "proposed-not-priced",
+++        "supportBoundary": "Architecture and enablement; production mutations require named approval."
+++      }
+++    ]
+++  },
+++  "intelligenceSystems": [
+++    {
+++      "name": "Starlight Intelligence System",
+++      "repoName": "Starlight-Intelligence-System",
+++      "layer": "substrate",
+++      "publicStatus": "hybrid",
+++      "purpose": "Memory, provenance, taxonomy, validation, release artifacts, and proof for agentic systems.",
+++      "proofGate": "Run SIS health checks, keep public/private boundaries explicit, and attach evidence paths to releases."
+++    },
+++    {
+++      "name": "Starlight Agent Config",
+++      "repoName": "starlight-agent-config",
+++      "layer": "agent-governance",
+++      "publicStatus": "private",
+++      "purpose": "Cross-agent skills, policies, task ledgers, install projection, and machine-local operating rules.",
+++      "proofGate": "Run installer doctor before handoff when config projection changes."
+++    },
+++    {
+++      "name": "Agentic Ops Hub",
+++      "repoName": "agentic-ops-hub",
+++      "layer": "agent-governance",
+++      "publicStatus": "hybrid",
+++      "purpose": "Agent instruction control plane, coordination rules, ASPH handoffs, and repo fleet operating doctrine.",
+++      "proofGate": "Sync/check generated agent rules before release-quality changes."
+++    },
+++    {
+++      "name": "Starlight Swarm Runtime",
+++      "repoName": "starlight-swarm",
+++      "layer": "swarm-runtime",
+++      "publicStatus": "hybrid",
+++      "purpose": "Queen-worker topology, dry-run safety spine, escalation ladders, and bounded loop execution.",
+++      "proofGate": "Run dry-run, typecheck, and tests; no autonomous live money or production actions."
+++    },
+++    {
+++      "name": "AI Capability Registry",
+++      "repoName": "ai-capability-registry",
+++      "layer": "capability-index",
+++      "publicStatus": "hybrid",
+++      "purpose": "Index of skills, plugins, activation routes, and agent capability surfaces.",
+++      "proofGate": "Regenerate the capability index after route or plugin changes."
+++    },
+++    {
+++      "name": "Hermes Cockpit",
+++      "repoName": "hermes-cockpit",
+++      "layer": "orchestration",
+++      "publicStatus": "private",
+++      "purpose": "Operational cockpit for progress reports, Railway-aware estate state, and agent work evidence.",
+++      "proofGate": "Progress collector writes latest evidence without reading secrets."
+++    },
+++    {
+++      "name": "Health Intelligence System",
+++      "repoName": "health-intelligence-system",
+++      "layer": "domain-vertical",
+++      "publicStatus": "hybrid",
+++      "purpose": "Safety-gated personal health and clinician-prep patterns separated from research-only workflows.",
+++      "proofGate": "Health work keeps human clinical authority and evidence dates explicit."
+++    },
+++    {
+++      "name": "Design and Visual Intelligence",
+++      "repoName": "starlight-design-intelligence",
+++      "layer": "quality-gate",
+++      "publicStatus": "hybrid",
+++      "purpose": "Design taste, visual QA, motion rubrics, and premium experience validation.",
+++      "proofGate": "Visual work passes screenshots, responsive checks, and the taste rubric before handoff."
+++    }
+++  ],
+++  "estateRepos": [
+++    {
+++      "name": "agentic-life-os",
+++      "lane": "master-offer",
+++      "role": "Private master shell that packages the life/business/learning/excellence operating system.",
+++      "source": "verified",
+++      "status": "primary"
+++    },
+++    {
+++      "name": "Starlight-Intelligence-System",
+++      "lane": "substrate",
+++      "role": "Memory, protocol, validation, release, and proof substrate.",
+++      "source": "verified",
+++      "status": "primary"
+++    },
+++    {
+++      "name": "starlight-agent-config",
+++      "lane": "agent-ops",
+++      "role": "Cross-agent policy, skills, ledgers, and machine projection.",
+++      "source": "verified",
+++      "status": "primary"
+++    },
+++    {
+++      "name": "starlight-swarm",
+++      "lane": "swarm",
+++      "role": "Typed queen-worker runtime and escalation model for bounded loops.",
+++      "source": "verified",
+++      "status": "primary"
+++    },
+++    {
+++      "name": "agentic-ops-hub",
+++      "lane": "agent-ops",
+++      "role": "Agent instruction control plane and ASPH operating doctrine.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "ai-capability-registry",
+++      "lane": "quality",
+++      "role": "Activation and capability index for skills, plugins, and routes.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "FrankX",
+++      "lane": "business",
+++      "role": "Private content, strategy, products, and internal business operating source.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "frankx.ai-vercel-website",
+++      "lane": "distribution",
+++      "role": "Public authority brand, content funnel, downloads, and conversion surface.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "agentic-creator-os",
+++      "lane": "creator",
+++      "role": "Creator workflows, content systems, and production operating patterns.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "ai-architect-academy",
+++      "lane": "learning",
+++      "role": "Learning paths, labs, agentic swarm education, and architecture patterns.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "ai-coe",
+++      "lane": "business",
+++      "role": "Enterprise AI center-of-excellence templates and advisory delivery patterns.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "health-intelligence-system",
+++      "lane": "health",
+++      "role": "Health safety, evidence, privacy, and clinician-prep companion system.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "agentic-investor-os",
+++      "lane": "wealth",
+++      "role": "Wealth, capital allocation, investor intelligence, and due diligence module source.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "arcanea-ai-app",
+++      "lane": "creative-platform",
+++      "role": "Creative platform and Arcanea public product surface.",
+++      "source": "verified",
+++      "status": "supporting"
+++    },
+++    {
+++      "name": "visual-intelligence",
+++      "lane": "quality",
+++      "role": "Visual production, media intelligence, and quality-review patterns.",
+++      "source": "verified",
+++      "status": "supporting"
+++    }
+++  ],
+++  "operatingLoops": [
+++    {
+++      "name": "Daily Command Loop",
+++      "cadence": "daily",
+++      "owner": "chief-operator",
+++      "purpose": "Select the highest-leverage work, route it to one bounded execution lane, and end with evidence.",
+++      "inputs": [
+++        "global-progress-ledger.json",
+++        "hermes-cockpit progress reports",
+++        "repo status"
+++      ],
+++      "outputs": [
+++        "one active priority",
+++        "bounded task queue",
+++        "handoff note"
+++      ],
+++      "safetyGate": "No production, billing, DNS, secret, or destructive mutation without explicit named approval."
+++    },
+++    {
+++      "name": "Business Ops Loop",
+++      "cadence": "daily plus weekly review",
+++      "owner": "business-command",
+++      "purpose": "Turn offers, client delivery, invoices, proof, and launch blockers into a visible operating cadence.",
+++      "inputs": [
+++        "business module",
+++        "FrankX docs",
+++        "public site/download surfaces"
+++      ],
+++      "outputs": [
+++        "offer backlog",
+++        "delivery tasks",
+++        "proof and revenue blockers"
+++      ],
+++      "safetyGate": "Payment setup, public claims, and client commitments require human review."
+++    },
+++    {
+++      "name": "Learning And Mastery Loop",
+++      "cadence": "weekly",
+++      "owner": "learning-systems",
+++      "purpose": "Convert research, courses, repos, and experiments into skill upgrades and reusable playbooks.",
+++      "inputs": [
+++        "ai-architect-academy",
+++        "prompt-library",
+++        "Starlight memory"
+++      ],
+++      "outputs": [
+++        "learning sprint",
+++        "skill update",
+++        "evidence-backed notes"
+++      ],
+++      "safetyGate": "Separate source-backed learning from unsupported claims."
+++    },
+++    {
+++      "name": "Growth And Distribution Loop",
+++      "cadence": "weekly",
+++      "owner": "growth-ops",
+++      "purpose": "Move audience attention into useful downloads, demos, trust proof, and follow-up workflows.",
+++      "inputs": [
+++        "frankx.ai-vercel-website",
+++        "analytics reports",
+++        "release artifacts"
+++      ],
+++      "outputs": [
+++        "campaign brief",
+++        "download/update checklist",
+++        "conversion evidence"
+++      ],
+++      "safetyGate": "Public pages need claim, privacy, attribution, and checkout readiness checks."
+++    },
+++    {
+++      "name": "Creator Production Loop",
+++      "cadence": "weekly",
+++      "owner": "creator-ops",
+++      "purpose": "Turn ideas, music, video, articles, and visual systems into publishable creative assets.",
+++      "inputs": [
+++        "agentic-creator-os",
+++        "visual-intelligence",
+++        "Arcanea media repos"
+++      ],
+++      "outputs": [
+++        "asset backlog",
+++        "publication packet",
+++        "quality score"
+++      ],
+++      "safetyGate": "Rights, attribution, taste, and platform policy checks run before publishing."
+++    },
+++    {
+++      "name": "Health And Excellence Loop",
+++      "cadence": "daily private log plus weekly review",
+++      "owner": "health-intelligence-ops",
+++      "purpose": "Support energy, training, nutrition, sleep, recovery, and clinician preparation without replacing professionals.",
+++      "inputs": [
+++        "health package",
+++        "health-intelligence-system",
+++        "private records"
+++      ],
+++      "outputs": [
+++        "wellness plan",
+++        "clinician questions",
+++        "evidence ledger"
+++      ],
+++      "safetyGate": "No diagnosis, treatment, or medication decisions; clinician authority stays explicit."
+++    },
+++    {
+++      "name": "Wealth And Capital Loop",
+++      "cadence": "weekly",
+++      "owner": "investor-ops",
+++      "purpose": "Track capital allocation, due diligence, portfolio state, and business cashflow connections.",
+++      "inputs": [
+++        "investor package",
+++        "business receivables",
+++        "deal notes"
+++      ],
+++      "outputs": [
+++        "portfolio snapshot",
+++        "due-diligence queue",
+++        "decision memo"
+++      ],
+++      "safetyGate": "No financial advice or autonomous capital movement."
+++    },
+++    {
+++      "name": "Swarm And Evals Loop",
+++      "cadence": "per coherent work wave",
+++      "owner": "starlight-substrate-ops",
+++      "purpose": "Route bounded worker lanes, collect handoffs, validate evidence, and preserve context for the next run.",
+++      "inputs": [
+++        "starlight-swarm",
+++        "starlight-agent-config",
+++        "ai-capability-registry"
+++      ],
+++      "outputs": [
+++        "worker queue",
+++        "eval report",
+++        "progress ledger update"
+++      ],
+++      "safetyGate": "One coordinator owns synthesis; every worker has allowed tools, stop condition, and handoff format."
+++    }
++   ]
++ }
++\ No newline at end of file
++diff --git a/alos-profile.yaml b/alos-profile.yaml
++index b5306b1..35eb230 100644
++--- a/alos-profile.yaml
+++++ b/alos-profile.yaml
++@@ -1,5 +1,5 @@
++ systemName: "Agentic Life OS (ALOS)"
++-version: "1.1.0"
+++version: "1.2.0"
++ sipVersion: "1.1.1"
++ workstation:
++   machineName: "Yoga Laptop Workstation"
++@@ -92,3 +92,269 @@ modules:
++     activeAgents:
++       - "Claude Code"
++     purpose: "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
+++
+++offering:
+++  name: "Agentic Life OS"
+++  audience: "Founder-operators, creators, and high-agency teams who want one AI-native command spine for work, learning, growth, success, and personal excellence."
+++  promise: "Turn the repo estate into a private operating system that routes decisions, memories, proof, agent swarms, and recurring loops into visible outcomes."
+++  status: "private-operator-suite"
+++  deliveryMode: "Git-backed system package, implementation sprint, agent runbooks, and proof-gated operating cadence."
+++  publicBoundary: "Public wrappers may describe the model and starter workflows. Private memory, health, finance, family, unreleased IP, strategy, credentials, and client data stay out of public assets."
+++  packages:
+++    - name: "Public Blueprint"
+++      audience: "Builders evaluating the Agentic Life OS model."
+++      promise: "Understand the architecture, module map, and first workflow without exposing private operating data."
+++      deliveryMode: "Sanitized docs, examples, and install notes."
+++      commercialStatus: "free"
+++      supportBoundary: "Self-serve only."
+++    - name: "Starter Operator Kit"
+++      audience: "Solo founders and creators who want a local command spine."
+++      promise: "Fork the core profile, run the health checks, and start the daily command loop."
+++      deliveryMode: "Template repo plus setup checklist."
+++      commercialStatus: "proposed-not-priced"
+++      supportBoundary: "Setup support only; no private-data handling."
+++    - name: "Private Life OS Implementation"
+++      audience: "Frank's own operating layer and selected high-trust clients."
+++      promise: "Connect business, creator, memory, health, wealth, family, and learning loops with bounded agent execution."
+++      deliveryMode: "Guided implementation sprint with private runbooks."
+++      commercialStatus: "private-only"
+++      supportBoundary: "Explicit scope, approval gates, and privacy boundaries required."
+++    - name: "Enterprise Intelligence System"
+++      audience: "Teams needing agent governance, memory, evals, and repo-operating discipline."
+++      promise: "Deploy the Starlight intelligence substrate and operating doctrine without personal-life modules."
+++      deliveryMode: "Architecture engagement, repo harness, and validation gates."
+++      commercialStatus: "proposed-not-priced"
+++      supportBoundary: "Architecture and enablement; production mutations require named approval."
+++
+++intelligenceSystems:
+++  - name: "Starlight Intelligence System"
+++    repoName: "Starlight-Intelligence-System"
+++    layer: "substrate"
+++    publicStatus: "hybrid"
+++    purpose: "Memory, provenance, taxonomy, validation, release artifacts, and proof for agentic systems."
+++    proofGate: "Run SIS health checks, keep public/private boundaries explicit, and attach evidence paths to releases."
+++  - name: "Starlight Agent Config"
+++    repoName: "starlight-agent-config"
+++    layer: "agent-governance"
+++    publicStatus: "private"
+++    purpose: "Cross-agent skills, policies, task ledgers, install projection, and machine-local operating rules."
+++    proofGate: "Run installer doctor before handoff when config projection changes."
+++  - name: "Agentic Ops Hub"
+++    repoName: "agentic-ops-hub"
+++    layer: "agent-governance"
+++    publicStatus: "hybrid"
+++    purpose: "Agent instruction control plane, coordination rules, ASPH handoffs, and repo fleet operating doctrine."
+++    proofGate: "Sync/check generated agent rules before release-quality changes."
+++  - name: "Starlight Swarm Runtime"
+++    repoName: "starlight-swarm"
+++    layer: "swarm-runtime"
+++    publicStatus: "hybrid"
+++    purpose: "Queen-worker topology, dry-run safety spine, escalation ladders, and bounded loop execution."
+++    proofGate: "Run dry-run, typecheck, and tests; no autonomous live money or production actions."
+++  - name: "AI Capability Registry"
+++    repoName: "ai-capability-registry"
+++    layer: "capability-index"
+++    publicStatus: "hybrid"
+++    purpose: "Index of skills, plugins, activation routes, and agent capability surfaces."
+++    proofGate: "Regenerate the capability index after route or plugin changes."
+++  - name: "Hermes Cockpit"
+++    repoName: "hermes-cockpit"
+++    layer: "orchestration"
+++    publicStatus: "private"
+++    purpose: "Operational cockpit for progress reports, Railway-aware estate state, and agent work evidence."
+++    proofGate: "Progress collector writes latest evidence without reading secrets."
+++  - name: "Health Intelligence System"
+++    repoName: "health-intelligence-system"
+++    layer: "domain-vertical"
+++    publicStatus: "hybrid"
+++    purpose: "Safety-gated personal health and clinician-prep patterns separated from research-only workflows."
+++    proofGate: "Health work keeps human clinical authority and evidence dates explicit."
+++  - name: "Design and Visual Intelligence"
+++    repoName: "starlight-design-intelligence"
+++    layer: "quality-gate"
+++    publicStatus: "hybrid"
+++    purpose: "Design taste, visual QA, motion rubrics, and premium experience validation."
+++    proofGate: "Visual work passes screenshots, responsive checks, and the taste rubric before handoff."
+++
+++estateRepos:
+++  - name: "agentic-life-os"
+++    lane: "master-offer"
+++    role: "Private master shell that packages the life/business/learning/excellence operating system."
+++    source: "verified"
+++    status: "primary"
+++  - name: "Starlight-Intelligence-System"
+++    lane: "substrate"
+++    role: "Memory, protocol, validation, release, and proof substrate."
+++    source: "verified"
+++    status: "primary"
+++  - name: "starlight-agent-config"
+++    lane: "agent-ops"
+++    role: "Cross-agent policy, skills, ledgers, and machine projection."
+++    source: "verified"
+++    status: "primary"
+++  - name: "starlight-swarm"
+++    lane: "swarm"
+++    role: "Typed queen-worker runtime and escalation model for bounded loops."
+++    source: "verified"
+++    status: "primary"
+++  - name: "agentic-ops-hub"
+++    lane: "agent-ops"
+++    role: "Agent instruction control plane and ASPH operating doctrine."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "ai-capability-registry"
+++    lane: "quality"
+++    role: "Activation and capability index for skills, plugins, and routes."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "FrankX"
+++    lane: "business"
+++    role: "Private content, strategy, products, and internal business operating source."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "frankx.ai-vercel-website"
+++    lane: "distribution"
+++    role: "Public authority brand, content funnel, downloads, and conversion surface."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "agentic-creator-os"
+++    lane: "creator"
+++    role: "Creator workflows, content systems, and production operating patterns."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "ai-architect-academy"
+++    lane: "learning"
+++    role: "Learning paths, labs, agentic swarm education, and architecture patterns."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "ai-coe"
+++    lane: "business"
+++    role: "Enterprise AI center-of-excellence templates and advisory delivery patterns."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "health-intelligence-system"
+++    lane: "health"
+++    role: "Health safety, evidence, privacy, and clinician-prep companion system."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "agentic-investor-os"
+++    lane: "wealth"
+++    role: "Wealth, capital allocation, investor intelligence, and due diligence module source."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "arcanea-ai-app"
+++    lane: "creative-platform"
+++    role: "Creative platform and Arcanea public product surface."
+++    source: "verified"
+++    status: "supporting"
+++  - name: "visual-intelligence"
+++    lane: "quality"
+++    role: "Visual production, media intelligence, and quality-review patterns."
+++    source: "verified"
+++    status: "supporting"
+++
+++operatingLoops:
+++  - name: "Daily Command Loop"
+++    cadence: "daily"
+++    owner: "chief-operator"
+++    purpose: "Select the highest-leverage work, route it to one bounded execution lane, and end with evidence."
+++    inputs:
+++      - "global-progress-ledger.json"
+++      - "hermes-cockpit progress reports"
+++      - "repo status"
+++    outputs:
+++      - "one active priority"
+++      - "bounded task queue"
+++      - "handoff note"
+++    safetyGate: "No production, billing, DNS, secret, or destructive mutation without explicit named approval."
+++  - name: "Business Ops Loop"
+++    cadence: "daily plus weekly review"
+++    owner: "business-command"
+++    purpose: "Turn offers, client delivery, invoices, proof, and launch blockers into a visible operating cadence."
+++    inputs:
+++      - "business module"
+++      - "FrankX docs"
+++      - "public site/download surfaces"
+++    outputs:
+++      - "offer backlog"
+++      - "delivery tasks"
+++      - "proof and revenue blockers"
+++    safetyGate: "Payment setup, public claims, and client commitments require human review."
+++  - name: "Learning And Mastery Loop"
+++    cadence: "weekly"
+++    owner: "learning-systems"
+++    purpose: "Convert research, courses, repos, and experiments into skill upgrades and reusable playbooks."
+++    inputs:
+++      - "ai-architect-academy"
+++      - "prompt-library"
+++      - "Starlight memory"
+++    outputs:
+++      - "learning sprint"
+++      - "skill update"
+++      - "evidence-backed notes"
+++    safetyGate: "Separate source-backed learning from unsupported claims."
+++  - name: "Growth And Distribution Loop"
+++    cadence: "weekly"
+++    owner: "growth-ops"
+++    purpose: "Move audience attention into useful downloads, demos, trust proof, and follow-up workflows."
+++    inputs:
+++      - "frankx.ai-vercel-website"
+++      - "analytics reports"
+++      - "release artifacts"
+++    outputs:
+++      - "campaign brief"
+++      - "download/update checklist"
+++      - "conversion evidence"
+++    safetyGate: "Public pages need claim, privacy, attribution, and checkout readiness checks."
+++  - name: "Creator Production Loop"
+++    cadence: "weekly"
+++    owner: "creator-ops"
+++    purpose: "Turn ideas, music, video, articles, and visual systems into publishable creative assets."
+++    inputs:
+++      - "agentic-creator-os"
+++      - "visual-intelligence"
+++      - "Arcanea media repos"
+++    outputs:
+++      - "asset backlog"
+++      - "publication packet"
+++      - "quality score"
+++    safetyGate: "Rights, attribution, taste, and platform policy checks run before publishing."
+++  - name: "Health And Excellence Loop"
+++    cadence: "daily private log plus weekly review"
+++    owner: "health-intelligence-ops"
+++    purpose: "Support energy, training, nutrition, sleep, recovery, and clinician preparation without replacing professionals."
+++    inputs:
+++      - "health package"
+++      - "health-intelligence-system"
+++      - "private records"
+++    outputs:
+++      - "wellness plan"
+++      - "clinician questions"
+++      - "evidence ledger"
+++    safetyGate: "No diagnosis, treatment, or medication decisions; clinician authority stays explicit."
+++  - name: "Wealth And Capital Loop"
+++    cadence: "weekly"
+++    owner: "investor-ops"
+++    purpose: "Track capital allocation, due diligence, portfolio state, and business cashflow connections."
+++    inputs:
+++      - "investor package"
+++      - "business receivables"
+++      - "deal notes"
+++    outputs:
+++      - "portfolio snapshot"
+++      - "due-diligence queue"
+++      - "decision memo"
+++    safetyGate: "No financial advice or autonomous capital movement."
+++  - name: "Swarm And Evals Loop"
+++    cadence: "per coherent work wave"
+++    owner: "starlight-substrate-ops"
+++    purpose: "Route bounded worker lanes, collect handoffs, validate evidence, and preserve context for the next run."
+++    inputs:
+++      - "starlight-swarm"
+++      - "starlight-agent-config"
+++      - "ai-capability-registry"
+++    outputs:
+++      - "worker queue"
+++      - "eval report"
+++      - "progress ledger update"
+++    safetyGate: "One coordinator owns synthesis; every worker has allowed tools, stop condition, and handoff format."
++diff --git a/docs/ultimate-offering-spine.md b/docs/ultimate-offering-spine.md
++new file mode 100644
++index 0000000..b7ad9a0
++--- /dev/null
+++++ b/docs/ultimate-offering-spine.md
++@@ -0,0 +1,199 @@
+++# Agentic Life OS Ultimate Offering Spine
+++
+++Status: private operator draft
+++Updated: 2026-06-22
+++Related work item: `alos-ultimate-offering-spine`
+++
+++This document turns the local repo estate into one operating product: Agentic Life OS, powered by Starlight intelligence systems and bounded agent swarm loops. It is an internal architecture and packaging map. Public copy requires a sanitizer pass before release.
+++
+++## Module Summary
+++
+++Agentic Life OS is the master operator shell. It connects life and business modules, routes work into bounded loops, and records evidence back into the Starlight ledger.
+++
+++Audience:
+++- Frank's own private operating layer.
+++- Founder-operators and creators who need a disciplined AI-native command spine.
+++- Teams that need enterprise-grade agent governance without personal-life modules.
+++
+++Core promise:
+++- One private command spine for business ops, learning, growth, creator output, wealth, health, family, and general excellence.
+++- One intelligence substrate for memory, provenance, evaluation, and proof.
+++- One swarm protocol for bounded multi-agent work with clear gates.
+++
+++## Estate Snapshot
+++
+++Evidence used:
+++- `C:\Users\frank\plugins\ecosystem-intelligence.registry.json`
+++- `C:\Users\frank\plugins\plugin-portfolio.registry.json`
+++- `C:\Users\frank\starlight\ecosystem.json`
+++- `C:\Users\frank\starlight\command-center\state.json`
+++- `C:\Users\frank\business\README.md`
+++- `C:\Users\frank\REPO-REGISTRY.md`
+++- `C:\Users\frank\repo-registry.json`
+++
+++Verified signals:
+++- `starlight/ecosystem.json` lists 79 repo records.
+++- `ecosystem-intelligence.registry.json` reports 64 local repos, 277 GitHub repos, and 178 active GitHub repos not cloned locally.
+++- The plugin portfolio already has the needed operating layers: command/memory, revenue/distribution, brand/product verticals, and protection/leverage.
+++- `agentic-life-os` is locally present and attached to `https://github.com/frankxai/agentic-life-os.git`, even though the older ecosystem registry still lists an `agentic-life-os` GitHub repo under not-cloned candidates.
+++
+++Primary repo lanes:
+++
+++| Lane | Primary repo | Role |
+++|---|---|---|
+++| Master offer | `agentic-life-os` | Private Life OS profile, packages, modules, loops, and generated discovery assets. |
+++| Intelligence substrate | `Starlight-Intelligence-System` | Memory, provenance, taxonomy, validation, release artifacts, proof. |
+++| Agent governance | `starlight-agent-config`, `agentic-ops-hub` | Skills, policies, ledgers, handoffs, instruction sync, machine projection. |
+++| Swarm runtime | `starlight-swarm` | Queen-worker topology, dry-run safety spine, escalation rules. |
+++| Capability index | `ai-capability-registry` | Activation routes, plugin/skill index, capability inventory. |
+++| Business and distribution | `FrankX`, `frankx.ai-vercel-website`, `ai-coe` | Offer, authority, funnel, enterprise delivery patterns. |
+++| Creator and growth | `agentic-creator-os`, `visual-intelligence`, `starlight-design-intelligence` | Content, media, quality, visual production, growth assets. |
+++| Learning | `ai-architect-academy`, `prompt-library`, `prompt-engine` | Learning paths, labs, prompts, reusable patterns. |
+++| Health and wealth | `health-intelligence-system`, `agentic-investor-os` | Private health safety and capital intelligence boundaries. |
+++| Creative platform | `arcanea-ai-app`, `arcanea-orchestrator`, `arcanea-claw` | Arcanea product, creative swarms, media systems. |
+++
+++## Offer Architecture
+++
+++Public/private boundary is the product discipline:
+++- Public: sanitized blueprint, starter workflow, module map, install notes, demo data, proof screenshots.
+++- Private: personal memory, health records, finance details, family data, unreleased IP, strategy, secrets, client data, and internal cost details.
+++
+++Package matrix:
+++
+++| Package | Audience | Promise | Commercial status |
+++|---|---|---|---|
+++| Public Blueprint | Builders evaluating the model | Understand the architecture and first workflow without private data | Free |
+++| Starter Operator Kit | Solo founders and creators | Fork the profile, run health checks, start the daily command loop | Proposed, not priced |
+++| Private Life OS Implementation | Frank and selected high-trust clients | Connect business, creator, memory, health, wealth, family, and learning loops | Private only |
+++| Enterprise Intelligence System | Teams | Starlight governance, memory, evals, and repo discipline without life modules | Proposed, not priced |
+++
+++Checkout and pricing are not complete. Use pricing, checkout, partner licensing, and public-safety skills before publishing or selling.
+++
+++## Components
+++
+++Core components:
+++- `alos-profile.yaml`: machine-readable module, offer, repo-lane, intelligence-system, and loop registry.
+++- `packages/core`: schema and loader for the profile.
+++- `scripts/generate-alos-assets.mjs`: generates `llms.txt`, `agents.json`, and `jsonld.json`.
+++- `packages/orchestration`: cross-module code that already connects business cashflow, memory, creator, health/research, family, and investor modules.
+++- `docs/ultimate-offering-spine.md`: this operating spine.
+++
+++Supporting systems:
+++- `global-progress-ledger.json`: cross-repo work item and evidence tracking.
+++- `hermes-cockpit/.starlight/progress/latest.md`: progress collector output.
+++- `starlight-swarm`: dry-run swarm runtime and safety model.
+++- `starlight-agent-config`: skills, policies, queue doctrine, and cross-agent projection.
+++
+++## First Workflow
+++
+++Daily Command Loop:
+++
+++1. Ingest: read the latest progress ledger, repo status, and active launch blockers.
+++2. Select: choose one highest-leverage objective for the day.
+++3. Route: classify the objective into business, creator, learning, growth, health, wealth, family, swarm, or quality lane.
+++4. Queue: create one bounded worker task only when parallel execution is useful.
+++5. Execute: edit or run checks inside the owning repo; keep scope tight.
+++6. Verify: run the repo health gate, proof check, screenshot, eval, or progress collector.
+++7. Record: update the ledger and attach evidence paths.
+++
+++Stop condition:
+++- A verified artifact exists, or the work is blocked by a named human approval, login, secret, billing, DNS, production, or destructive gate.
+++
+++## Swarm Objective
+++
+++Objective: operate bounded swarms and loops that improve business ops, learning, growth, success, and excellence without losing context or crossing safety gates.
+++
+++Coordinator:
+++- `SO` owns cross-repo strategy, governance, queue design, evals, and synthesis.
+++
+++Worker lanes:
+++
+++| Lane | Expected artifact | Allowed action | Stop condition |
+++|---|---|---|---|
+++| Estate mapper | Repo/module evidence map | Read registries and repo docs | Map has evidence labels |
+++| Module builder | Profile/schema/docs/code patch | Edit ALOS-owned files | Tests and generation pass |
+++| Growth/release | Download or offer checklist | Draft public-safe copy and blockers | Public-safety gate listed |
+++| Evals/safety | Gate checklist and residual risks | Run tests, health checks, progress collector | Evidence path recorded |
+++| Vertical specialist | Domain packet | Work inside one vertical repo | No private-data leakage |
+++
+++Every worker must receive input context, expected artifact, allowed tools, stop condition, and handoff format. One coordinator owns synthesis and risk decisions.
+++
+++## Operating Loops
+++
+++The profile defines these first loops:
+++- Daily Command Loop.
+++- Business Ops Loop.
+++- Learning And Mastery Loop.
+++- Growth And Distribution Loop.
+++- Creator Production Loop.
+++- Health And Excellence Loop.
+++- Wealth And Capital Loop.
+++- Swarm And Evals Loop.
+++
+++Each loop must produce an artifact, not just activity: backlog, packet, checklist, memo, score, ledger entry, or release evidence.
+++
+++## Gap Map
+++
+++Current gaps:
+++- Registry freshness: the older ecosystem graph thinks `agentic-life-os` is not cloned, while the local repo exists and has a remote.
+++- Public wrapper: the public-facing Agentic Life OS story needs sanitized copy and proof assets.
+++- Pricing and checkout: packages are intentionally marked proposed or private until checkout, support, analytics, refund, and delivery assets exist.
+++- Evals: release-grade ALOS needs a repeatable scorecard for schema validity, privacy boundary, first workflow, and proof quality.
+++- Website distribution: public download or router pages should be updated only after the public wrapper is sanitized.
+++- Swarm queue: the Queen inbox can run bounded tasks, but this pass does not enqueue workers or start long-running loops.
+++
+++## Ranked Execution Wave
+++
+++1. Productize the public wrapper.
+++   - Target: `agentic-life-os` and `frankx.ai-vercel-website`.
+++   - Success check: public-safe README/download copy exists and passes private-data sanitizer.
+++
+++2. Build the first operator kit manifest.
+++   - Target: `agentic-life-os`.
+++   - Success check: manifest lists version, modules, install command, first workflow, proof gates, and support boundary.
+++
+++3. Turn loops into scripts or tasks.
+++   - Target: `agentic-life-os`, `starlight-agent-config`, `hermes-cockpit`.
+++   - Success check: daily command loop can produce a dated handoff and update the ledger.
+++
+++4. Add release/eval gates.
+++   - Target: `Starlight-Intelligence-System`, `starlight-evals-lab`, `agentic-life-os`.
+++   - Success check: validation checklist covers schema, privacy, build, tests, discovery assets, and public/private boundaries.
+++
+++5. Prepare one bounded swarm wave.
+++   - Target: Queen inbox or explicit worktree tasks.
+++   - Success check: each worker has context, artifact, allowed tools, stop condition, and handoff format.
+++
+++## Validation Gates
+++
+++Local gates:
+++- `pnpm test`
+++- `pnpm build`
+++- `pnpm health`
+++- Generated `llms.txt`, `agents.json`, and `jsonld.json` include the new spine metadata.
+++- Progress collector writes a fresh report.
+++
+++Safety gates:
+++- No credentials or `.env` values.
+++- No production deploys in this pass.
+++- No Railway, DNS, billing, secret, or destructive mutation.
+++- Public-facing copy must exclude private records, client data, financial details, family data, health specifics, and unreleased IP.
+++- Health and finance modules remain assistive and evidence-oriented; no clinical, legal, tax, or financial advice claims.
+++
+++## Release Plan
+++
+++Private v0.2:
+++- Keep `agentic-life-os` as the private master profile and implementation harness.
+++- Use this doc and generated assets as the source for future public wrappers.
+++
+++Public starter:
+++- Publish only a sanitized blueprint and starter kit.
+++- Include version, install command, first workflow, support boundary, and proof gates.
+++
+++Enterprise path:
+++- Extract Starlight Intelligence System, repo harness, evals, and agent governance into an enterprise-facing package without personal-life modules.
+++
+++Download placement:
+++- Private: `agentic-life-os` repo.
+++- Technical public: `starlightintelligence.org/download` after sanitizer and release gates.
+++- Business public: `frankx.ai/downloads` after pricing, checkout, support, and analytics gates.
++diff --git a/jsonld.json b/jsonld.json
++index 92804cb..a29ca17 100644
++--- a/jsonld.json
+++++ b/jsonld.json
++@@ -49,6 +49,54 @@
++       "@type": "SoftwareApplication",
++       "name": "agentic-family-os",
++       "description": "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
+++    },
+++    {
+++      "@type": "SoftwareApplication",
+++      "name": "Starlight Intelligence System",
+++      "description": "Memory, provenance, taxonomy, validation, release artifacts, and proof for agentic systems.",
+++      "applicationSubCategory": "substrate"
+++    },
+++    {
+++      "@type": "SoftwareApplication",
+++      "name": "Starlight Agent Config",
+++      "description": "Cross-agent skills, policies, task ledgers, install projection, and machine-local operating rules.",
+++      "applicationSubCategory": "agent-governance"
+++    },
+++    {
+++      "@type": "SoftwareApplication",
+++      "name": "Agentic Ops Hub",
+++      "description": "Agent instruction control plane, coordination rules, ASPH handoffs, and repo fleet operating doctrine.",
+++      "applicationSubCategory": "agent-governance"
+++    },
+++    {
+++      "@type": "SoftwareApplication",
+++      "name": "Starlight Swarm Runtime",
+++      "description": "Queen-worker topology, dry-run safety spine, escalation ladders, and bounded loop execution.",
+++      "applicationSubCategory": "swarm-runtime"
+++    },
+++    {
+++      "@type": "SoftwareApplication",
+++      "name": "AI Capability Registry",
+++      "description": "Index of skills, plugins, activation routes, and agent capability surfaces.",
+++      "applicationSubCategory": "capability-index"
+++    },
+++    {
+++      "@type": "SoftwareApplication",
+++      "name": "Hermes Cockpit",
+++      "description": "Operational cockpit for progress reports, Railway-aware estate state, and agent work evidence.",
+++      "applicationSubCategory": "orchestration"
+++    },
+++    {
+++      "@type": "SoftwareApplication",
+++      "name": "Health Intelligence System",
+++      "description": "Safety-gated personal health and clinician-prep patterns separated from research-only workflows.",
+++      "applicationSubCategory": "domain-vertical"
+++    },
+++    {
+++      "@type": "SoftwareApplication",
+++      "name": "Design and Visual Intelligence",
+++      "description": "Design taste, visual QA, motion rubrics, and premium experience validation.",
+++      "applicationSubCategory": "quality-gate"
++     }
++   ]
++ }
++\ No newline at end of file
++diff --git a/llms.txt b/llms.txt
++index 1bd31ff..52c1feb 100644
++--- a/llms.txt
+++++ b/llms.txt
++@@ -5,7 +5,7 @@ This file defines the active modules, substrates, and agent capabilities of Fran
++ ## Architecture
++ - Machine: Yoga Laptop Workstation (Windows)
++ - SIP Version: 1.1.1
++-- System Version: 1.1.0
+++- System Version: 1.2.0
++ 
++ ## Interconnected Modules
++ 
++@@ -72,3 +72,163 @@ This file defines the active modules, substrates, and agent capabilities of Fran
++ - Health Command: `vitest run`
++ - Active Agents: Claude Code
++ - Description: Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation.
+++
+++## Master Offering
+++- Name: Agentic Life OS
+++- Audience: Founder-operators, creators, and high-agency teams who want one AI-native command spine for work, learning, growth, success, and personal excellence.
+++- Promise: Turn the repo estate into a private operating system that routes decisions, memories, proof, agent swarms, and recurring loops into visible outcomes.
+++- Status: private-operator-suite
+++- Delivery Mode: Git-backed system package, implementation sprint, agent runbooks, and proof-gated operating cadence.
+++- Public Boundary: Public wrappers may describe the model and starter workflows. Private memory, health, finance, family, unreleased IP, strategy, credentials, and client data stay out of public assets.
+++
+++### Package: Public Blueprint
+++- Audience: Builders evaluating the Agentic Life OS model.
+++- Promise: Understand the architecture, module map, and first workflow without exposing private operating data.
+++- Delivery Mode: Sanitized docs, examples, and install notes.
+++- Commercial Status: free
+++- Support Boundary: Self-serve only.
+++
+++### Package: Starter Operator Kit
+++- Audience: Solo founders and creators who want a local command spine.
+++- Promise: Fork the core profile, run the health checks, and start the daily command loop.
+++- Delivery Mode: Template repo plus setup checklist.
+++- Commercial Status: proposed-not-priced
+++- Support Boundary: Setup support only; no private-data handling.
+++
+++### Package: Private Life OS Implementation
+++- Audience: Frank's own operating layer and selected high-trust clients.
+++- Promise: Connect business, creator, memory, health, wealth, family, and learning loops with bounded agent execution.
+++- Delivery Mode: Guided implementation sprint with private runbooks.
+++- Commercial Status: private-only
+++- Support Boundary: Explicit scope, approval gates, and privacy boundaries required.
+++
+++### Package: Enterprise Intelligence System
+++- Audience: Teams needing agent governance, memory, evals, and repo-operating discipline.
+++- Promise: Deploy the Starlight intelligence substrate and operating doctrine without personal-life modules.
+++- Delivery Mode: Architecture engagement, repo harness, and validation gates.
+++- Commercial Status: proposed-not-priced
+++- Support Boundary: Architecture and enablement; production mutations require named approval.
+++
+++## Intelligence Systems
+++
+++### Starlight Intelligence System
+++- Repo: `Starlight-Intelligence-System`
+++- Layer: `substrate`
+++- Public Status: `hybrid`
+++- Purpose: Memory, provenance, taxonomy, validation, release artifacts, and proof for agentic systems.
+++- Proof Gate: Run SIS health checks, keep public/private boundaries explicit, and attach evidence paths to releases.
+++
+++### Starlight Agent Config
+++- Repo: `starlight-agent-config`
+++- Layer: `agent-governance`
+++- Public Status: `private`
+++- Purpose: Cross-agent skills, policies, task ledgers, install projection, and machine-local operating rules.
+++- Proof Gate: Run installer doctor before handoff when config projection changes.
+++
+++### Agentic Ops Hub
+++- Repo: `agentic-ops-hub`
+++- Layer: `agent-governance`
+++- Public Status: `hybrid`
+++- Purpose: Agent instruction control plane, coordination rules, ASPH handoffs, and repo fleet operating doctrine.
+++- Proof Gate: Sync/check generated agent rules before release-quality changes.
+++
+++### Starlight Swarm Runtime
+++- Repo: `starlight-swarm`
+++- Layer: `swarm-runtime`
+++- Public Status: `hybrid`
+++- Purpose: Queen-worker topology, dry-run safety spine, escalation ladders, and bounded loop execution.
+++- Proof Gate: Run dry-run, typecheck, and tests; no autonomous live money or production actions.
+++
+++### AI Capability Registry
+++- Repo: `ai-capability-registry`
+++- Layer: `capability-index`
+++- Public Status: `hybrid`
+++- Purpose: Index of skills, plugins, activation routes, and agent capability surfaces.
+++- Proof Gate: Regenerate the capability index after route or plugin changes.
+++
+++### Hermes Cockpit
+++- Repo: `hermes-cockpit`
+++- Layer: `orchestration`
+++- Public Status: `private`
+++- Purpose: Operational cockpit for progress reports, Railway-aware estate state, and agent work evidence.
+++- Proof Gate: Progress collector writes latest evidence without reading secrets.
+++
+++### Health Intelligence System
+++- Repo: `health-intelligence-system`
+++- Layer: `domain-vertical`
+++- Public Status: `hybrid`
+++- Purpose: Safety-gated personal health and clinician-prep patterns separated from research-only workflows.
+++- Proof Gate: Health work keeps human clinical authority and evidence dates explicit.
+++
+++### Design and Visual Intelligence
+++- Repo: `starlight-design-intelligence`
+++- Layer: `quality-gate`
+++- Public Status: `hybrid`
+++- Purpose: Design taste, visual QA, motion rubrics, and premium experience validation.
+++- Proof Gate: Visual work passes screenshots, responsive checks, and the taste rubric before handoff.
+++
+++## Operating Loops
+++
+++### Daily Command Loop
+++- Cadence: daily
+++- Owner: chief-operator
+++- Purpose: Select the highest-leverage work, route it to one bounded execution lane, and end with evidence.
+++- Inputs: global-progress-ledger.json, hermes-cockpit progress reports, repo status
+++- Outputs: one active priority, bounded task queue, handoff note
+++- Safety Gate: No production, billing, DNS, secret, or destructive mutation without explicit named approval.
+++
+++### Business Ops Loop
+++- Cadence: daily plus weekly review
+++- Owner: business-command
+++- Purpose: Turn offers, client delivery, invoices, proof, and launch blockers into a visible operating cadence.
+++- Inputs: business module, FrankX docs, public site/download surfaces
+++- Outputs: offer backlog, delivery tasks, proof and revenue blockers
+++- Safety Gate: Payment setup, public claims, and client commitments require human review.
+++
+++### Learning And Mastery Loop
+++- Cadence: weekly
+++- Owner: learning-systems
+++- Purpose: Convert research, courses, repos, and experiments into skill upgrades and reusable playbooks.
+++- Inputs: ai-architect-academy, prompt-library, Starlight memory
+++- Outputs: learning sprint, skill update, evidence-backed notes
+++- Safety Gate: Separate source-backed learning from unsupported claims.
+++
+++### Growth And Distribution Loop
+++- Cadence: weekly
+++- Owner: growth-ops
+++- Purpose: Move audience attention into useful downloads, demos, trust proof, and follow-up workflows.
+++- Inputs: frankx.ai-vercel-website, analytics reports, release artifacts
+++- Outputs: campaign brief, download/update checklist, conversion evidence
+++- Safety Gate: Public pages need claim, privacy, attribution, and checkout readiness checks.
+++
+++### Creator Production Loop
+++- Cadence: weekly
+++- Owner: creator-ops
+++- Purpose: Turn ideas, music, video, articles, and visual systems into publishable creative assets.
+++- Inputs: agentic-creator-os, visual-intelligence, Arcanea media repos
+++- Outputs: asset backlog, publication packet, quality score
+++- Safety Gate: Rights, attribution, taste, and platform policy checks run before publishing.
+++
+++### Health And Excellence Loop
+++- Cadence: daily private log plus weekly review
+++- Owner: health-intelligence-ops
+++- Purpose: Support energy, training, nutrition, sleep, recovery, and clinician preparation without replacing professionals.
+++- Inputs: health package, health-intelligence-system, private records
+++- Outputs: wellness plan, clinician questions, evidence ledger
+++- Safety Gate: No diagnosis, treatment, or medication decisions; clinician authority stays explicit.
+++
+++### Wealth And Capital Loop
+++- Cadence: weekly
+++- Owner: investor-ops
+++- Purpose: Track capital allocation, due diligence, portfolio state, and business cashflow connections.
+++- Inputs: investor package, business receivables, deal notes
+++- Outputs: portfolio snapshot, due-diligence queue, decision memo
+++- Safety Gate: No financial advice or autonomous capital movement.
+++
+++### Swarm And Evals Loop
+++- Cadence: per coherent work wave
+++- Owner: starlight-substrate-ops
+++- Purpose: Route bounded worker lanes, collect handoffs, validate evidence, and preserve context for the next run.
+++- Inputs: starlight-swarm, starlight-agent-config, ai-capability-registry
+++- Outputs: worker queue, eval report, progress ledger update
+++- Safety Gate: One coordinator owns synthesis; every worker has allowed tools, stop condition, and handoff format.
++diff --git a/packages/core/src/schemas.ts b/packages/core/src/schemas.ts
++index e4a043b..306ccec 100644
++--- a/packages/core/src/schemas.ts
+++++ b/packages/core/src/schemas.ts
++@@ -12,6 +12,88 @@ export const OSModuleSchema = z.object({
++ 
++ export type OSModule = z.infer<typeof OSModuleSchema>;
++ 
+++export const OfferPackageSchema = z.object({
+++  name: z.string(),
+++  audience: z.string(),
+++  promise: z.string(),
+++  deliveryMode: z.string(),
+++  commercialStatus: z.enum(['free', 'proposed-not-priced', 'priced', 'private-only']),
+++  supportBoundary: z.string(),
+++});
+++
+++export type OfferPackage = z.infer<typeof OfferPackageSchema>;
+++
+++export const AgenticLifeOSOfferingSchema = z.object({
+++  name: z.string(),
+++  audience: z.string(),
+++  promise: z.string(),
+++  status: z.enum(['draft', 'active', 'public-wrapper', 'private-operator-suite']),
+++  deliveryMode: z.string(),
+++  publicBoundary: z.string(),
+++  packages: z.array(OfferPackageSchema),
+++});
+++
+++export type AgenticLifeOSOffering = z.infer<typeof AgenticLifeOSOfferingSchema>;
+++
+++export const IntelligenceSystemSchema = z.object({
+++  name: z.string(),
+++  repoName: z.string(),
+++  layer: z.enum([
+++    'substrate',
+++    'memory',
+++    'orchestration',
+++    'swarm-runtime',
+++    'agent-governance',
+++    'capability-index',
+++    'domain-vertical',
+++    'distribution',
+++    'quality-gate',
+++  ]),
+++  publicStatus: z.enum(['public-safe', 'private', 'hybrid']),
+++  purpose: z.string(),
+++  proofGate: z.string(),
+++});
+++
+++export type IntelligenceSystem = z.infer<typeof IntelligenceSystemSchema>;
+++
+++export const EstateRepoSchema = z.object({
+++  name: z.string(),
+++  lane: z.enum([
+++    'master-offer',
+++    'substrate',
+++    'agent-ops',
+++    'swarm',
+++    'business',
+++    'creator',
+++    'learning',
+++    'growth',
+++    'wealth',
+++    'health',
+++    'family',
+++    'creative-platform',
+++    'distribution',
+++    'quality',
+++    'archive',
+++  ]),
+++  role: z.string(),
+++  source: z.enum(['verified', 'repo-evidenced', 'doc-evidenced', 'inferred']),
+++  status: z.enum(['primary', 'supporting', 'candidate', 'watch', 'archive']),
+++});
+++
+++export type EstateRepo = z.infer<typeof EstateRepoSchema>;
+++
+++export const OperatingLoopSchema = z.object({
+++  name: z.string(),
+++  cadence: z.string(),
+++  owner: z.string(),
+++  purpose: z.string(),
+++  inputs: z.array(z.string()),
+++  outputs: z.array(z.string()),
+++  safetyGate: z.string(),
+++});
+++
+++export type OperatingLoop = z.infer<typeof OperatingLoopSchema>;
+++
++ export const LifeOSProfileSchema = z.object({
++   systemName: z.string(),
++   version: z.string(),
++@@ -21,6 +103,10 @@ export const LifeOSProfileSchema = z.object({
++     os: z.string(),
++   }),
++   modules: z.record(z.string(), OSModuleSchema),
+++  offering: AgenticLifeOSOfferingSchema.optional(),
+++  intelligenceSystems: z.array(IntelligenceSystemSchema).default([]),
+++  estateRepos: z.array(EstateRepoSchema).default([]),
+++  operatingLoops: z.array(OperatingLoopSchema).default([]),
++ });
++ 
++ export type LifeOSProfile = z.infer<typeof LifeOSProfileSchema>;
++diff --git a/packages/core/tests/loader.test.ts b/packages/core/tests/loader.test.ts
++index 75373d5..1fcd78c 100644
++--- a/packages/core/tests/loader.test.ts
+++++ b/packages/core/tests/loader.test.ts
++@@ -84,6 +84,78 @@ modules:
++     }
++   });
++ 
+++  it('should load offering, intelligence systems, repo lanes, and operating loops', () => {
+++    const profileContent = `
+++systemName: "Agentic Life OS"
+++version: "1.2.0"
+++sipVersion: "1.1.1"
+++workstation:
+++  machineName: "Yoga Laptop"
+++  os: "Windows"
+++modules:
+++  business:
+++    repoName: "agentic-business-os"
+++    path: "C:\\\\Users\\\\frank\\\\starlight\\\\repos\\\\agentic-life-os\\\\packages\\\\business"
+++    status: "in-development"
+++    riskLevel: "production"
+++    healthCommand: "vitest run"
+++    activeAgents:
+++      - "Claude Code"
+++    purpose: "Business ops"
+++offering:
+++  name: "Agentic Life OS"
+++  audience: "Founder-operators"
+++  promise: "One private command spine for work and life"
+++  status: "private-operator-suite"
+++  deliveryMode: "Git-backed repo package plus guided implementation"
+++  publicBoundary: "Public wrappers exclude private memory, health, finance, and unreleased strategy."
+++  packages:
+++    - name: "Public Blueprint"
+++      audience: "Builders evaluating the model"
+++      promise: "Understand the stack"
+++      deliveryMode: "Docs"
+++      commercialStatus: "free"
+++      supportBoundary: "Self-serve only"
+++intelligenceSystems:
+++  - name: "Starlight Intelligence System"
+++    repoName: "Starlight-Intelligence-System"
+++    layer: "substrate"
+++    publicStatus: "hybrid"
+++    purpose: "Memory, provenance, and validation"
+++    proofGate: "Health command plus evidence path"
+++estateRepos:
+++  - name: "agentic-life-os"
+++    lane: "master-offer"
+++    role: "Master operating shell"
+++    source: "verified"
+++    status: "primary"
+++operatingLoops:
+++  - name: "Daily Command Loop"
+++    cadence: "daily"
+++    owner: "chief-operator"
+++    purpose: "Select and verify the day's work"
+++    inputs:
+++      - "progress ledger"
+++    outputs:
+++      - "bounded queue"
+++    safetyGate: "No production or billing mutation without approval"
+++`;
+++    fs.writeFileSync(mockYamlPath, profileContent);
+++
+++    try {
+++      const profile = loadLifeOSProfile(mockYamlPath);
+++      expect(profile.offering?.name).toBe('Agentic Life OS');
+++      expect(profile.offering?.packages[0]?.commercialStatus).toBe('free');
+++      expect(profile.intelligenceSystems[0]?.repoName).toBe('Starlight-Intelligence-System');
+++      expect(profile.estateRepos[0]?.lane).toBe('master-offer');
+++      expect(profile.operatingLoops[0]?.cadence).toBe('daily');
+++    } finally {
+++      if (fs.existsSync(mockYamlPath)) {
+++        fs.unlinkSync(mockYamlPath);
+++      }
+++    }
+++  });
+++
++   it('should throw an error on invalid schema data', () => {
++     const invalidProfileContent = `
++ systemName: "Agentic Life OS"
++diff --git a/scripts/generate-alos-assets.mjs b/scripts/generate-alos-assets.mjs
++index 3a60bdc..a68f484 100644
++--- a/scripts/generate-alos-assets.mjs
+++++ b/scripts/generate-alos-assets.mjs
++@@ -40,6 +40,64 @@ This file defines the active modules, substrates, and agent capabilities of Fran
++ `;
++     }
++ 
+++    if (profile.offering) {
+++      llmsText += `
+++## Master Offering
+++- Name: ${profile.offering.name}
+++- Audience: ${profile.offering.audience}
+++- Promise: ${profile.offering.promise}
+++- Status: ${profile.offering.status}
+++- Delivery Mode: ${profile.offering.deliveryMode}
+++- Public Boundary: ${profile.offering.publicBoundary}
+++`;
+++
+++      for (const pkg of profile.offering.packages) {
+++        llmsText += `
+++### Package: ${pkg.name}
+++- Audience: ${pkg.audience}
+++- Promise: ${pkg.promise}
+++- Delivery Mode: ${pkg.deliveryMode}
+++- Commercial Status: ${pkg.commercialStatus}
+++- Support Boundary: ${pkg.supportBoundary}
+++`;
+++      }
+++    }
+++
+++    if (profile.intelligenceSystems.length > 0) {
+++      llmsText += `
+++## Intelligence Systems
+++`;
+++
+++      for (const system of profile.intelligenceSystems) {
+++        llmsText += `
+++### ${system.name}
+++- Repo: \`${system.repoName}\`
+++- Layer: \`${system.layer}\`
+++- Public Status: \`${system.publicStatus}\`
+++- Purpose: ${system.purpose}
+++- Proof Gate: ${system.proofGate}
+++`;
+++      }
+++    }
+++
+++    if (profile.operatingLoops.length > 0) {
+++      llmsText += `
+++## Operating Loops
+++`;
+++
+++      for (const loop of profile.operatingLoops) {
+++        llmsText += `
+++### ${loop.name}
+++- Cadence: ${loop.cadence}
+++- Owner: ${loop.owner}
+++- Purpose: ${loop.purpose}
+++- Inputs: ${loop.inputs.join(', ')}
+++- Outputs: ${loop.outputs.join(', ')}
+++- Safety Gate: ${loop.safetyGate}
+++`;
+++      }
+++    }
+++
++     const llmsPath = path.join(ROOT_DIR, 'llms.txt');
++     fs.writeFileSync(llmsPath, llmsText, 'utf8');
++     console.log(`✅ Generated: llms.txt -> ${llmsPath}`);
++@@ -60,6 +118,10 @@ This file defines the active modules, substrates, and agent capabilities of Fran
++           verify: m.healthCommand,
++           purpose: m.purpose,
++         })),
+++        offering: profile.offering ?? null,
+++        intelligenceSystems: profile.intelligenceSystems,
+++        estateRepos: profile.estateRepos,
+++        operatingLoops: profile.operatingLoops,
++       },
++       null,
++       2
++@@ -81,11 +143,19 @@ This file defines the active modules, substrates, and agent capabilities of Fran
++           '@type': 'Person',
++           name: 'Frank Riemer',
++         },
++-        hasPart: Object.entries(profile.modules).map(([name, m]) => ({
++-          '@type': 'SoftwareApplication',
++-          name: m.repoName,
++-          description: m.purpose,
++-        })),
+++        hasPart: [
+++          ...Object.entries(profile.modules).map(([name, m]) => ({
+++            '@type': 'SoftwareApplication',
+++            name: m.repoName,
+++            description: m.purpose,
+++          })),
+++          ...profile.intelligenceSystems.map((system) => ({
+++            '@type': 'SoftwareApplication',
+++            name: system.name,
+++            description: system.purpose,
+++            applicationSubCategory: system.layer,
+++          })),
+++        ],
++       },
++       null,
++       2
