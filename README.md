@@ -52,20 +52,20 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
 | **`orchestration`** | **Control Grid:** Aggregates cashflow to investor portfolio, coordinates health audits and lineage creators. | **Active** | Orchestration harness. Health: `vitest run` |
 | **`investor`** | **Sovereign Wealth:** Deals pipeline, capital allocation, valuations, due diligence, and net worth calculations. | **Active** | Wealth harness. Health: `vitest run` |
 | **`health`** | **Biomedical Intelligence:** Interfaces scientific databases (ChEMBL, dbSNP, UCSC TFBS, OpenFDA, and AlphaFold). | **Active** | Science gateway. Health: `vitest run` |
-| **`family`** | **Heritage Vault:** Lineage charts, genealogy timelines, and family tree compilation. | **Active** | Family harness. Health: `vitest run` |
+| **`family`** | **Private Family Intelligence:** Evidence-backed claims, governed relationship review, audience-scoped ancestor projections, and private research operations. | **Kernel active; vault gated** | Real ingestion remains blocked until encrypted persistence, authentication, durable audit, backup/restore, consent, and succession gates pass. |
 
 ---
 
 ## 📦 Monorepo Structure
 
-* **[`packages/core`](file:///C:/Users/frank/agentic-life-os/packages/core/README.md)**: Parses and validates the unified [alos-profile.yaml](file:///C:/Users/frank/agentic-life-os/alos-profile.yaml) configuration.
-* **[`packages/business`](file:///C:/Users/frank/agentic-life-os/packages/business)**: Manages invoicing status and BV compliance limits.
-* **[`packages/creator`](file:///C:/Users/frank/agentic-life-os/packages/creator)**: Powers script generation and visual media templates.
-* **[`packages/memory`](file:///C:/Users/frank/agentic-life-os/packages/memory)**: Implements Starlight Intelligence Protocol (SIP) semantic nodes.
-* **[`packages/orchestration`](file:///C:/Users/frank/agentic-life-os/packages/orchestration)**: Cross-module pipeline triggers linking cashflow and heritage databases.
-* **[`packages/investor`](file:///C:/Users/frank/agentic-life-os/packages/investor/README.md)**: Sovereign wealth calculations.
-* **[`packages/health`](file:///C:/Users/frank/agentic-life-os/packages/health/README.md)**: Biomedical lookup gateways.
-* **[`packages/family`](file:///C:/Users/frank/agentic-life-os/packages/family/README.md)**: Genealogy lineage compiler.
+* **[`packages/core`](packages/core/README.md)**: Parses and validates the unified [alos-profile.yaml](alos-profile.yaml) configuration.
+* **[`packages/business`](packages/business)**: Manages invoicing status and BV compliance limits.
+* **[`packages/creator`](packages/creator)**: Powers script generation and visual media templates.
+* **[`packages/memory`](packages/memory)**: Implements Starlight Intelligence Protocol (SIP) semantic nodes.
+* **[`packages/orchestration`](packages/orchestration)**: Cross-module pipeline triggers linking cashflow and heritage databases.
+* **[`packages/investor`](packages/investor/README.md)**: Sovereign wealth calculations.
+* **[`packages/health`](packages/health/README.md)**: Biomedical lookup gateways.
+* **[`packages/family`](packages/family/README.md)**: Private evidence-backed family research registry and governed ancestor projections.
 * **`Agentic_Ecosystem.canvas`**: Visual whiteboard connecting workspace modules, substrates, agent command wrappers, and science database plugins.
 * **`scripts/generate-alos-assets.mjs`**: Compiles discovery sitemaps (`llms.txt`, `agents.json`, and `jsonld.json`).
 
@@ -75,8 +75,8 @@ ALOS is a master-orchestration framework that connects all aspects of life, busi
 
 A premium, glassmorphic visual interface is available directly inside the repository. To access the control center:
 
-1. Open [dashboard/index.html](file:///C:/Users/frank/agentic-life-os/dashboard/index.html) in your browser.
-2. Monitor all 8 active packages, run real-time net worth calculations, query search nodes in the Starlight Memory Palace, and compile automated creator draft outlines from family nodes.
+1. Open [dashboard/index.html](dashboard/index.html) in your browser.
+2. Monitor package health and run bounded synthetic demonstrations. Private family or genetic data is not routed into generic Memory OS or Creator OS; that cross-module path remains fail-closed pending deployment-owned authorization, minimization, audience controls, and audit.
 
 ---
 
@@ -108,4 +108,4 @@ pnpm test
 
 ## 📜 License
 
-MIT License — see the [LICENSE](file:///C:/Users/frank/agentic-life-os/LICENSE) file for details.
+License status: no repository license file is currently present. Do not represent this repository as open source until a human approves and adds the applicable license.

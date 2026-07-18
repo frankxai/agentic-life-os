@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "sip": "1.1.1",
   "workstation": {
-    "machineName": "Yoga Laptop Workstation",
+    "machineName": "Local Development Workstation",
     "os": "Windows"
   },
   "modules": [
@@ -61,8 +61,8 @@
       "repo": "agentic-family-os",
       "status": "in-development",
       "risk": "private",
-      "verify": "vitest run",
-      "purpose": "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
+      "verify": "pnpm exec vitest run packages/family/tests",
+      "purpose": "Evidence-backed private family research, human-governed relationship claims, audience-scoped ancestor projections, preservation, and stewardship."
     }
   ]
 }
