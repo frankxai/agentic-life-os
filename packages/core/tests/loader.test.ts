@@ -16,12 +16,12 @@ systemName: "Agentic Life OS"
 version: "1.0.0"
 sipVersion: "1.1.1"
 workstation:
-  machineName: "Yoga Laptop"
+  machineName: "Local Development Workstation"
   os: "Windows"
 modules:
   business:
     repoName: "agentic-business-os"
-    path: "C:\\\\Users\\\\frank\\\\agentic-business-os"
+    path: "packages/business"
     status: "live"
     riskLevel: "production"
     healthCommand: "pnpm test"
@@ -49,7 +49,7 @@ systemName: "Agentic Life OS"
 version: "1.0.0"
 sipVersion: "1.1.1"
 workstation:
-  machineName: "Yoga Laptop"
+  machineName: "Local Development Workstation"
   os: "Windows"
 modules:
   business:

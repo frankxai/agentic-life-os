@@ -1,9 +1,9 @@
 import { BusinessOSManager, type Invoice } from '@frankx-ai/agentic-business-os';
 import { CreatorOSManager } from '@frankx-ai/agentic-creator-os';
-import { MemoryOSManager, type MemoryNode } from '@frankx-ai/second-brain-os';
+import { MemoryOSManager } from '@frankx-ai/second-brain-os';
 import { calculateNetWorth, type WealthPortfolio } from '@frankx-ai/agentic-investor-os';
 import { HealthScienceGateway } from '@frankx-ai/agentic-health-os';
-import { compileLineageChain, type FamilyNode } from '@frankx-ai/agentic-family-os';
+import { type FamilyNode } from '@frankx-ai/agentic-family-os';
 import { type LifeOSProfile } from '@frankx-ai/alos-core';
 
 export interface EcosystemHealthReport {
@@ -62,51 +62,25 @@ export class ALOSOrchestrator {
   }
 
   /**
-   * Pipeline 2: Sync Family heritage transcripts and Health gateway results to Memory OS (Obsidian)
-   * and Creator OS (YouTube script outline drafting).
+   * Disabled fail-closed boundary.
+   *
+   * Family records and genetic/health results must not flow into generic memory or
+   * creator systems until the private deployment has server-resolved consent,
+   * purpose limitation, audience authorization, minimization/redaction, audit,
+   * withdrawal, and recipient controls. Keeping the legacy signature prevents a
+   * silent API substitution while making every attempted transfer fail closed.
    */
   async syncBiographicResearchToCreator(
     familyNodes: FamilyNode[],
     rsId: string,
     topicTitle: string
   ): Promise<{ scriptId: string; memoryNodeId: string }> {
-    // 1. Compile family chain
-    const lineage = compileLineageChain(familyNodes);
-    
-    // 2. Query biomarker significance
-    const biomarker = await this.healthGateway.resolveVariantSignificance(rsId);
-
-    // 3. Construct unified narrative content
-    const narrativeText = `Lineage Chain:\n${lineage.join('\n')}\n\nGenetic Health Marker (${rsId}): ${biomarker.geneSymbol} status: ${biomarker.clinicalSignificance}`;
-
-    // 4. Index as a SIP node in Memory OS
-    const nodeId = `heritage_node_${Date.now()}`;
-    const memoryNode: MemoryNode = {
-      id: nodeId,
-      label: `Heritage & Health Study: ${topicTitle}`,
-      category: 'concept',
-      content: narrativeText,
-      metadata: { rsId, familyCount: familyNodes.length },
-      createdAt: new Date().toISOString(),
-    };
-    this.memoryManager.indexNode(memoryNode);
-
-    // 5. Draft content script in Creator OS
-    const script = this.creatorManager.draftScript(
-      `Exploring My Heritage: ${topicTitle}`,
-      'YouTube',
-      [
-        'Introduction to the Family Lineage',
-        'How genetic traits trace back generations',
-        `Analyzing biomarker ${biomarker.geneSymbol} (${rsId})`,
-        'Future outlook & health conservation',
-      ]
+    void familyNodes;
+    void rsId;
+    void topicTitle;
+    throw new Error(
+      'Family-to-health, memory, and creator synchronization is disabled pending trusted consent and publication authorization.'
     );
-
-    return {
-      scriptId: script.id,
-      memoryNodeId: nodeId,
-    };
   }
 
   /**

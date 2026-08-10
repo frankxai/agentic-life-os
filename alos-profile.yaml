@@ -2,13 +2,13 @@ systemName: "Agentic Life OS (ALOS)"
 version: "1.0.0"
 sipVersion: "1.1.1"
 workstation:
-  machineName: "Yoga Laptop Workstation"
+  machineName: "Local Development Workstation"
   os: "Windows"
 
 modules:
   business:
     repoName: "agentic-business-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\business"
+    path: "packages/business"
     status: "in-development"
     riskLevel: "production"
     healthCommand: "vitest run"
@@ -19,7 +19,7 @@ modules:
 
   creator:
     repoName: "agentic-creator-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\creator"
+    path: "packages/creator"
     status: "in-development"
     riskLevel: "production"
     healthCommand: "vitest run"
@@ -31,7 +31,7 @@ modules:
 
   memory:
     repoName: "second-brain-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\memory"
+    path: "packages/memory"
     status: "in-development"
     riskLevel: "private"
     healthCommand: "vitest run"
@@ -42,7 +42,7 @@ modules:
 
   orchestration:
     repoName: "agentic-orchestration-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\orchestration"
+    path: "packages/orchestration"
     status: "in-development"
     riskLevel: "production"
     healthCommand: "vitest run"
@@ -53,7 +53,7 @@ modules:
 
   investor:
     repoName: "agentic-investor-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\investor"
+    path: "packages/investor"
     status: "in-development"
     riskLevel: "private"
     healthCommand: "vitest run"
@@ -63,7 +63,7 @@ modules:
 
   health:
     repoName: "agentic-health-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\health"
+    path: "packages/health"
     status: "in-development"
     riskLevel: "private"
     healthCommand: "vitest run"
@@ -74,10 +74,11 @@ modules:
 
   family:
     repoName: "agentic-family-os"
-    path: "C:\\Users\\frank\\agentic-life-os\\packages\\family"
+    path: "packages/family"
     status: "in-development"
     riskLevel: "private"
-    healthCommand: "vitest run"
+    healthCommand: "pnpm exec vitest run packages/family/tests"
     activeAgents:
+      - "Hermes"
       - "Claude Code"
-    purpose: "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
+    purpose: "Evidence-backed private family research, human-governed relationship claims, audience-scoped ancestor projections, preservation, and stewardship."

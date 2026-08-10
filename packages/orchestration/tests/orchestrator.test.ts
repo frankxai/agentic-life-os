@@ -51,34 +51,25 @@ describe('Agentic Life OS (ALOS) Interconnectivity', () => {
     expect(projectedWealth).toBe(395000);
   });
 
-  it('should run a biographic + health study, sync it to Memory OS (SIP), and generate Creator OS outlines', async () => {
+  it('fails closed instead of sending family and genetic data to generic memory or creator modules', async () => {
     const businessManager = new BusinessOSManager(entity);
     const orchestrator = new ALOSOrchestrator(businessManager);
 
     const nodes: FamilyNode[] = [
-      { id: '1', name: 'Grandpa Frank', relationship: 'ancestor', birthYear: 1920 },
-      { id: '2', name: 'Papa Frank', relationship: 'parent', birthYear: 1955 },
+      { id: 'person_ancestor', name: 'Private ancestor label', relationship: 'ancestor', birthYear: 1920 },
+      { id: 'person_parent', name: 'Private parent label', relationship: 'parent', birthYear: 1955 },
     ];
 
-    const result = await orchestrator.syncBiographicResearchToCreator(
-      nodes,
-      'rs12345',
-      'The Frank Lineage Trait'
-    );
+    await expect(
+      orchestrator.syncBiographicResearchToCreator(
+        nodes,
+        'synthetic-variant-reference',
+        'Private research topic'
+      )
+    ).rejects.toThrow(/disabled pending trusted consent and publication authorization/i);
 
-    expect(result.scriptId).toBeDefined();
-    expect(result.memoryNodeId).toBeDefined();
-
-    // Verify memory indexing
-    const memoryNode = orchestrator.getMemoryManager().semanticSearch('rs12345')[0];
-    expect(memoryNode).toBeDefined();
-    expect(memoryNode?.label).toContain('The Frank Lineage Trait');
-    expect(memoryNode?.content).toContain('Grandpa Frank');
-    expect(memoryNode?.content).toContain('BRCA1');
-
-    // Verify creator outline
-    const creatorAssets = orchestrator.getCreatorManager().getAssets();
-    expect(creatorAssets).toBeDefined();
+    expect(orchestrator.getMemoryManager().getNodesCount()).toBe(0);
+    expect(orchestrator.getCreatorManager().getAssets()).toEqual([]);
   });
 
   it('should generate a comprehensive health dashboard report', () => {
@@ -100,13 +91,13 @@ describe('Agentic Life OS (ALOS) Interconnectivity', () => {
       version: '1.0.0',
       sipVersion: '1.1.1',
       workstation: {
-        machineName: 'Yoga Laptop Workstation',
+        machineName: 'Local Development Workstation',
         os: 'Windows',
       },
       modules: {
         business: {
           repoName: 'agentic-business-os',
-          path: 'C:\\Users\\frank\\agentic-business-os',
+          path: 'packages/business',
           status: 'live',
           riskLevel: 'production',
           healthCommand: 'pnpm test',
