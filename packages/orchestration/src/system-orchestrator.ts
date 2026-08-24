@@ -1,10 +1,10 @@
-import { BusinessOSManager, type Invoice } from '@frankx-ai/agentic-business-os';
+import { BusinessOSManager } from '@frankx-ai/agentic-business-os';
 import { CreatorOSManager } from '@frankx-ai/agentic-creator-os';
-import { MemoryOSManager, type MemoryNode } from '@frankx-ai/second-brain-os';
+import { MemoryOSManager } from '@frankx-ai/second-brain-os';
 import { calculateNetWorth, type WealthPortfolio } from '@frankx-ai/agentic-investor-os';
 import { AgenticHealthOS } from '@frankx-ai/agentic-health-os';
 import { LifeSciencesResearchGateway } from '@frankx-ai/life-sciences-researcher-is';
-import { compileLineageChain, type FamilyNode } from '@frankx-ai/agentic-family-os';
+import { type FamilyNode } from '@frankx-ai/agentic-family-os';
 import { type LifeOSProfile } from '@frankx-ai/alos-core';
 
 export interface EcosystemHealthReport {
@@ -69,55 +69,25 @@ export class ALOSOrchestrator {
   }
 
   /**
-   * Pipeline 2: Sync family heritage transcripts and research-only science results
-   * to Memory OS and Creator OS without turning research fixtures into medical advice.
+   * Disabled fail-closed boundary.
+   *
+   * Family records and genetic/health results must not flow into generic memory or
+   * creator systems until the private deployment has server-resolved consent,
+   * purpose limitation, audience authorization, minimization/redaction, audit,
+   * withdrawal, and recipient controls. Keeping the legacy signature prevents a
+   * silent API substitution while making every attempted transfer fail closed.
    */
   async syncBiographicResearchToCreator(
     familyNodes: FamilyNode[],
     rsId: string,
     topicTitle: string
   ): Promise<{ scriptId: string; memoryNodeId: string }> {
-    // 1. Compile family chain
-    const lineage = compileLineageChain(familyNodes);
-    
-    // 2. Query research-only variant evidence.
-    const biomarker = await this.lifeSciencesGateway.resolveVariantSignificance(rsId);
-
-    // 3. Construct unified narrative content
-    const narrativeText = [
-      `Lineage Chain:\n${lineage.join('\n')}`,
-      `Research-only Variant Fixture (${rsId}): ${biomarker.data.geneSymbol} status: ${biomarker.data.clinicalSignificance}`,
-      `Boundary: ${biomarker.limitations.join(' ')}`,
-    ].join('\n\n');
-
-    // 4. Index as a SIP node in Memory OS
-    const nodeId = `heritage_node_${Date.now()}`;
-    const memoryNode: MemoryNode = {
-      id: nodeId,
-      label: `Heritage & Health Study: ${topicTitle}`,
-      category: 'concept',
-      content: narrativeText,
-      metadata: { rsId, familyCount: familyNodes.length },
-      createdAt: new Date().toISOString(),
-    };
-    this.memoryManager.indexNode(memoryNode);
-
-    // 5. Draft content script in Creator OS
-    const script = this.creatorManager.draftScript(
-      `Exploring My Heritage: ${topicTitle}`,
-      'YouTube',
-      [
-        'Introduction to the Family Lineage',
-        'How genetic traits trace back generations',
-        `Research-only variant fixture ${biomarker.data.geneSymbol} (${rsId})`,
-        'Boundaries: no patient-specific medical interpretation',
-      ]
+    void familyNodes;
+    void rsId;
+    void topicTitle;
+    throw new Error(
+      'Family-to-health, memory, and creator synchronization is disabled pending trusted consent and publication authorization.'
     );
-
-    return {
-      scriptId: script.id,
-      memoryNodeId: nodeId,
-    };
   }
 
   /**

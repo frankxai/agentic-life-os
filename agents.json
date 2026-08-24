@@ -29,6 +29,15 @@
       "path": "packages/orchestration",
       "status": "experimental",
       "risk": "bounded-runtime"
+    },
+    {
+      "key": "family",
+      "repo": "agentic-family-os",
+      "path": "packages/family",
+      "status": "experimental",
+      "risk": "sensitive-local",
+      "verify": "pnpm exec vitest run packages/family/tests",
+      "purpose": "Evidence-backed private family research, human-governed relationship claims, audience-scoped ancestor projections, preservation, and stewardship."
     }
   ],
   "healthKnowledgeSource": {
@@ -39,6 +48,7 @@
     "raw-health-records",
     "clinical-data",
     "genomic-data",
+    "family-records",
     "secrets",
     "authority-state",
     "personal-metrics"

@@ -14,6 +14,7 @@ Open-source, local-first agent runtime with private-instance overlays.
 - `packages/health`: sovereign health bridge, admission, projection, and export contracts.
 - `packages/memory`: local memory primitives.
 - `packages/orchestration`: bounded cross-module composition.
+- `packages/family`: evidence-backed research registry and audience-scoped projections.
 - Other packages are experimental synthetic workflow primitives.
 
 ## Health source
@@ -26,3 +27,7 @@ repository-relative path, byte length, and SHA-256. Integrity is not clinical va
 
 No diagnosis, treatment, medication changes, result interpretation, emergency
 reassurance, autonomous transport, or public storage of private records.
+
+Family or genetic data must not flow into generic Memory or Creator modules.
+Real family records require a private encrypted deployment with consent, audit,
+backup/restore, audience authorization, and succession controls.

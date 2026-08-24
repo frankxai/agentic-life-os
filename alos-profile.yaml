@@ -67,9 +67,9 @@ modules:
     path: "packages/family"
     status: "in-development"
     riskLevel: "private"
-    healthCommand: "vitest run"
+    healthCommand: "pnpm exec vitest run packages/family/tests"
     activeAgents: ["local-agent"]
-    purpose: "Synthetic heritage primitives with private-instance data boundaries."
+    purpose: "Evidence-backed private family research, human-governed relationship claims, audience-scoped ancestor projections, preservation, and stewardship."
 
 offering:
   name: "Agentic Life OS"

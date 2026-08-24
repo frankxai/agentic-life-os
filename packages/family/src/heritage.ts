@@ -16,7 +16,7 @@ export interface LifeStoryNode {
 }
 
 export function compileLineageChain(nodes: FamilyNode[]): string[] {
-  return nodes
+  return [...nodes]
     .sort((a, b) => a.birthYear - b.birthYear)
     .map((n) => `${n.name} (b. ${n.birthYear}) - ${n.relationship}`);
 }

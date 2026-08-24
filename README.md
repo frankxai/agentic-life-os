@@ -46,6 +46,14 @@ This is organizational and developer infrastructure. It does not diagnose,
 interpret results, recommend treatment or medication changes, or replace a
 licensed clinician. Artifact integrity does not establish clinical validity.
 
+## Family research kernel
+
+[`@frankx-ai/agentic-family-os`](packages/family/README.md) provides evidence
+records with rights and fixity metadata, human-governed relationship claims, and
+audience-scoped ancestor projections. Real family records remain outside this
+repository, and family or genetic data cannot flow into generic Memory or Creator
+modules. See the [family research operating system](docs/family-research-operating-system.md).
+
 ## Public and private products
 
 - **Agentic Life OS** is the public developer/runtime name.
@@ -76,7 +84,7 @@ grants tools through capabilities, current consent, and human approval.
 | `investor` | Synthetic wealth-calculation primitives | Experimental |
 | [`health`](packages/health/README.md) | Sovereign health boundary and wellness organization | Experimental, safety-gated |
 | [`life-sciences-researcher`](packages/life-sciences-researcher/README.md) | Research-only synthetic gateway fixtures | Experimental; not a truth source |
-| [`family`](packages/family/README.md) | Synthetic heritage primitives | Experimental |
+| [`family`](packages/family/README.md) | Evidence-backed research registry and audience-scoped projections | Experimental, private-data gated |
 
 The static [`dashboard`](dashboard/index.html) is a development demonstration,
 not a live medical, financial, or operational console.
@@ -106,6 +114,7 @@ copy raw records or secrets into this repository.
 - [Contributing](CONTRIBUTING.md)
 - [Offering and release spine](docs/ultimate-offering-spine.md)
 - [Public release checklist](docs/public-release-checklist.md)
+- [Family research operating system](docs/family-research-operating-system.md)
 
 The repository is licensed under the [MIT License](LICENSE). Health sources,
 books, papers, media, datasets, and imported artifacts retain their own licenses;

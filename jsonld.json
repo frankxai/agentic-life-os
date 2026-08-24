@@ -20,6 +20,11 @@
       "@type": "SoftwareSourceCode",
       "name": "Health Intelligence System bridge",
       "description": "Immutable provenance receipts for versioned public health artifacts."
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Agentic Family OS",
+      "description": "Evidence-backed family research registry with human-governed claims and audience-scoped projections."
     }
   ]
 }

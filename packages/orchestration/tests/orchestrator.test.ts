@@ -51,35 +51,25 @@ describe('Agentic Life OS (ALOS) Interconnectivity', () => {
     expect(projectedWealth).toBe(395000);
   });
 
-  it('should run a biographic + research-only study, sync it to Memory OS (SIP), and generate Creator OS outlines', async () => {
+  it('fails closed instead of sending family and genetic data to generic memory or creator modules', async () => {
     const businessManager = new BusinessOSManager(entity);
     const orchestrator = new ALOSOrchestrator(businessManager);
 
     const nodes: FamilyNode[] = [
-      { id: '1', name: 'Example Ancestor', relationship: 'ancestor', birthYear: 1920 },
-      { id: '2', name: 'Example Parent', relationship: 'parent', birthYear: 1955 },
+      { id: 'person_ancestor', name: 'Example ancestor label', relationship: 'ancestor', birthYear: 1920 },
+      { id: 'person_parent', name: 'Example parent label', relationship: 'parent', birthYear: 1955 },
     ];
 
-    const result = await orchestrator.syncBiographicResearchToCreator(
-      nodes,
-      'rs12345',
-      'The Synthetic Lineage Trait'
-    );
+    await expect(
+      orchestrator.syncBiographicResearchToCreator(
+        nodes,
+        'synthetic-variant-reference',
+        'Private research topic'
+      )
+    ).rejects.toThrow(/disabled pending trusted consent and publication authorization/i);
 
-    expect(result.scriptId).toBeDefined();
-    expect(result.memoryNodeId).toBeDefined();
-
-    // Verify memory indexing
-    const memoryNode = orchestrator.getMemoryManager().semanticSearch('rs12345')[0];
-    expect(memoryNode).toBeDefined();
-    expect(memoryNode?.label).toContain('The Synthetic Lineage Trait');
-    expect(memoryNode?.content).toContain('Example Ancestor');
-    expect(memoryNode?.content).toContain('TEST1');
-    expect(memoryNode?.content.toLowerCase()).toContain('research-only');
-
-    // Verify creator outline
-    const creatorAssets = orchestrator.getCreatorManager().getAssets();
-    expect(creatorAssets).toBeDefined();
+    expect(orchestrator.getMemoryManager().getNodesCount()).toBe(0);
+    expect(orchestrator.getCreatorManager().getAssets()).toEqual([]);
   });
 
   it('should generate a comprehensive health dashboard report', () => {

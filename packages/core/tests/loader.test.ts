@@ -16,6 +16,9 @@ describe('ALOS Profile Loader', () => {
     expect(profile.version).toBe('1.3.0');
     expect(profile.workstation.machineName).toBe('local-instance');
     expect(profile.modules['health']?.path).toBe('packages/health');
+    expect(profile.modules['family']?.path).toBe('packages/family');
+    expect(profile.modules['family']?.healthCommand).toBe('pnpm exec vitest run packages/family/tests');
+    expect(profile.modules['family']?.purpose).toMatch(/evidence-backed private family research/i);
   });
 
   it('should successfully load and validate a well-formed ALOS profile', () => {
