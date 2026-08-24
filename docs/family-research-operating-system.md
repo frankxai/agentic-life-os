@@ -1,6 +1,6 @@
 # Private Family Research Operating System
 
-Status: private production-instance contract
+Status: private-adapter design contract; not implemented by the public package
 Data policy: no real family records, names, dates, media, or source scans belong in public repositories.
 
 ## What this system treats as truth
@@ -13,17 +13,17 @@ The canonical archive is **not** a family tree. It is a reversible registry of:
 4. human review decisions, uncertainty, and contradictions;
 5. audience-specific tree and narrative projections.
 
-A tree is generated only from accepted, evidence-backed relationship claims. Proposed, disputed, and rejected claims remain searchable but cannot silently enter the tree.
+In a future authority-bearing private adapter, a tree may be generated only from relationship claims covered by authority-owned review receipts bound to exact evidence and registry digests. Caller-authored accepted/reviewer fields are never sufficient.
 
 ## Repository and runtime boundary
 
-| Plane | Location | Permitted content |
+| Planned plane | Location | Permitted content |
 |---|---|---|
-| Public doctrine | `family-intelligence-systems` | protocols, schemas, source methodology, synthetic fixtures |
-| Reusable runtime | `family-intelligence-os` | policy engine, authorization, audit, connectors, export contracts |
-| Private product integration | this private repository | private operator code and research workflow, but no credentials |
+| Public doctrine | this document | protocols and source methodology; no real records |
+| Public adapter boundary | `packages/family` | opaque, non-executable plan descriptors only |
+| Private authority adapter | separate authenticated deployment | evidence resolution, authority-owned review receipts, consent, audit, and publication decisions |
 | Private tenant state | `<private-family-data-root>/` | real claims, private citations, manifests, review logs, encrypted-object references |
-| Public projection | separate human-approved export | deceased-person material with rights, cultural, and publication review |
+| Public projection | disabled until separately implemented and audited | deceased-person material only after rights, cultural, consent, and publication review |
 
 The private tenant remains locked until authentication, encrypted storage, persistent audit, malware scanning, backup, restore, and succession controls are operational.
 
@@ -168,4 +168,4 @@ A web index or existing online tree may locate a record. It does not validate th
 
 ## Current production state
 
-The private software now has a tested claim/evidence relationship registry and audience-scoped ancestor projection. It is **not yet a production vault**: persistent encrypted storage, authentication, object scanning, durable audit, backup/restore, consent onboarding, and trusted deployment composition remain mandatory gates before real documents are ingested.
+The public software has only a tested descriptor boundary. It has no claim/evidence registry, no reviewer authority, no tree renderer, and no publication function. A future private adapter must bind evidence, authority-owned review receipts, consent, rights, revocation, audience, and exact registry/projection digests. Persistent encrypted storage, authentication, object scanning, durable audit, backup/restore, consent onboarding, and trusted deployment composition remain mandatory gates before real documents are ingested.

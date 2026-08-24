@@ -32,9 +32,13 @@ must pass every item below immediately before that action.
 
 ```bash
 pnpm check:public
-pnpm --filter @frankx-ai/agentic-health-os typecheck
-pnpm --filter @frankx-ai/agentic-health-os test
-pnpm --filter @frankx-ai/alos-core typecheck
-pnpm --filter @frankx-ai/alos-core test
+pnpm check:generated
+pnpm check:licenses
+pnpm check:projection
+pnpm typecheck
+pnpm test
+pnpm audit --audit-level=moderate
+# When the machine-performance gate allows it:
+pnpm build
 git diff --check
 ```

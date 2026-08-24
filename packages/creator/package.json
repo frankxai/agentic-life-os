@@ -1,19 +1,20 @@
 {
   "name": "@frankx-ai/agentic-creator-os",
   "version": "0.1.0",
+  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./src/index.ts",
-      "import": "./src/index.ts"
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run --config ../../vitest.config.ts"
   },
   "dependencies": {},
   "devDependencies": {

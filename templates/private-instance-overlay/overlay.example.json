@@ -3,14 +3,27 @@
   "instanceId": "private-life-instance",
   "publicRuntime": {
     "repository": "frankxai/agentic-life-os",
-    "version": "0.3.0"
+    "activationGate": "approved-clean-history-projection-required",
+    "version": "0.3.0",
+    "commitSha": null,
+    "treeSha": null,
+    "projectionDigest": null
   },
   "health": {
     "publicKnowledgeSource": {
+      "enabled": false,
       "repository": "frankxai/health-intelligence-system",
-      "artifactVersion": "0.2.1",
-      "requireImmutableCommit": true,
-      "requireSha256Receipt": true
+      "activationGate": "approved-release-manifest-required",
+      "requiredReceiptFields": [
+        "pinVersion",
+        "repository",
+        "commitSha",
+        "artifactVersion",
+        "artifactPath",
+        "mediaType",
+        "byteLength",
+        "sha256"
+      ]
     },
     "vault": {
       "adapter": "separately-encrypted-local-vault",
@@ -19,7 +32,7 @@
     "secondBrainProjection": {
       "enabled": false,
       "direction": "health-vault-to-second-brain-only",
-      "maximumSensitivity": "personal",
+      "maximumSensitivity": "unverified-private",
       "requiresHumanApproval": true
     },
     "exports": {

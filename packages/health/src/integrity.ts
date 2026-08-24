@@ -5,6 +5,53 @@ const SAFE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/;
 const SEMVER_PATTERN = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
 const COMMIT_PATTERN = /^[a-f0-9]{40}(?:[a-f0-9]{24})?$/;
 
+export function isPlainRecord(value: unknown): value is Record<string, unknown> {
+  return (
+    value !== null &&
+    typeof value === 'object' &&
+    !Array.isArray(value) &&
+    Object.getPrototypeOf(value) === Object.prototype
+  );
+}
+
+export function assertExactOwnKeys(
+  value: unknown,
+  requiredKeys: readonly string[],
+  optionalKeys: readonly string[],
+  label: string,
+): asserts value is Record<string, unknown> {
+  void snapshotExactOwnData(value, requiredKeys, optionalKeys, label);
+}
+
+export function snapshotExactOwnData(
+  value: unknown,
+  requiredKeys: readonly string[],
+  optionalKeys: readonly string[],
+  label: string,
+): Readonly<Record<string, unknown>> {
+  if (!isPlainRecord(value)) throw new Error(`${label} must be a plain object`);
+  const allowed = new Set([...requiredKeys, ...optionalKeys]);
+  const ownKeys = Reflect.ownKeys(value);
+  if (ownKeys.some((key) => typeof key !== 'string' || !allowed.has(key))) {
+    throw new Error(`${label} contains unknown fields`);
+  }
+  for (const requiredKey of requiredKeys) {
+    if (!Object.prototype.hasOwnProperty.call(value, requiredKey)) {
+      throw new Error(`${label} is missing required fields`);
+    }
+  }
+  const snapshot: Record<string, unknown> = {};
+  for (const key of ownKeys) {
+    if (typeof key !== 'string') continue;
+    const descriptor = Object.getOwnPropertyDescriptor(value, key);
+    if (descriptor === undefined || !descriptor.enumerable || !('value' in descriptor)) {
+      throw new Error(`${label} fields must be enumerable data properties`);
+    }
+    snapshot[key] = descriptor.value;
+  }
+  return Object.freeze(snapshot);
+}
+
 export function sha256Hex(value: string | Uint8Array): string {
   return createHash('sha256').update(value).digest('hex');
 }
@@ -14,25 +61,24 @@ export function isSha256(value: unknown): value is string {
 }
 
 export function assertSafeId(value: string, label: string): void {
-  if (!SAFE_ID_PATTERN.test(value)) {
+  if (typeof value !== 'string' || !SAFE_ID_PATTERN.test(value)) {
     throw new Error(`${label} must be a bounded opaque identifier`);
   }
 }
 
 export function assertIsoTimestamp(value: string, label: string): void {
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value)) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value)) {
     throw new Error(`${label} must be a UTC ISO-8601 timestamp`);
   }
   const parsed = new Date(value);
-  if (!Number.isFinite(parsed.getTime())) {
-    throw new Error(`${label} must be a valid timestamp`);
-  }
+  if (!Number.isFinite(parsed.getTime())) throw new Error(`${label} must be a valid timestamp`);
   const canonical = value.includes('.') ? parsed.toISOString() : parsed.toISOString().replace('.000Z', 'Z');
   if (canonical !== value) throw new Error(`${label} must be a real canonical UTC timestamp`);
 }
 
 export function assertSafeRepoRelativePath(value: string): void {
   if (
+    typeof value !== 'string' ||
     value.length === 0 ||
     value.length > 240 ||
     value.includes('\\') ||
@@ -45,26 +91,24 @@ export function assertSafeRepoRelativePath(value: string): void {
 }
 
 export function assertArtifactVersion(value: string): void {
-  if (!SEMVER_PATTERN.test(value)) {
+  if (typeof value !== 'string' || !SEMVER_PATTERN.test(value)) {
     throw new Error('artifactVersion must be an explicit semantic version');
   }
 }
 
 export function assertCommitSha(value: string): void {
-  if (!COMMIT_PATTERN.test(value)) {
+  if (typeof value !== 'string' || !COMMIT_PATTERN.test(value)) {
     throw new Error('commitSha must be an immutable 40- or 64-character Git object ID');
   }
 }
 
 function sortForCanonicalJson(value: unknown): unknown {
-  if (Array.isArray(value)) {
-    return value.map(sortForCanonicalJson);
-  }
+  if (Array.isArray(value)) return value.map(sortForCanonicalJson);
   if (value !== null && typeof value === 'object') {
     return Object.fromEntries(
       Object.entries(value as Record<string, unknown>)
         .sort(([left], [right]) => left.localeCompare(right))
-        .map(([key, nested]) => [key, sortForCanonicalJson(nested)])
+        .map(([key, nested]) => [key, sortForCanonicalJson(nested)]),
     );
   }
   return value;
@@ -74,9 +118,13 @@ export function canonicalJson(value: unknown): string {
   return JSON.stringify(sortForCanonicalJson(value));
 }
 
-export interface PublicHisArtifactReceipt {
-  receiptVersion: '1.0.0';
-  receiptId: string;
+/**
+ * An exact artifact pin supplied by a private, authenticated authority store.
+ * This public type and its validators do not establish that authority or prove
+ * that commitSha/path exist in Git; the private ingestion adapter must do so.
+ */
+export interface HisArtifactPin {
+  pinVersion: '1.0.0';
   repository: 'frankxai/health-intelligence-system';
   commitSha: string;
   artifactPath: string;
@@ -84,113 +132,82 @@ export interface PublicHisArtifactReceipt {
   mediaType: string;
   byteLength: number;
   sha256: string;
-  receivedAt: string;
-  immutable: true;
 }
 
-export interface PublicHisArtifactInput {
-  repository: 'frankxai/health-intelligence-system';
-  commitSha: string;
-  artifactPath: string;
-  artifactVersion: string;
-  mediaType: string;
-  bytes: string | Uint8Array;
-  receivedAt: string;
+export interface HisArtifactIntegrityAssessment {
+  assessmentVersion: '1.0.0';
+  pinDigest: string;
+  observedByteLength: number;
+  observedSha256: string;
+  matchesPin: boolean;
+  authoritative: false;
+  trustBoundary: 'caller-supplied-pin-requires-private-git-and-authority-verification';
 }
 
-export function createPublicHisArtifactReceipt(input: PublicHisArtifactInput): PublicHisArtifactReceipt {
-  const allowedKeys = new Set([
+function normalizeHisArtifactPin(pin: HisArtifactPin): Readonly<HisArtifactPin> {
+  const requiredKeys = [
+    'pinVersion',
     'repository',
     'commitSha',
     'artifactPath',
     'artifactVersion',
     'mediaType',
-    'bytes',
-    'receivedAt',
-  ]);
-  if (Object.keys(input).some((key) => !allowedKeys.has(key))) {
-    throw new Error('Public HIS artifact input contains unknown fields');
-  }
-  if (input.repository !== 'frankxai/health-intelligence-system') {
+    'byteLength',
+    'sha256',
+  ] as const;
+  const snapshot = snapshotExactOwnData(pin, requiredKeys, [], 'HIS artifact pin');
+  if (snapshot.pinVersion !== '1.0.0') throw new Error('Unsupported HIS artifact pin version');
+  if (snapshot.repository !== 'frankxai/health-intelligence-system') {
     throw new Error('Only the canonical public Health Intelligence System repository is accepted');
   }
-  assertCommitSha(input.commitSha);
-  assertSafeRepoRelativePath(input.artifactPath);
-  assertArtifactVersion(input.artifactVersion);
-  assertIsoTimestamp(input.receivedAt, 'receivedAt');
-  if (!/^[a-z0-9][a-z0-9.+-]+\/[a-z0-9][a-z0-9.+-]+$/i.test(input.mediaType)) {
+  if (typeof snapshot.commitSha !== 'string') throw new Error('commitSha must be a string');
+  if (typeof snapshot.artifactPath !== 'string') throw new Error('artifactPath must be a string');
+  if (typeof snapshot.artifactVersion !== 'string') throw new Error('artifactVersion must be a string');
+  assertCommitSha(snapshot.commitSha);
+  assertSafeRepoRelativePath(snapshot.artifactPath);
+  assertArtifactVersion(snapshot.artifactVersion);
+  if (
+    typeof snapshot.mediaType !== 'string' ||
+    !/^[a-z0-9][a-z0-9.+-]+\/[a-z0-9][a-z0-9.+-]+$/i.test(snapshot.mediaType)
+  ) {
     throw new Error('mediaType must be an explicit MIME type');
   }
-
-  const bytes = typeof input.bytes === 'string' ? Buffer.from(input.bytes, 'utf8') : Buffer.from(input.bytes);
-  const sha256 = sha256Hex(bytes);
-  const receiptBody = {
-    repository: input.repository,
-    commitSha: input.commitSha,
-    artifactPath: input.artifactPath,
-    artifactVersion: input.artifactVersion,
-    mediaType: input.mediaType,
-    byteLength: bytes.byteLength,
-    sha256,
-    receivedAt: input.receivedAt,
-  };
-
+  if (!Number.isSafeInteger(snapshot.byteLength) || (snapshot.byteLength as number) < 0) {
+    throw new Error('byteLength must be a non-negative safe integer');
+  }
+  if (!isSha256(snapshot.sha256)) throw new Error('sha256 must be a lowercase SHA-256 digest');
   return Object.freeze({
-    receiptVersion: '1.0.0',
-    receiptId: `his:${sha256Hex(canonicalJson(receiptBody))}`,
-    ...receiptBody,
-    immutable: true,
+    pinVersion: snapshot.pinVersion,
+    repository: snapshot.repository,
+    commitSha: snapshot.commitSha,
+    artifactPath: snapshot.artifactPath,
+    artifactVersion: snapshot.artifactVersion,
+    mediaType: snapshot.mediaType,
+    byteLength: snapshot.byteLength as number,
+    sha256: snapshot.sha256,
   });
 }
 
-export function verifyPublicHisArtifactBytes(
-  receipt: PublicHisArtifactReceipt,
-  bytes: string | Uint8Array
-): boolean {
-  try {
-    const allowedKeys = new Set([
-      'receiptVersion',
-      'receiptId',
-      'repository',
-      'commitSha',
-      'artifactPath',
-      'artifactVersion',
-      'mediaType',
-      'byteLength',
-      'sha256',
-      'receivedAt',
-      'immutable',
-    ]);
-    if (Object.keys(receipt).some((key) => !allowedKeys.has(key))) return false;
-    if (
-      receipt.repository !== 'frankxai/health-intelligence-system' ||
-      receipt.receiptVersion !== '1.0.0' ||
-      receipt.immutable !== true
-    ) {
-      return false;
-    }
-    assertCommitSha(receipt.commitSha);
-    assertSafeRepoRelativePath(receipt.artifactPath);
-    assertArtifactVersion(receipt.artifactVersion);
-    assertIsoTimestamp(receipt.receivedAt, 'receivedAt');
-    if (!isSha256(receipt.sha256)) return false;
-    if (!/^[a-z0-9][a-z0-9.+-]+\/[a-z0-9][a-z0-9.+-]+$/i.test(receipt.mediaType)) return false;
+export function assertHisArtifactPin(pin: HisArtifactPin): void {
+  void normalizeHisArtifactPin(pin);
+}
 
-    const normalized = typeof bytes === 'string' ? Buffer.from(bytes, 'utf8') : Buffer.from(bytes);
-    if (normalized.byteLength !== receipt.byteLength || sha256Hex(normalized) !== receipt.sha256) return false;
-
-    const receiptBody = {
-      repository: receipt.repository,
-      commitSha: receipt.commitSha,
-      artifactPath: receipt.artifactPath,
-      artifactVersion: receipt.artifactVersion,
-      mediaType: receipt.mediaType,
-      byteLength: receipt.byteLength,
-      sha256: receipt.sha256,
-      receivedAt: receipt.receivedAt,
-    };
-    return receipt.receiptId === `his:${sha256Hex(canonicalJson(receiptBody))}`;
-  } catch {
-    return false;
-  }
+export function assessPublicHisArtifactPin(
+  pin: HisArtifactPin,
+  bytes: string | Uint8Array,
+): HisArtifactIntegrityAssessment {
+  const normalizedPin = normalizeHisArtifactPin(pin);
+  const normalized = typeof bytes === 'string' ? Buffer.from(bytes, 'utf8') : Buffer.from(bytes);
+  const observedSha256 = sha256Hex(normalized);
+  return Object.freeze({
+    assessmentVersion: '1.0.0',
+    pinDigest: sha256Hex(canonicalJson(normalizedPin)),
+    observedByteLength: normalized.byteLength,
+    observedSha256,
+    matchesPin:
+      normalized.byteLength === normalizedPin.byteLength &&
+      observedSha256 === normalizedPin.sha256,
+    authoritative: false,
+    trustBoundary: 'caller-supplied-pin-requires-private-git-and-authority-verification',
+  });
 }

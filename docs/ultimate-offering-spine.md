@@ -1,6 +1,6 @@
 # Agentic Life OS offering and release spine
 
-Status: public open-core candidate
+Status: private hardening candidate; public clean-history projection required
 Updated: 2026-08-24
 
 Agentic Life OS is a free, reusable runtime for bounded personal agents. The
@@ -11,9 +11,10 @@ Every person's live instance remains separately private and local-first.
 
 | Layer | Repository or boundary | Responsibility |
 |---|---|---|
-| Public runtime | `agentic-life-os` | Agent contracts, admission, orchestration, safe manifests, synthetic examples |
+| Public runtime | future clean projection of `agentic-life-os` | Agent contracts, report-only policy simulation, non-executable plans, synthetic examples |
 | Public health knowledge | `health-intelligence-system` | Evidence ledger, protocols, privacy patterns, clinician-prep templates |
 | Private instance | Suggested `frankx-life-os` | Enabled modules, preferences, local policy IDs, sanitized operating notes |
+| Private runtime authority | Authenticated external store | Current capabilities, consent, approvals, revocations, and decision receipts |
 | Raw data | Separately encrypted local vault | Records, wearables, journals, exports, keys, backups |
 | Public discovery | FrankX/Starlight surfaces | Documentation and fictional-data demos only |
 
@@ -26,11 +27,11 @@ raw stores remain physically and logically separated.
 1. Clone and verify the public runtime.
 2. Copy the generic private-instance overlay into an approved private repository.
 3. Configure an encrypted local-vault adapter through environment injection.
-4. Pin Health Intelligence System artifacts by commit, version, and SHA-256 receipt.
-5. Create authority-owned capability, consent, egress, and approval records locally.
-6. Run a synthetic health workflow and inspect the decision receipt.
-7. Enable a Second Brain projection only after the one-way and sensitivity gates pass.
-8. Prepare, but do not transmit, a clinician-handoff manifest for human review.
+4. Keep the overlay separate from an authenticated private runtime authority store.
+5. Leave Health Intelligence System ingestion disabled until an approved release manifest exists.
+6. Run only synthetic report-only policy simulation and inspect its non-authoritative result.
+7. Prepare fixed-enum Second Brain and descriptor-only clinician-handoff requests.
+8. Do not enable egress; the authenticated private authority and transport adapters are not implemented.
 
 ## Release gates
 
@@ -41,14 +42,14 @@ raw stores remain physically and logically separated.
   client data, or personal metrics are tracked.
 - Public copy describes health behavior as educational organization and clinician
   preparation, never diagnosis, treatment, result interpretation, or reassurance.
-- Research-only fixtures are labeled fixtures and cannot authorize personal advice.
+- The biomedical package performs no public lookup and returns no scientific data.
 - Repository visibility, domain, deployment, and any regulated-product claim are
   explicitly human-approved after a history and license review.
 
 ## Product identities
 
 `Agentic Life OS` remains the developer-facing runtime. The public health source is
-`Health Intelligence System`; the public movement module uses the descriptive
+`Health Intelligence System`; a planned bounded movement module reserves the descriptive
 `Training Intelligence Pack` label. `Vitalis` is held as a private memorial steward
 codename, and `Velora` remains reserved for Arcanea's established Executor persona.
 Neither held name is a public app, product, service, marketplace agent, or package.

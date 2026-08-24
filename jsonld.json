@@ -2,10 +2,19 @@
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Agentic Life OS (ALOS)",
-  "description": "Open-source, local-first agent runtime with private-instance overlays and sovereign data boundaries.",
+  "description": "Publication-candidate local-first agent runtime with private-instance overlays and sovereign data boundaries.",
   "codeRepository": "https://github.com/frankxai/agentic-life-os",
   "programmingLanguage": "TypeScript",
   "license": "https://opensource.org/license/mit",
+  "version": "0.3.0",
+  "operatingSystem": "Portable Node.js 24 target; Windows verified, Linux CI pending",
+  "applicationCategory": "DeveloperApplication",
+  "conditionsOfAccess": "Publication-candidate code and synthetic data only; live records, secrets, authority, and metrics stay private.",
+  "additionalProperty": {
+    "@type": "PropertyValue",
+    "name": "Profile assertion status",
+    "value": "unverified-declarative-configuration"
+  },
   "creator": {
     "@type": "Person",
     "name": "Frank Riemer"
@@ -13,18 +22,79 @@
   "hasPart": [
     {
       "@type": "SoftwareSourceCode",
-      "name": "Agentic Health OS",
-      "description": "Default-deny health bridge and local sovereign-data contracts."
+      "name": "agentic-business-os",
+      "alternateName": "business",
+      "description": "Descriptor-only private business-adapter planning; public code accepts no entities, clients, invoices, dates, or amounts.",
+      "applicationSubCategory": "template"
     },
     {
       "@type": "SoftwareSourceCode",
-      "name": "Health Intelligence System bridge",
-      "description": "Immutable provenance receipts for versioned public health artifacts."
+      "name": "agentic-creator-os",
+      "alternateName": "creator",
+      "description": "Descriptor-only private creator-adapter planning; public code accepts no titles, outlines, paths, metadata, or raw content.",
+      "applicationSubCategory": "template"
     },
     {
       "@type": "SoftwareSourceCode",
-      "name": "Agentic Family OS",
-      "description": "Evidence-backed family research registry with human-governed claims and audience-scoped projections."
+      "name": "second-brain-os",
+      "alternateName": "memory",
+      "description": "Descriptor-only private memory-adapter planning; public code accepts no labels, transcripts, metadata, paths, or raw content.",
+      "applicationSubCategory": "private"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "agentic-orchestration-os",
+      "alternateName": "orchestration",
+      "description": "Bounded cross-module orchestration with explicit stop conditions.",
+      "applicationSubCategory": "library"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "agentic-investor-os",
+      "alternateName": "investor",
+      "description": "Descriptor-only private wealth-adapter planning; public code accepts no holdings, values, deals, or financial identifiers and provides no advice.",
+      "applicationSubCategory": "template"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "agentic-health-os",
+      "alternateName": "health",
+      "description": "Sovereign health-data boundary, wellness organization, and clinician preparation.",
+      "applicationSubCategory": "private"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "life-sciences-researcher-is",
+      "alternateName": "lifeSciencesResearcher",
+      "description": "Descriptor-only private research-adapter planning; public code performs no lookup and returns no scientific data.",
+      "applicationSubCategory": "template"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "agentic-family-os",
+      "alternateName": "family",
+      "description": "Descriptor-only private family-adapter planning; public code accepts no people, relationships, evidence, reviewer claims, genetics, or publication payloads.",
+      "applicationSubCategory": "private"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Starlight Intelligence System",
+      "alternateName": "Starlight-Intelligence-System",
+      "description": "Memory, provenance, taxonomy, and validation substrate.",
+      "applicationSubCategory": "substrate"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Health Intelligence System",
+      "alternateName": "health-intelligence-system",
+      "description": "Evidence, protocols, privacy patterns, and clinician-preparation templates.",
+      "applicationSubCategory": "domain-vertical"
     }
-  ]
+  ],
+  "isBasedOn": {
+    "@type": "SoftwareSourceCode",
+    "name": "Health Intelligence System",
+    "codeRepository": "https://github.com/frankxai/health-intelligence-system",
+    "description": "Immutable provenance receipts for versioned public health artifacts."
+  }
 }

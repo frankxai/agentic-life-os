@@ -6,24 +6,27 @@ The package has two deliberately separate surfaces:
 
 1. `AgenticHealthOS` creates conservative wellness briefs and clinician-handoff
    preparation. It does not provide medical advice.
-2. `SovereignHealthRuntime` governs access to private health descriptors and
-   prepares sanitized projections or manifest-only exports.
+2. `PublicHealthPolicySimulator` evaluates caller-supplied policy snapshots as a
+   non-authoritative conformance report. It cannot authorize or produce egress.
 
 ## Public Health Intelligence System bridge
 
-`createPublicHisArtifactReceipt` accepts bytes only from the canonical public
-`frankxai/health-intelligence-system` identity and binds them to:
+`assessPublicHisArtifactPin` compares bytes with a complete pin for the canonical
+`frankxai/health-intelligence-system` repository:
 
 - an immutable Git commit;
 - an explicit semantic version;
 - a normalized repository-relative path;
 - media type and byte length;
 - SHA-256;
-- a deterministic receipt ID.
+- a deterministic pin digest.
 
-`verifyPublicHisArtifactBytes` detects altered bytes or receipt metadata.
-Provenance and integrity do not establish evidence quality, clinical validity,
-currency, or applicability to a person.
+The assessment is always marked non-authoritative. It can detect altered bytes,
+but public code cannot prove that a caller-authored commit/path exists or accept
+the artifact. A private authenticated ingestion adapter must resolve the exact Git
+tree/blob against an approved release manifest before accepting the artifact.
+Integrity does not establish evidence quality, clinical validity, currency, or
+applicability to a person.
 
 ## Private vault boundary
 
@@ -31,36 +34,39 @@ currency, or applicability to a person.
 public contract has no method for decrypted bytes and no raw-path field. A private
 instance owns the encrypted vault, key management, backup, and restore process.
 
-## Admission
+## Policy simulation, not authority
 
-Every protected operation re-resolves authority state at operation time:
+The simulator checks whether a supplied snapshot is internally consistent across:
 
 - capability: tenant, subject, actor, action, purpose, and sensitivity;
 - matching current consent;
 - hard destination sensitivity ceiling;
 - matching current egress policy;
 - matching current human approval bound to both the operation digest and the
-  canonical normalized payload digest;
-- an atomic, durable, single-use approval claim before a projection or export
-  manifest is returned.
+  canonical normalized payload digest.
 
-Missing, expired, revoked, malformed, cross-tenant, or out-of-scope records deny
-the operation. Prompts, serialized request fields, and agent personas do not grant
-authority.
+Missing, expired, revoked, malformed, cross-tenant, or out-of-scope records fail
+the simulation. Every result is marked `authorityStatus:
+unverified-policy-simulation` and `executionPermitted: false`.
 
-The public package defines the authority contract; it does not ship a production
-authority database. A real adapter must enforce a cross-process unique claim and
-revalidate capability, consent, policy, and approval revocation in the same
-transaction. An in-memory adapter is suitable only for synthetic tests.
+The public package does not ship or bootstrap a production authority database.
+Prompts, files, personas, and caller-authored callbacks cannot become authority.
+A future private implementation needs authenticated server-owned configuration,
+an authority-owned clock, durable revocation, and atomic single-use approval
+claims before any execution path exists.
 
 ## Egress
 
-- Second Brain projections are one-way, month-granular, public/personal only,
-  hash-bound, and reject direct identifiers, credentials, and local paths.
-- Clinician exports are manifest-only and capped at clinical sensitivity.
-- Encrypted local exports are manifest-only and may be explicitly approved for
-  genomic sensitivity.
-- The runtime performs no transport and includes no raw bytes in a manifest.
+- Second Brain planning accepts only fixed, structured monthly wellness-pattern
+  enums. It accepts no title, summary, source-record digest, genomic field, or
+  caller-authored sensitivity.
+- Internal export validation accepts descriptor metadata only and checks a
+  bounded opaque-reference syntax. Syntax does not prove private minting or
+  authority, and the payload/digest builders are not public exports.
+- Public preparation methods always return `public-runtime-report-only`; they do
+  not claim approvals, create projections/manifests, or perform transport.
+- Caller-supplied citation notes expose `claimedStance` plus
+  `claimStatus: unverified-caller-supplied`; they never mint evidence quality.
 
 ## Safety stance
 
@@ -68,7 +74,7 @@ transaction. An in-memory adapter is suitable only for synthetic tests.
 - No lab, pathology, imaging, biomarker, or genetic interpretation.
 - No medication, supplement, dose, treatment, or delay recommendations.
 - No replacement for licensed clinicians, emergency care, or care-team instructions.
-- Biomedical gateway fixtures are synthetic research examples, not medical truth.
+- The public biomedical boundary performs no lookup and returns no scientific data.
 
 ## Focused verification
 

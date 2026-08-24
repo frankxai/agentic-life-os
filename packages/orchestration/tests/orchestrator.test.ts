@@ -1,123 +1,88 @@
-import { describe, it, expect } from 'vitest';
-import { BusinessOSManager, type BusinessEntity } from '@frankx-ai/agentic-business-os';
-import { ALOSOrchestrator } from '../src/system-orchestrator.js';
-import { type WealthPortfolio } from '@frankx-ai/agentic-investor-os';
-import { type FamilyNode } from '@frankx-ai/agentic-family-os';
+import { describe, expect, it } from 'vitest';
+import { ALOSOrchestrator, BLOCKED_SENSITIVE_ROUTES } from '../src/system-orchestrator.js';
 import { type LifeOSProfile } from '@frankx-ai/alos-core';
 
-describe('Agentic Life OS (ALOS) Interconnectivity', () => {
-  const entity: BusinessEntity = {
-    name: 'Example Cooperative',
-    kvkNumber: '00000000',
-    vatNumber: 'NL000000000B00',
-    jurisdiction: 'NL',
-    taxReservesRatio: 0.25,
-  };
+describe('Agentic Life OS public orchestration', () => {
+  it('composes only non-executable private-adapter descriptors', () => {
+    const orchestrator = new ALOSOrchestrator();
 
-  it('should successfully calculate projected wealth by connecting Business cashflow and Investor portfolio', () => {
-    const businessManager = new BusinessOSManager(entity);
-    businessManager.addInvoice({
-      id: 'INV-001',
-      clientName: 'Enterprise Client A',
-      amount: 10000,
-      vatRate: 0.21,
-      status: 'paid',
-      issueDate: '2026-06-01',
-      dueDate: '2026-06-15',
+    expect(orchestrator.planPrivateBusinessReview('business_0123456789abcdef0123456789abcdef')).toMatchObject({
+      financialDataIncluded: false,
+      executionPermitted: false,
     });
-    businessManager.addInvoice({
-      id: 'INV-002',
-      clientName: 'Enterprise Client B',
-      amount: 5000,
-      vatRate: 0.21,
-      status: 'sent',
-      issueDate: '2026-06-10',
-      dueDate: '2026-06-24',
+    expect(orchestrator.planPrivateWealthReview('wealth_0123456789abcdef0123456789abcdef')).toMatchObject({
+      financialDataIncluded: false,
+      adviceProvided: false,
     });
-
-    const orchestrator = new ALOSOrchestrator(businessManager);
-
-    const portfolio: WealthPortfolio = {
-      cash: 20000,
-      equities: 50000,
-      realEstate: 300000,
-      sovereignAssets: 10000,
-    };
-
-    // Net worth = 20k cash + 50k equities + 300k RE + 10k sovereign = 380k
-    // Business OS has: 10k paid + 5k outstanding = 15k additions
-    // Total should be: 380k + 15k = 395k
-    const projectedWealth = orchestrator.aggregateProjectedWealth(portfolio);
-    expect(projectedWealth).toBe(395000);
+    expect(orchestrator.planPrivateResearchQuery(
+      'variant-literature',
+      'research_0123456789abcdef0123456789abcdef',
+    )).toMatchObject({ dataIncluded: false, networkRequestPermitted: false });
+    expect(orchestrator.planPrivateFamilyProjection('family_0123456789abcdef0123456789abcdef')).toMatchObject({
+      contentIncluded: false,
+      authorityStatus: 'unverified-public-plan',
+    });
   });
 
-  it('fails closed instead of sending family and genetic data to generic memory or creator modules', async () => {
-    const businessManager = new BusinessOSManager(entity);
-    const orchestrator = new ALOSOrchestrator(businessManager);
+  it('fails closed without accepting family or genetic payloads', () => {
+    const orchestrator = new ALOSOrchestrator();
+    const decision = orchestrator.evaluateSensitiveRoute('genetic-to-creator');
 
-    const nodes: FamilyNode[] = [
-      { id: 'person_ancestor', name: 'Example ancestor label', relationship: 'ancestor', birthYear: 1920 },
-      { id: 'person_parent', name: 'Example parent label', relationship: 'parent', birthYear: 1955 },
-    ];
-
-    await expect(
-      orchestrator.syncBiographicResearchToCreator(
-        nodes,
-        'synthetic-variant-reference',
-        'Private research topic'
-      )
-    ).rejects.toThrow(/disabled pending trusted consent and publication authorization/i);
-
-    expect(orchestrator.getMemoryManager().getNodesCount()).toBe(0);
-    expect(orchestrator.getCreatorManager().getAssets()).toEqual([]);
+    expect(decision).toMatchObject({
+      conforms: false,
+      inputIncluded: false,
+      executionPermitted: false,
+      authorityStatus: 'public-static-denial',
+    });
+    expect(orchestrator.getDataFlowStatus()).toEqual({ memoryNodesCount: 0, creatorAssetsCount: 0 });
+    expect('getMemoryManager' in orchestrator).toBe(false);
+    expect('getCreatorManager' in orchestrator).toBe(false);
+    expect('getBusinessManager' in orchestrator).toBe(false);
+    expect('getLifeSciencesGateway' in orchestrator).toBe(false);
+    expect('aggregateProjectedWealth' in orchestrator).toBe(false);
+    expect('clock' in orchestrator).toBe(false);
+    expect(Object.isFrozen(BLOCKED_SENSITIVE_ROUTES)).toBe(true);
+    expect(() => Object.defineProperty(BLOCKED_SENSITIVE_ROUTES, 'includes', {
+      value: () => true,
+    })).toThrow();
+    expect(() => orchestrator.evaluateSensitiveRoute(
+      'PRIVATE_PAYLOAD' as 'family-to-memory',
+    )).toThrow(/not recognized/i);
   });
 
-  it('should generate a comprehensive health dashboard report', () => {
-    const businessManager = new BusinessOSManager(entity);
-    businessManager.addInvoice({
-      id: 'INV-001',
-      clientName: 'Client X',
-      amount: 15000,
-      vatRate: 0.21,
-      status: 'sent',
-      issueDate: '2026-06-01',
-      dueDate: '2026-06-15',
+  it('reports only declarative public configuration and zero sensitive payloads', () => {
+    const orchestrator = new ALOSOrchestrator(() => new Date('2026-08-24T12:00:00.000Z'));
+    const profile = {
+      modules: { business: {}, health: {} },
+    } as LifeOSProfile;
+
+    expect(orchestrator.generateStatusReport(profile)).toEqual({
+      generatedAt: '2026-08-24T12:00:00.000Z',
+      totalModulesDeclared: 2,
+      memoryNodesCount: 0,
+      creatorAssetsCount: 0,
+      financialDataIncluded: false,
+      personalDataIncluded: false,
+      configurationStatus: 'unverified-profile-configuration',
+      status: 'informational',
     });
+  });
 
-    const orchestrator = new ALOSOrchestrator(businessManager);
+  it('rejects forged clock objects without emitting their payload', () => {
+    const secret = 'PRIVATE_PAYLOAD_FROM_FORGED_CLOCK';
+    const orchestrator = new ALOSOrchestrator(() => ({
+      getTime: () => 0,
+      toISOString: () => secret,
+    }) as never);
+    const profile = { modules: { health: {} } } as LifeOSProfile;
 
-    const profile: LifeOSProfile = {
-      systemName: 'Agentic Life OS (ALOS)',
-      version: '1.0.0',
-      sipVersion: '1.1.1',
-      workstation: {
-        machineName: 'local-instance',
-        os: 'Cross-platform',
-      },
-      modules: {
-        business: {
-          repoName: 'agentic-business-os',
-          path: 'packages/business',
-          status: 'live',
-          riskLevel: 'production',
-          healthCommand: 'pnpm test',
-          activeAgents: ['Claude Code'],
-          purpose: 'Billing',
-        },
-      },
-    };
-
-    const portfolio: WealthPortfolio = {
-      cash: 5000,
-      equities: 0,
-      realEstate: 0,
-      sovereignAssets: 0,
-    };
-
-    const report = orchestrator.generateHealthReport(profile, portfolio);
-    expect(report.status).toBe('healthy');
-    expect(report.totalModulesChecked).toBe(1);
-    expect(report.unresolvedReceivablesEUR).toBe(15000);
-    expect(report.projectedNetWorthEUR).toBe(20000); // 5000 cash + 15000 receivables
+    let message = '';
+    try {
+      orchestrator.generateStatusReport(profile);
+    } catch (error) {
+      message = error instanceof Error ? error.message : String(error);
+    }
+    expect(message).toMatch(/must return a Date/i);
+    expect(message).not.toContain(secret);
   });
 });

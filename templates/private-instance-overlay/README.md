@@ -23,6 +23,16 @@ Start from `overlay.example.json` and rename it to `overlay.json`. Inject the
 vault root, credentials, and encryption material at runtime. Do not put them in
 the JSON file.
 
+The runtime binding is disabled until `commitSha`, `treeSha`, and
+`projectionDigest` are copied from an approved clean-history projection receipt.
+Version text by itself is never a runtime binding.
+
+Health knowledge ingestion is disabled by default. Enable it only after an
+approved Health Intelligence System release exists and the private instance has
+the complete immutable receipt: pin version, repository, commit SHA, artifact
+version, repository-relative artifact path, media type, byte length, and
+SHA-256. Legacy prerelease versions are not a fallback.
+
 The overlay is not authority. A private runtime must store current capabilities,
 consent, egress policies, human approvals, and revocation state in an authenticated
 local authority repository.

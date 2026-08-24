@@ -3,34 +3,42 @@ import {
   HEALTH_EGRESS_DESTINATIONS,
   HEALTH_PURPOSES,
   HEALTH_SENSITIVITIES,
-  type HealthAdmissionAllowed,
-  type HealthAdmissionBlocked,
-  type HealthAdmissionDecision,
+  WELLNESS_PATTERN_KEYS,
+  WELLNESS_PATTERN_TRENDS,
+  type HealthPolicyConformanceReport,
+  type HealthPolicyDoesNotConform,
   type HealthAdmissionRequest,
-  type HealthApprovalClaimRequest,
-  type HealthAuthorityRepository,
+  type HealthPolicySimulationRepository,
   type HealthEgressDestination,
   type HealthRecordDescriptor,
   type HealthRuntimeClock,
   type HealthSensitivity,
-  type SafeExportManifest,
-  type SafeExportPlan,
   type SafeExportPreparation,
-  type SafeExportRecord,
-  type SanitizedSecondBrainProjection,
   type SecondBrainProjectionDraft,
-  type SecondBrainProjectionPlan,
   type SecondBrainProjectionPreparation,
 } from './sovereign-contracts.js';
 import {
   assertIsoTimestamp,
   assertSafeId,
   canonicalJson,
+  isPlainRecord,
   isSha256,
   sha256Hex,
+  snapshotExactOwnData,
 } from './integrity.js';
 
 const SYSTEM_CLOCK: HealthRuntimeClock = { now: () => new Date() };
+const HEALTH_ENUM_SETS = new Map<readonly string[], ReadonlySet<string>>([
+  [HEALTH_ACTIONS, new Set<string>(HEALTH_ACTIONS)],
+  [HEALTH_EGRESS_DESTINATIONS, new Set<string>(HEALTH_EGRESS_DESTINATIONS)],
+  [HEALTH_PURPOSES, new Set<string>(HEALTH_PURPOSES)],
+  [HEALTH_SENSITIVITIES, new Set<string>(HEALTH_SENSITIVITIES)],
+  [WELLNESS_PATTERN_KEYS, new Set<string>(WELLNESS_PATTERN_KEYS)],
+  [WELLNESS_PATTERN_TRENDS, new Set<string>(WELLNESS_PATTERN_TRENDS)],
+]);
+const ARRAY_INCLUDES = Array.prototype.includes;
+const MAP_GET = Map.prototype.get;
+const SET_HAS = Set.prototype.has;
 const SENSITIVITY_RANK: Record<HealthSensitivity, number> = {
   public: 0,
   personal: 1,
@@ -50,25 +58,138 @@ const DESTINATION_BY_ACTION: Partial<Record<HealthAdmissionRequest['action'], He
   'prepare-encrypted-local-export': 'encrypted-local-export',
 };
 
-function assertOnlyKeys(value: object, allowed: readonly string[], label: string): void {
-  const keySet = new Set(allowed);
-  if (Object.keys(value).some((key) => !keySet.has(key))) {
-    throw new Error(`${label} contains unknown fields`);
-  }
+const REQUEST_REQUIRED_KEYS = [
+  'requestId',
+  'tenantId',
+  'subjectId',
+  'actorId',
+  'capabilityId',
+  'action',
+  'purpose',
+  'sensitivity',
+  'resourceId',
+] as const;
+const REQUEST_OPTIONAL_KEYS = ['destination', 'humanApprovalId'] as const;
+const CAPABILITY_REQUIRED_KEYS = [
+  'id', 'tenantId', 'subjectId', 'actorId', 'actions', 'purposes', 'sensitivities',
+  'consentId', 'issuedAt', 'expiresAt',
+] as const;
+const CAPABILITY_OPTIONAL_KEYS = ['egressPolicyId', 'revokedAt'] as const;
+const CONSENT_REQUIRED_KEYS = [
+  'id', 'tenantId', 'subjectId', 'actorId', 'actions', 'purposes', 'sensitivities',
+  'issuedAt', 'expiresAt',
+] as const;
+const CONSENT_OPTIONAL_KEYS = ['revokedAt'] as const;
+const EGRESS_REQUIRED_KEYS = [
+  'id', 'tenantId', 'allowedDestinations', 'allowedPurposes', 'allowedSensitivities',
+  'requiresHumanApproval', 'issuedAt', 'expiresAt',
+] as const;
+const EGRESS_OPTIONAL_KEYS = ['revokedAt'] as const;
+const APPROVAL_REQUIRED_KEYS = [
+  'id', 'tenantId', 'subjectId', 'actorId', 'operationDigest', 'payloadDigest',
+  'destination', 'approvedBy', 'issuedAt', 'expiresAt',
+] as const;
+const APPROVAL_OPTIONAL_KEYS = ['revokedAt'] as const;
+
+interface InternalSafeExportRecord {
+  opaqueRecordRef: string;
+  sensitivity: HealthSensitivity;
+  contentSha256: string;
+  byteLength: number;
+  mediaType: string;
+  sourceReceiptIds: readonly string[];
+}
+
+interface InternalSecondBrainProjectionPlan {
+  payload: {
+    schemaVersion: '1.0.0';
+    kind: 'second-brain-projection-plan';
+    title: 'Monthly wellness pattern review';
+    period: string;
+    patterns: readonly { key: string; trend: string }[];
+    sensitivity: 'personal';
+  };
+  payloadSha256: string;
+}
+
+interface InternalSafeExportPlan {
+  payload: {
+    schemaVersion: '1.0.0';
+    kind: 'safe-export-plan';
+    purpose: HealthAdmissionRequest['purpose'];
+    destination: Exclude<HealthEgressDestination, 'second-brain'>;
+    requestSensitivity: HealthSensitivity;
+    records: readonly InternalSafeExportRecord[];
+  };
+  payloadSha256: string;
 }
 
 function isEnumValue<T extends string>(values: readonly T[], value: unknown): value is T {
-  return typeof value === 'string' && (values as readonly string[]).includes(value);
+  const membership = Reflect.apply(MAP_GET, HEALTH_ENUM_SETS, [values]) as ReadonlySet<string> | undefined;
+  return (
+    typeof value === 'string' &&
+    membership !== undefined &&
+    Reflect.apply(SET_HAS, membership, [value])
+  );
 }
 
-function assertEnumArray<T extends string>(
+function normalizeOrdinaryDenseArray(
+  value: unknown,
+  label: string,
+  minimum: number,
+  maximum: number,
+): readonly unknown[] {
+  if (!Array.isArray(value) || Object.getPrototypeOf(value) !== Array.prototype) {
+    throw new Error(`${label} must be an ordinary array`);
+  }
+  const lengthDescriptor = Object.getOwnPropertyDescriptor(value, 'length');
+  if (
+    lengthDescriptor === undefined ||
+    !('value' in lengthDescriptor) ||
+    !Number.isSafeInteger(lengthDescriptor.value) ||
+    lengthDescriptor.value < minimum ||
+    lengthDescriptor.value > maximum
+  ) {
+    throw new Error(`${label} has an invalid length`);
+  }
+  const length = lengthDescriptor.value as number;
+  const allowedKeys = new Set(['length']);
+  for (let index = 0; index < length; index += 1) allowedKeys.add(String(index));
+  const ownKeys = Reflect.ownKeys(value);
+  if (
+    ownKeys.length !== allowedKeys.size ||
+    ownKeys.some((key) => typeof key !== 'string' || !allowedKeys.has(key))
+  ) {
+    throw new Error(`${label} contains custom fields or sparse entries`);
+  }
+  const normalized: unknown[] = [];
+  for (let index = 0; index < length; index += 1) {
+    const descriptor = Object.getOwnPropertyDescriptor(value, String(index));
+    if (descriptor === undefined || !descriptor.enumerable || !('value' in descriptor)) {
+      throw new Error(`${label} entries must be enumerable data properties`);
+    }
+    normalized.push(descriptor.value);
+  }
+  return Object.freeze(normalized);
+}
+
+function normalizeEnumArray<T extends string>(
   value: unknown,
   allowed: readonly T[],
-  label: string
-): asserts value is readonly T[] {
-  if (!Array.isArray(value) || value.some((entry) => !isEnumValue(allowed, entry))) {
-    throw new Error(`${label} contains an unknown enum value`);
+  label: string,
+): readonly T[] {
+  const entries = normalizeOrdinaryDenseArray(value, label, 1, 16);
+  const normalized: T[] = [];
+  for (const entry of entries) {
+    if (!isEnumValue(allowed, entry)) throw new Error(`${label} contains an unknown enum value`);
+    normalized.push(entry);
   }
+  if (new Set(normalized).size !== normalized.length) throw new Error(`${label} contains duplicates`);
+  return Object.freeze(normalized);
+}
+
+function arrayIncludes<T>(values: readonly T[], expected: T): boolean {
+  return Reflect.apply(ARRAY_INCLUDES, values, [expected]) as boolean;
 }
 
 function assertSafeRuntimeId(value: unknown, label: string): asserts value is string {
@@ -78,16 +199,29 @@ function assertSafeRuntimeId(value: unknown, label: string): asserts value is st
 
 function blocked(
   request: Pick<HealthAdmissionRequest, 'requestId'> | unknown,
-  code: HealthAdmissionBlocked['code'],
+  code: HealthPolicyDoesNotConform['code'],
   reason: string
-): HealthAdmissionBlocked {
-  const requestId =
-    request !== null &&
-    typeof request === 'object' &&
-    typeof (request as { requestId?: unknown }).requestId === 'string'
-      ? (request as { requestId: string }).requestId
-      : 'invalid-request';
-  return { allowed: false, code, requestId, reason };
+): HealthPolicyDoesNotConform {
+  let requestId = 'invalid-request';
+  try {
+    if (isPlainRecord(request)) {
+      const descriptor = Object.getOwnPropertyDescriptor(request, 'requestId');
+      if (descriptor !== undefined && 'value' in descriptor && typeof descriptor.value === 'string') {
+        assertSafeId(descriptor.value, 'requestId');
+        requestId = descriptor.value;
+      }
+    }
+  } catch {
+    requestId = 'invalid-request';
+  }
+  return {
+    conforms: false,
+    code,
+    requestId,
+    reason,
+    authorityStatus: 'unverified-policy-simulation',
+    executionPermitted: false,
+  };
 }
 
 function isActive(
@@ -116,14 +250,20 @@ function sameBinding(
   );
 }
 
-function assertGrantScopes(record: {
+function normalizeGrantScopes(record: {
   actions: readonly HealthAdmissionRequest['action'][];
   purposes: readonly HealthAdmissionRequest['purpose'][];
   sensitivities: readonly HealthAdmissionRequest['sensitivity'][];
-}): void {
-  assertEnumArray(record.actions, HEALTH_ACTIONS, 'Authority actions');
-  assertEnumArray(record.purposes, HEALTH_PURPOSES, 'Authority purposes');
-  assertEnumArray(record.sensitivities, HEALTH_SENSITIVITIES, 'Authority sensitivities');
+}): Readonly<{
+  actions: readonly HealthAdmissionRequest['action'][];
+  purposes: readonly HealthAdmissionRequest['purpose'][];
+  sensitivities: readonly HealthAdmissionRequest['sensitivity'][];
+}> {
+  return Object.freeze({
+    actions: normalizeEnumArray(record.actions, HEALTH_ACTIONS, 'Authority actions'),
+    purposes: normalizeEnumArray(record.purposes, HEALTH_PURPOSES, 'Authority purposes'),
+    sensitivities: normalizeEnumArray(record.sensitivities, HEALTH_SENSITIVITIES, 'Authority sensitivities'),
+  });
 }
 
 function includesScope(
@@ -134,168 +274,127 @@ function includesScope(
   },
   request: HealthAdmissionRequest
 ): boolean {
-  assertGrantScopes(record);
+  const scopes = normalizeGrantScopes(record);
   return (
-    record.actions.includes(request.action) &&
-    record.purposes.includes(request.purpose) &&
-    record.sensitivities.includes(request.sensitivity)
+    arrayIncludes(scopes.actions, request.action) &&
+    arrayIncludes(scopes.purposes, request.purpose) &&
+    arrayIncludes(scopes.sensitivities, request.sensitivity)
   );
 }
 
-function validateRequest(request: HealthAdmissionRequest): void {
-  if (request === null || typeof request !== 'object') {
-    throw new Error('Health admission request must be an object');
-  }
-  assertOnlyKeys(
+function normalizeRequest(request: HealthAdmissionRequest): Readonly<HealthAdmissionRequest> {
+  const snapshot = snapshotExactOwnData(
     request,
-    [
-      'requestId',
-      'tenantId',
-      'subjectId',
-      'actorId',
-      'capabilityId',
-      'action',
-      'purpose',
-      'sensitivity',
-      'resourceId',
-      'destination',
-      'humanApprovalId',
-    ],
-    'Health admission request'
+    REQUEST_REQUIRED_KEYS,
+    REQUEST_OPTIONAL_KEYS,
+    'Health admission request',
   );
   for (const [label, value] of [
-    ['requestId', request.requestId],
-    ['tenantId', request.tenantId],
-    ['subjectId', request.subjectId],
-    ['actorId', request.actorId],
-    ['capabilityId', request.capabilityId],
-    ['resourceId', request.resourceId],
+    ['requestId', snapshot.requestId],
+    ['tenantId', snapshot.tenantId],
+    ['subjectId', snapshot.subjectId],
+    ['actorId', snapshot.actorId],
+    ['capabilityId', snapshot.capabilityId],
+    ['resourceId', snapshot.resourceId],
   ] as const) {
     assertSafeRuntimeId(value, label);
   }
-  if (!isEnumValue(HEALTH_ACTIONS, request.action)) throw new Error('Unknown health action');
-  if (!isEnumValue(HEALTH_PURPOSES, request.purpose)) throw new Error('Unknown health purpose');
-  if (!isEnumValue(HEALTH_SENSITIVITIES, request.sensitivity)) throw new Error('Unknown sensitivity');
+  if (!isEnumValue(HEALTH_ACTIONS, snapshot.action)) throw new Error('Unknown health action');
+  if (!isEnumValue(HEALTH_PURPOSES, snapshot.purpose)) throw new Error('Unknown health purpose');
+  if (!isEnumValue(HEALTH_SENSITIVITIES, snapshot.sensitivity)) throw new Error('Unknown sensitivity');
   if (
-    request.destination !== undefined &&
-    !isEnumValue(HEALTH_EGRESS_DESTINATIONS, request.destination)
+    snapshot.destination !== undefined &&
+    !isEnumValue(HEALTH_EGRESS_DESTINATIONS, snapshot.destination)
   ) {
     throw new Error('Unknown egress destination');
   }
-  if (request.humanApprovalId !== undefined) {
-    assertSafeRuntimeId(request.humanApprovalId, 'humanApprovalId');
+  if (snapshot.humanApprovalId !== undefined) {
+    assertSafeRuntimeId(snapshot.humanApprovalId, 'humanApprovalId');
   }
 
-  const expectedDestination = DESTINATION_BY_ACTION[request.action];
-  if (expectedDestination !== request.destination) {
+  const expectedDestination = DESTINATION_BY_ACTION[snapshot.action];
+  if (expectedDestination !== snapshot.destination) {
     throw new Error(
       expectedDestination === undefined
         ? 'This action must not declare an egress destination'
         : `This action requires the ${expectedDestination} destination`
     );
   }
+  return Object.freeze({
+    requestId: snapshot.requestId as string,
+    tenantId: snapshot.tenantId as string,
+    subjectId: snapshot.subjectId as string,
+    actorId: snapshot.actorId as string,
+    capabilityId: snapshot.capabilityId as string,
+    action: snapshot.action,
+    purpose: snapshot.purpose,
+    sensitivity: snapshot.sensitivity,
+    resourceId: snapshot.resourceId as string,
+    ...(snapshot.destination === undefined ? {} : { destination: snapshot.destination }),
+    ...(snapshot.humanApprovalId === undefined ? {} : { humanApprovalId: snapshot.humanApprovalId }),
+  });
 }
 
 export function healthOperationDigest(request: HealthAdmissionRequest): string {
-  validateRequest(request);
-  const { humanApprovalId: _humanApprovalId, ...approvalBoundRequest } = request;
+  const normalizedRequest = normalizeRequest(request);
+  const approvalBoundRequest = Object.freeze({
+    requestId: normalizedRequest.requestId,
+    tenantId: normalizedRequest.tenantId,
+    subjectId: normalizedRequest.subjectId,
+    actorId: normalizedRequest.actorId,
+    capabilityId: normalizedRequest.capabilityId,
+    action: normalizedRequest.action,
+    purpose: normalizedRequest.purpose,
+    sensitivity: normalizedRequest.sensitivity,
+    resourceId: normalizedRequest.resourceId,
+    ...(normalizedRequest.destination === undefined ? {} : { destination: normalizedRequest.destination }),
+  });
   return sha256Hex(canonicalJson(approvalBoundRequest));
 }
 
-function assertProjectionTextSafe(value: unknown, label: string, maxLength: number): asserts value is string {
-  if (
-    typeof value !== 'string' ||
-    value.length === 0 ||
-    value.length > maxLength ||
-    /[\u0000-\u001f\u007f]/.test(value)
-  ) {
-    throw new Error(`${label} must be non-empty, bounded, single-line text`);
-  }
-
-  const forbidden = [
-    /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i,
-    /\b(?:mrn|medical record|patient id|date of birth|dob)\s*[:#]/i,
-    /\b(?:bearer|api[_ -]?key|access[_ -]?token|password)\s*[:=]/i,
-    /\b\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])\b/,
-    /\b(?:\+?\d[\d .()-]{7,}\d)\b/,
-    /file:\/\/[A-Za-z]:\//i,
-    /(?:^|\s)[A-Za-z]:\\(?:Users|Documents)\\/i,
-    /-----BEGIN [A-Z ]*PRIVATE KEY-----/,
-  ];
-  if (forbidden.some((pattern) => pattern.test(value))) {
-    throw new Error(`${label} contains a direct identifier, credential, or local path`);
-  }
-}
-
 /**
- * Produces the exact canonical payload that a human approval must bind. Runtime
- * timestamps and authority identifiers are intentionally excluded.
+ * Produces a narrowly structured, non-free-text projection plan. It is still a
+ * report-only draft; public code cannot authorize or transport it.
  */
-export function createSecondBrainProjectionPlan(
+function createSecondBrainProjectionPlan(
   draft: SecondBrainProjectionDraft
-): SecondBrainProjectionPlan {
-  if (draft === null || typeof draft !== 'object') {
-    throw new Error('Second Brain projection draft must be an object');
-  }
-  assertOnlyKeys(
+): InternalSecondBrainProjectionPlan {
+  const draftSnapshot = snapshotExactOwnData(
     draft,
-    ['title', 'summary', 'period', 'tags', 'sourceRecordDigests', 'sensitivity'],
-    'Second Brain projection draft'
+    ['period', 'patterns'],
+    [],
+    'Second Brain projection draft',
   );
-  assertProjectionTextSafe(draft.title, 'title', 120);
-  assertProjectionTextSafe(draft.summary, 'summary', 1_000);
-
-  const title = draft.title.normalize('NFC');
-  const summary = draft.summary.normalize('NFC');
-  assertProjectionTextSafe(title, 'title', 120);
-  assertProjectionTextSafe(summary, 'summary', 1_000);
-  const period = typeof draft.period === 'string' ? draft.period.normalize('NFC') : draft.period;
+  const period = typeof draftSnapshot.period === 'string'
+    ? draftSnapshot.period.normalize('NFC')
+    : draftSnapshot.period;
   if (typeof period !== 'string' || !/^\d{4}-(?:0[1-9]|1[0-2])$/.test(period)) {
     throw new Error('period must use month precision (YYYY-MM)');
   }
-  if (
-    !isEnumValue(HEALTH_SENSITIVITIES, draft.sensitivity) ||
-    (draft.sensitivity !== 'public' && draft.sensitivity !== 'personal')
-  ) {
-    throw new Error('Second Brain projections cannot carry clinical or genomic sensitivity');
-  }
-  if (!Array.isArray(draft.tags) || draft.tags.length > 12) {
-    throw new Error('tags must be unique and limited to 12 values');
-  }
-  const tags = draft.tags.map((tag) => {
-    if (typeof tag !== 'string') throw new Error('tags must be strings');
-    const normalized = tag.normalize('NFC');
-    if (!/^[a-z0-9][a-z0-9-]{0,39}$/.test(normalized)) {
-      throw new Error('tags must be bounded lowercase slugs');
-    }
-    return normalized;
+  const patternEntries = normalizeOrdinaryDenseArray(
+    draftSnapshot.patterns,
+    'patterns',
+    1,
+    5,
+  );
+  const patterns = patternEntries.map((pattern) => {
+    const patternSnapshot = snapshotExactOwnData(pattern, ['key', 'trend'], [], 'wellness pattern');
+    if (!isEnumValue(WELLNESS_PATTERN_KEYS, patternSnapshot.key)) throw new Error('pattern key is unknown');
+    if (!isEnumValue(WELLNESS_PATTERN_TRENDS, patternSnapshot.trend)) throw new Error('pattern trend is unknown');
+    return Object.freeze({ key: patternSnapshot.key, trend: patternSnapshot.trend });
   });
-  if (new Set(tags).size !== tags.length) {
-    throw new Error('tags must be unique and limited to 12 values');
+  if (new Set(patterns.map((pattern) => pattern.key)).size !== patterns.length) {
+    throw new Error('wellness pattern keys must be unique');
   }
-  if (
-    !Array.isArray(draft.sourceRecordDigests) ||
-    draft.sourceRecordDigests.length === 0 ||
-    draft.sourceRecordDigests.length > 32
-  ) {
-    throw new Error('sourceRecordDigests must contain 1 to 32 hashes');
-  }
-  if (
-    !draft.sourceRecordDigests.every(isSha256) ||
-    new Set(draft.sourceRecordDigests).size !== draft.sourceRecordDigests.length
-  ) {
-    throw new Error('sourceRecordDigests must contain unique SHA-256 values');
-  }
+  patterns.sort((left, right) => left.key.localeCompare(right.key));
 
   const payload = Object.freeze({
     schemaVersion: '1.0.0' as const,
     kind: 'second-brain-projection-plan' as const,
-    title,
-    summary,
+    title: 'Monthly wellness pattern review' as const,
     period,
-    tags: Object.freeze([...tags].sort()),
-    sensitivity: draft.sensitivity,
-    sourceRecordDigests: Object.freeze([...draft.sourceRecordDigests].sort()),
+    patterns: Object.freeze(patterns),
+    sensitivity: 'personal' as const,
   });
   return Object.freeze({
     payload,
@@ -306,14 +405,11 @@ export function createSecondBrainProjectionPlan(
 function normalizeSafeExportRecord(
   request: HealthAdmissionRequest,
   record: HealthRecordDescriptor
-): SafeExportRecord {
-  if (record === null || typeof record !== 'object') {
-    throw new Error('Health record descriptor must be an object');
-  }
-  assertOnlyKeys(
+): InternalSafeExportRecord {
+  const recordSnapshot = snapshotExactOwnData(
     record,
     [
-      'recordId',
+      'opaqueRecordRef',
       'tenantId',
       'subjectId',
       'sensitivity',
@@ -322,9 +418,13 @@ function normalizeSafeExportRecord(
       'mediaType',
       'sourceReceiptIds',
     ],
-    'Health record descriptor'
+    [],
+    'Health record descriptor',
   );
-  assertSafeRuntimeId(record.recordId, 'recordId');
+  record = recordSnapshot as unknown as HealthRecordDescriptor;
+  if (typeof record.opaqueRecordRef !== 'string' || !/^opaque:[a-f0-9]{32,64}$/.test(record.opaqueRecordRef)) {
+    throw new Error('opaqueRecordRef must use the bounded opaque:<hex> reference syntax');
+  }
   if (record.tenantId !== request.tenantId || record.subjectId !== request.subjectId) {
     throw new Error('Export record belongs to another tenant or subject');
   }
@@ -346,41 +446,43 @@ function normalizeSafeExportRecord(
   ) {
     throw new Error('Record media type must be explicit');
   }
-  if (!Array.isArray(record.sourceReceiptIds) || record.sourceReceiptIds.length > 64) {
-    throw new Error('Record source receipt IDs must be a bounded array');
-  }
-  if (new Set(record.sourceReceiptIds).size !== record.sourceReceiptIds.length) {
-    throw new Error('Record source receipt IDs must be unique');
-  }
-  for (const receiptId of record.sourceReceiptIds) {
+  const receiptEntries = normalizeOrdinaryDenseArray(
+    record.sourceReceiptIds,
+    'Record source receipt IDs',
+    0,
+    64,
+  );
+  const receiptIds: string[] = [];
+  for (const receiptId of receiptEntries) {
     assertSafeRuntimeId(receiptId, 'sourceReceiptId');
+    receiptIds.push(receiptId);
+  }
+  if (new Set(receiptIds).size !== receiptIds.length) {
+    throw new Error('Record source receipt IDs must be unique');
   }
 
   return Object.freeze({
-    opaqueRecordRef: `record:${sha256Hex(record.recordId)}`,
+    opaqueRecordRef: record.opaqueRecordRef,
     sensitivity: record.sensitivity,
     contentSha256: record.contentSha256,
     byteLength: record.byteLength,
     mediaType: record.mediaType.toLowerCase(),
-    sourceReceiptIds: Object.freeze([...record.sourceReceiptIds].sort()),
+    sourceReceiptIds: Object.freeze(receiptIds.sort()),
   });
 }
 
 /** Produces the exact canonical export record set that an approval must bind. */
-export function createSafeExportPlan(
+function createSafeExportPlan(
   request: HealthAdmissionRequest,
   records: readonly HealthRecordDescriptor[]
-): SafeExportPlan {
-  validateRequest(request);
+): InternalSafeExportPlan {
+  request = normalizeRequest(request);
   if (request.destination === undefined || request.destination === 'second-brain') {
     throw new Error('Safe exports require a clinician or encrypted-local destination');
   }
-  if (!Array.isArray(records) || records.length === 0 || records.length > 128) {
-    throw new Error('Export requires 1 to 128 records');
-  }
-
-  const safeRecords = records
-    .map((record) => normalizeSafeExportRecord(request, record))
+  const recordEntries = normalizeOrdinaryDenseArray(records, 'Export records', 1, 128);
+  const safeRecords = recordEntries
+    .map((record) => normalizeSafeExportRecord(request, record as HealthRecordDescriptor))
     .sort((left, right) => left.opaqueRecordRef.localeCompare(right.opaqueRecordRef));
   if (new Set(safeRecords.map((record) => record.opaqueRecordRef)).size !== safeRecords.length) {
     throw new Error('Export records must be unique');
@@ -400,81 +502,88 @@ export function createSafeExportPlan(
   });
 }
 
-function createProjection(
-  plan: SecondBrainProjectionPlan,
-  createdAt: string
-): SanitizedSecondBrainProjection {
-  const body = {
-    schemaVersion: '1.0.0' as const,
-    createdAt,
-    title: plan.payload.title,
-    summary: plan.payload.summary,
-    period: plan.payload.period,
-    tags: plan.payload.tags,
-    sensitivity: plan.payload.sensitivity,
-    sourceRecordDigests: plan.payload.sourceRecordDigests,
-    payloadSha256: plan.payloadSha256,
-    direction: 'health-vault-to-second-brain-only' as const,
-    containsRawRecords: false as const,
-    containsVaultLocation: false as const,
-  };
-  const projectionSha256 = sha256Hex(canonicalJson(body));
-  return Object.freeze({
-    ...body,
-    projectionId: `sbp:${projectionSha256}`,
-    projectionSha256,
-  });
-}
-
-function validateAuthorityEgressPolicy(policy: {
+function normalizeAuthorityEgressPolicy(policy: {
   allowedDestinations: readonly HealthEgressDestination[];
   allowedPurposes: readonly HealthAdmissionRequest['purpose'][];
   allowedSensitivities: readonly HealthSensitivity[];
   requiresHumanApproval: true;
-}): void {
-  assertEnumArray(policy.allowedDestinations, HEALTH_EGRESS_DESTINATIONS, 'Egress destinations');
-  assertEnumArray(policy.allowedPurposes, HEALTH_PURPOSES, 'Egress purposes');
-  assertEnumArray(policy.allowedSensitivities, HEALTH_SENSITIVITIES, 'Egress sensitivities');
+}): Readonly<{
+  allowedDestinations: readonly HealthEgressDestination[];
+  allowedPurposes: readonly HealthAdmissionRequest['purpose'][];
+  allowedSensitivities: readonly HealthSensitivity[];
+}> {
   if (policy.requiresHumanApproval !== true) {
     throw new Error('Egress policy must require human approval');
   }
+  return Object.freeze({
+    allowedDestinations: normalizeEnumArray(
+      policy.allowedDestinations,
+      HEALTH_EGRESS_DESTINATIONS,
+      'Egress destinations',
+    ),
+    allowedPurposes: normalizeEnumArray(policy.allowedPurposes, HEALTH_PURPOSES, 'Egress purposes'),
+    allowedSensitivities: normalizeEnumArray(
+      policy.allowedSensitivities,
+      HEALTH_SENSITIVITIES,
+      'Egress sensitivities',
+    ),
+  });
 }
 
-export class SovereignHealthRuntime {
-  readonly mode = 'local-open-core-runtime' as const;
+export class PublicHealthPolicySimulator {
+  readonly mode = 'public-report-only' as const;
+  readonly #authority: HealthPolicySimulationRepository;
+  readonly #clock: HealthRuntimeClock;
 
   constructor(
-    private readonly authority: HealthAuthorityRepository,
-    private readonly clock: HealthRuntimeClock = SYSTEM_CLOCK
-  ) {}
+    authority: HealthPolicySimulationRepository,
+    clock: HealthRuntimeClock = SYSTEM_CLOCK
+  ) {
+    this.#authority = authority;
+    this.#clock = clock;
+  }
 
   /**
    * Read-only admission preview. Egress cannot be admitted through this method:
    * a runtime-computed payload digest and atomic approval claim are mandatory.
    */
-  authorize(request: HealthAdmissionRequest): HealthAdmissionDecision {
-    return this.authorizeInternal(request);
+  evaluate(request: HealthAdmissionRequest): HealthPolicyConformanceReport {
+    return this.#authorizeInternal(request);
   }
 
-  private authorizeInternal(
+  #authorizeInternal(
     request: HealthAdmissionRequest,
     payloadDigest?: string
-  ): HealthAdmissionDecision {
+  ): HealthPolicyConformanceReport {
     try {
-      validateRequest(request);
-      const now = this.clock.now();
-      if (!Number.isFinite(now.getTime())) {
+      request = normalizeRequest(request);
+      const clockValue = this.#clock.now();
+      if (!(clockValue instanceof Date)) {
+        return blocked(request, 'invalid-request', 'Runtime clock must return a Date');
+      }
+      const timeValue = Date.prototype.getTime.call(clockValue);
+      if (!Number.isFinite(timeValue)) {
         return blocked(request, 'invalid-request', 'Runtime clock returned an invalid time');
       }
+      const now = new Date(timeValue);
 
-      const capability = this.authority.resolveCapability(request.capabilityId);
-      if (capability === undefined) {
+      const resolvedCapability = this.#authority.resolveCapability(request.capabilityId);
+      if (resolvedCapability === undefined) {
         return blocked(request, 'capability-not-found', 'No authority-owned capability exists');
       }
+      const capability = snapshotExactOwnData(
+        resolvedCapability,
+        CAPABILITY_REQUIRED_KEYS,
+        CAPABILITY_OPTIONAL_KEYS,
+        'Capability record',
+      ) as unknown as typeof resolvedCapability;
       if (!isActive(capability, now)) {
         return blocked(request, 'capability-inactive', 'Capability is not currently active');
       }
       assertSafeRuntimeId(capability.id, 'capability.id');
+      assertSafeRuntimeId(capability.tenantId, 'capability.tenantId');
+      assertSafeRuntimeId(capability.subjectId, 'capability.subjectId');
+      assertSafeRuntimeId(capability.actorId, 'capability.actorId');
       assertSafeRuntimeId(capability.consentId, 'capability.consentId');
       if (capability.egressPolicyId !== undefined) {
         assertSafeRuntimeId(capability.egressPolicyId, 'capability.egressPolicyId');
@@ -494,14 +603,23 @@ export class SovereignHealthRuntime {
         );
       }
 
-      const consent = this.authority.resolveConsent(capability.consentId);
-      if (consent === undefined) {
+      const resolvedConsent = this.#authority.resolveConsent(capability.consentId);
+      if (resolvedConsent === undefined) {
         return blocked(request, 'consent-not-found', 'Capability has no current authority-owned consent');
       }
+      const consent = snapshotExactOwnData(
+        resolvedConsent,
+        CONSENT_REQUIRED_KEYS,
+        CONSENT_OPTIONAL_KEYS,
+        'Consent record',
+      ) as unknown as typeof resolvedConsent;
       if (!isActive(consent, now)) {
         return blocked(request, 'consent-inactive', 'Consent is expired, revoked, or not yet active');
       }
       assertSafeRuntimeId(consent.id, 'consent.id');
+      assertSafeRuntimeId(consent.tenantId, 'consent.tenantId');
+      assertSafeRuntimeId(consent.subjectId, 'consent.subjectId');
+      assertSafeRuntimeId(consent.actorId, 'consent.actorId');
       if (consent.id !== capability.consentId || !sameBinding(consent, request)) {
         return blocked(
           request,
@@ -520,8 +638,10 @@ export class SovereignHealthRuntime {
       const operationDigest = healthOperationDigest(request);
       if (request.destination === undefined) {
         return {
-          allowed: true,
-          code: 'allowed',
+          conforms: true,
+          code: 'policy-conforms',
+          authorityStatus: 'unverified-policy-simulation',
+          executionPermitted: false,
           requestId: request.requestId,
           evaluatedAt: now.toISOString(),
           operationDigest,
@@ -542,14 +662,21 @@ export class SovereignHealthRuntime {
       if (capability.egressPolicyId === undefined) {
         return blocked(request, 'egress-policy-required', 'Egress requires an authority-owned policy');
       }
-      const egress = this.authority.resolveEgressPolicy(capability.egressPolicyId);
-      if (egress === undefined) {
+      const resolvedEgress = this.#authority.resolveEgressPolicy(capability.egressPolicyId);
+      if (resolvedEgress === undefined) {
         return blocked(request, 'egress-policy-not-found', 'Egress policy was not found');
       }
+      const egress = snapshotExactOwnData(
+        resolvedEgress,
+        EGRESS_REQUIRED_KEYS,
+        EGRESS_OPTIONAL_KEYS,
+        'Egress policy record',
+      ) as unknown as typeof resolvedEgress;
       if (!isActive(egress, now)) {
         return blocked(request, 'egress-policy-inactive', 'Egress policy is not currently active');
       }
       assertSafeRuntimeId(egress.id, 'egress.id');
+      assertSafeRuntimeId(egress.tenantId, 'egress.tenantId');
       if (egress.tenantId !== request.tenantId || egress.id !== capability.egressPolicyId) {
         return blocked(
           request,
@@ -557,11 +684,11 @@ export class SovereignHealthRuntime {
           'Egress policy belongs to another tenant'
         );
       }
-      validateAuthorityEgressPolicy(egress);
+      const egressScopes = normalizeAuthorityEgressPolicy(egress);
       if (
-        !egress.allowedDestinations.includes(request.destination) ||
-        !egress.allowedPurposes.includes(request.purpose) ||
-        !egress.allowedSensitivities.includes(request.sensitivity)
+        !arrayIncludes(egressScopes.allowedDestinations, request.destination) ||
+        !arrayIncludes(egressScopes.allowedPurposes, request.purpose) ||
+        !arrayIncludes(egressScopes.allowedSensitivities, request.sensitivity)
       ) {
         return blocked(
           request,
@@ -582,14 +709,20 @@ export class SovereignHealthRuntime {
       if (request.humanApprovalId === undefined) {
         return blocked(request, 'human-approval-required', 'Egress requires current human approval');
       }
-      const approval = this.authority.resolveHumanApproval(request.humanApprovalId);
-      if (approval === undefined) {
+      const resolvedApproval = this.#authority.resolveHumanApproval(request.humanApprovalId);
+      if (resolvedApproval === undefined) {
         return blocked(
           request,
           'human-approval-not-found',
           'Human approval was not found in the authority repository'
         );
       }
+      const approval = snapshotExactOwnData(
+        resolvedApproval,
+        APPROVAL_REQUIRED_KEYS,
+        APPROVAL_OPTIONAL_KEYS,
+        'Human approval record',
+      ) as unknown as typeof resolvedApproval;
       if (!isActive(approval, now)) {
         return blocked(
           request,
@@ -598,6 +731,9 @@ export class SovereignHealthRuntime {
         );
       }
       assertSafeRuntimeId(approval.id, 'approval.id');
+      assertSafeRuntimeId(approval.tenantId, 'approval.tenantId');
+      assertSafeRuntimeId(approval.subjectId, 'approval.subjectId');
+      assertSafeRuntimeId(approval.actorId, 'approval.actorId');
       assertSafeRuntimeId(approval.approvedBy, 'approval.approvedBy');
       if (!isEnumValue(HEALTH_EGRESS_DESTINATIONS, approval.destination)) {
         throw new Error('Human approval contains an unknown destination');
@@ -626,8 +762,10 @@ export class SovereignHealthRuntime {
       }
 
       return {
-        allowed: true,
-        code: 'allowed',
+        conforms: true,
+        code: 'policy-conforms',
+        authorityStatus: 'unverified-policy-simulation',
+        executionPermitted: false,
         requestId: request.requestId,
         evaluatedAt: now.toISOString(),
         operationDigest,
@@ -638,87 +776,11 @@ export class SovereignHealthRuntime {
         payloadDigest,
       };
     } catch (error) {
+      void error;
       return blocked(
         request,
         'invalid-request',
-        error instanceof Error ? error.message : 'Request or authority record is malformed'
-      );
-    }
-  }
-
-  private async claimEgressApproval(
-    request: HealthAdmissionRequest,
-    decision: HealthAdmissionAllowed
-  ): Promise<HealthAdmissionDecision> {
-    if (
-      request.destination === undefined ||
-      decision.humanApprovalId === undefined ||
-      decision.payloadDigest === undefined
-    ) {
-      return blocked(request, 'human-approval-claim-failed', 'Egress admission is incomplete');
-    }
-
-    const claimRequest: HealthApprovalClaimRequest = {
-      approvalId: decision.humanApprovalId,
-      tenantId: request.tenantId,
-      subjectId: request.subjectId,
-      actorId: request.actorId,
-      destination: request.destination,
-      operationDigest: decision.operationDigest,
-      payloadDigest: decision.payloadDigest,
-    };
-
-    try {
-      const result = await this.authority.claimHumanApproval(claimRequest);
-      if (!result.claimed) {
-        switch (result.reason) {
-          case 'already-claimed':
-            return blocked(
-              request,
-              'human-approval-already-claimed',
-              'Human approval has already been consumed'
-            );
-          case 'not-found':
-            return blocked(request, 'human-approval-not-found', 'Human approval no longer exists');
-          case 'inactive':
-            return blocked(request, 'human-approval-inactive', 'Human approval is no longer active');
-          case 'binding-mismatch':
-            return blocked(
-              request,
-              'human-approval-binding-mismatch',
-              'Human approval changed before it could be claimed'
-            );
-        }
-      }
-
-      assertSafeRuntimeId(result.claimId, 'claimId');
-      assertIsoTimestamp(result.claimedAt, 'claimedAt');
-      if (
-        result.approvalId !== claimRequest.approvalId ||
-        result.tenantId !== claimRequest.tenantId ||
-        result.subjectId !== claimRequest.subjectId ||
-        result.actorId !== claimRequest.actorId ||
-        result.destination !== claimRequest.destination ||
-        result.operationDigest !== claimRequest.operationDigest ||
-        result.payloadDigest !== claimRequest.payloadDigest
-      ) {
-        return blocked(
-          request,
-          'human-approval-claim-failed',
-          'Authority returned a claim for a different operation or payload'
-        );
-      }
-
-      return {
-        ...decision,
-        evaluatedAt: result.claimedAt,
-        approvalClaimId: result.claimId,
-      };
-    } catch {
-      return blocked(
-        request,
-        'human-approval-claim-failed',
-        'Trusted authority could not atomically claim human approval'
+        'Request or authority record is malformed'
       );
     }
   }
@@ -727,40 +789,29 @@ export class SovereignHealthRuntime {
     request: HealthAdmissionRequest,
     draft: SecondBrainProjectionDraft
   ): Promise<SecondBrainProjectionPreparation> {
-    let plan: SecondBrainProjectionPlan;
+    let plan: InternalSecondBrainProjectionPlan;
     try {
-      validateRequest(request);
+      request = normalizeRequest(request);
       plan = createSecondBrainProjectionPlan(draft);
     } catch (error) {
+      void error;
       return {
         ok: false,
         decision: blocked(
           request,
           'invalid-request',
-          error instanceof Error ? error.message : 'Projection is invalid'
+          'Projection request is malformed'
         ),
       };
     }
-
-    const admission = this.authorizeInternal(request, plan.payloadSha256);
-    if (!admission.allowed) return { ok: false, decision: admission };
-    if (request.destination !== 'second-brain' || request.sensitivity !== plan.payload.sensitivity) {
-      return {
-        ok: false,
-        decision: blocked(
-          request,
-          'egress-scope-denied',
-          'Projection sensitivity and destination must match admission'
-        ),
-      };
-    }
-
-    const claimed = await this.claimEgressApproval(request, admission);
-    if (!claimed.allowed) return { ok: false, decision: claimed };
+    void plan;
     return {
-      ok: true,
-      decision: claimed,
-      projection: createProjection(plan, claimed.evaluatedAt),
+      ok: false,
+      decision: blocked(
+        request,
+        'public-runtime-report-only',
+        'Public code can validate a structured draft but cannot authorize or produce Second Brain egress.',
+      ),
     };
   }
 
@@ -768,63 +819,28 @@ export class SovereignHealthRuntime {
     request: HealthAdmissionRequest,
     records: readonly HealthRecordDescriptor[]
   ): Promise<SafeExportPreparation> {
-    let plan: SafeExportPlan;
+    let plan: InternalSafeExportPlan;
     try {
       plan = createSafeExportPlan(request, records);
     } catch (error) {
+      void error;
       return {
         ok: false,
         decision: blocked(
           request,
           'invalid-request',
-          error instanceof Error ? error.message : 'Export is invalid'
+          'Export request is malformed'
         ),
       };
     }
-
-    const admission = this.authorizeInternal(request, plan.payloadSha256);
-    if (!admission.allowed) return { ok: false, decision: admission };
-    if (
-      admission.egressPolicyId === undefined ||
-      admission.humanApprovalId === undefined ||
-      admission.payloadDigest === undefined
-    ) {
-      return {
-        ok: false,
-        decision: blocked(request, 'human-approval-claim-failed', 'Export authority bindings are incomplete'),
-      };
-    }
-
-    const claimed = await this.claimEgressApproval(request, admission);
-    if (!claimed.allowed) return { ok: false, decision: claimed };
-    if (claimed.approvalClaimId === undefined) {
-      return {
-        ok: false,
-        decision: blocked(request, 'human-approval-claim-failed', 'Export approval was not claimed'),
-      };
-    }
-
-    const body = {
-      schemaVersion: '1.0.0' as const,
-      createdAt: claimed.evaluatedAt,
-      purpose: plan.payload.purpose,
-      destination: plan.payload.destination,
-      records: plan.payload.records,
-      capabilityId: claimed.capabilityId,
-      consentId: claimed.consentId,
-      egressPolicyId: admission.egressPolicyId,
-      humanApprovalId: admission.humanApprovalId,
-      approvalClaimId: claimed.approvalClaimId,
-      payloadSha256: plan.payloadSha256,
-      rawBytesIncluded: false as const,
-      transportPerformed: false as const,
+    void plan;
+    return {
+      ok: false,
+      decision: blocked(
+        request,
+        'public-runtime-report-only',
+        'Public code can validate a manifest-only draft but cannot authorize or produce an export.',
+      ),
     };
-    const manifestSha256 = sha256Hex(canonicalJson(body));
-    const manifest: SafeExportManifest = Object.freeze({
-      ...body,
-      exportId: `export:${manifestSha256}`,
-      manifestSha256,
-    });
-    return { ok: true, decision: claimed, manifest };
   }
 }

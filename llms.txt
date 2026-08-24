@@ -1,33 +1,178 @@
 # Agentic Life OS (ALOS)
 
-Open-source, local-first agent runtime with private-instance overlays.
+Publication-candidate local-first agent runtime with private-instance overlays.
 
 ## Public boundary
 
-- Public repository: code, contracts, docs, synthetic fixtures, generic templates.
-- Private instance: preferences, local policy identifiers, live authority, sanitized notes.
+- Public repository: code, contracts, docs, synthetic fixtures, and generic templates.
+- Private instance overlay: preferences, local policy identifiers, and sanitized notes; it is not authority.
+- Private runtime authority store: authenticated capabilities, consent, approvals, and revocations.
 - Encrypted local vault: raw personal, clinical, genomic, family, and financial data.
+- Profile assertions: `unverified-declarative-configuration`; fields below are configuration declarations, not runtime receipts.
 
-## Core modules
+## Version axes
 
-- `packages/core`: strict profile schema and loader.
-- `packages/health`: sovereign health bridge, admission, projection, and export contracts.
-- `packages/memory`: local memory primitives.
-- `packages/orchestration`: bounded cross-module composition.
-- `packages/family`: evidence-backed research registry and audience-scoped projections.
-- Other packages are experimental synthetic workflow primitives.
+- Runtime package version: `0.3.0`
+- Profile contract version: `1.4.0`
+- SIP compatibility version: `1.1.1`
+- Discovery asset schema: `1.3.0`
+- Runtime target: Portable Node.js 24 target; Windows verified, Linux CI pending
 
-## Health source
+## Modules
 
-Public Health Intelligence System artifacts must be pinned to
-`frankxai/health-intelligence-system` by immutable commit, semantic version,
-repository-relative path, byte length, and SHA-256. Integrity is not clinical validity.
+### agentic-business-os (`business`)
+- Path: `packages/business`
+- Declared status: `in-development`
+- Declared risk class: `template`
+- Health check: `vitest-module`
+- Declared agent roles: local-agent
+- Purpose: Descriptor-only private business-adapter planning; public code accepts no entities, clients, invoices, dates, or amounts.
 
-## Safety
+### agentic-creator-os (`creator`)
+- Path: `packages/creator`
+- Declared status: `in-development`
+- Declared risk class: `template`
+- Health check: `vitest-module`
+- Declared agent roles: local-agent
+- Purpose: Descriptor-only private creator-adapter planning; public code accepts no titles, outlines, paths, metadata, or raw content.
 
-No diagnosis, treatment, medication changes, result interpretation, emergency
-reassurance, autonomous transport, or public storage of private records.
+### second-brain-os (`memory`)
+- Path: `packages/memory`
+- Declared status: `in-development`
+- Declared risk class: `private`
+- Health check: `vitest-module`
+- Declared agent roles: local-agent
+- Purpose: Descriptor-only private memory-adapter planning; public code accepts no labels, transcripts, metadata, paths, or raw content.
 
-Family or genetic data must not flow into generic Memory or Creator modules.
-Real family records require a private encrypted deployment with consent, audit,
-backup/restore, audience authorization, and succession controls.
+### agentic-orchestration-os (`orchestration`)
+- Path: `packages/orchestration`
+- Declared status: `in-development`
+- Declared risk class: `library`
+- Health check: `vitest-module`
+- Declared agent roles: local-agent
+- Purpose: Bounded cross-module orchestration with explicit stop conditions.
+
+### agentic-investor-os (`investor`)
+- Path: `packages/investor`
+- Declared status: `in-development`
+- Declared risk class: `template`
+- Health check: `vitest-module`
+- Declared agent roles: local-agent
+- Purpose: Descriptor-only private wealth-adapter planning; public code accepts no holdings, values, deals, or financial identifiers and provides no advice.
+
+### agentic-health-os (`health`)
+- Path: `packages/health`
+- Declared status: `in-development`
+- Declared risk class: `private`
+- Health check: `vitest-module`
+- Declared agent roles: local-agent
+- Purpose: Sovereign health-data boundary, wellness organization, and clinician preparation.
+
+### life-sciences-researcher-is (`lifeSciencesResearcher`)
+- Path: `packages/life-sciences-researcher`
+- Declared status: `in-development`
+- Declared risk class: `template`
+- Health check: `vitest-module`
+- Declared agent roles: local-agent
+- Purpose: Descriptor-only private research-adapter planning; public code performs no lookup and returns no scientific data.
+
+### agentic-family-os (`family`)
+- Path: `packages/family`
+- Declared status: `in-development`
+- Declared risk class: `private`
+- Health check: `vitest-module`
+- Declared agent roles: local-agent
+- Purpose: Descriptor-only private family-adapter planning; public code accepts no people, relationships, evidence, reviewer claims, genetics, or publication payloads.
+
+## Health knowledge source
+
+- Repository: `frankxai/health-intelligence-system`
+- Required immutable bindings: `pinVersion`, `repository`, `commitSha`, `artifactVersion`, `artifactPath`, `mediaType`, `byteLength`, `sha256`
+- Integrity proves exact bytes against the supplied pin. Provenance requires separate private Git and release-manifest verification; neither proves clinical validity.
+
+## Safety contract
+
+- Runtime authority: `private-runtime-authority-store`
+- Default admission: `deny`
+- Prohibited public data: `raw-health-records`, `clinical-data`, `genomic-data`, `family-records`, `secrets`, `authority-state`, `personal-metrics`
+- Prohibited agent actions: `diagnosis`, `treatment`, `medication-change`, `result-interpretation`, `emergency-reassurance`, `autonomous-transport`, `public-storage-of-private-records`
+- Family/genetic data classes: `family-records`, `genomic-data`
+- Denied generic destinations: `memory`, `creator`
+- Controls required before any specialized private flow: `private-encrypted-deployment`, `consent`, `audit`, `backup-restore`, `audience-authorization`, `succession-controls`
+
+## Offering
+
+- Name: Agentic Life OS
+- Audience: Builders who want a local-first, bounded agent runtime for life domains.
+- Promise: Compose reusable agents without placing personal data or authority in public code.
+- Status: `draft`
+- Delivery: Planned clean-history public projection with synthetic examples and a private-instance overlay template.
+- Public boundary: Publication-candidate code and synthetic data only; live records, secrets, authority, and metrics stay private.
+
+### Public Runtime
+- Audience: Developers and researchers
+- Promise: Use bounded contracts, tests, and templates under an open-source license.
+- Delivery: Self-hosted source code
+- Commercial status: `free`
+- Support boundary: Community and self-serve; no personal-data processing.
+
+### Private Instance Overlay
+- Audience: Individuals and trusted local operators
+- Promise: Configure the public runtime without forking personal data into product code.
+- Delivery: Generic local-first template
+- Commercial status: `free`
+- Support boundary: The operator owns storage, consent, clinical decisions, and backups.
+
+## Intelligence systems
+
+### Starlight Intelligence System
+- Repository: `Starlight-Intelligence-System`
+- Layer: `substrate`
+- Declared public status: `hybrid`
+- Purpose: Memory, provenance, taxonomy, and validation substrate.
+- Proof gate: Keep public and private state separate and attach deterministic evidence.
+
+### Health Intelligence System
+- Repository: `health-intelligence-system`
+- Layer: `domain-vertical`
+- Declared public status: `publication-candidate`
+- Purpose: Evidence, protocols, privacy patterns, and clinician-preparation templates.
+- Proof gate: Pin artifacts by immutable commit, version, path, length, and SHA-256.
+
+## Estate roles
+
+### agentic-life-os
+- Lane: `master-offer`
+- Role: Private hardening source for a clean-history public runtime projection and private-instance overlay contract.
+- Declared evidence basis: `repo-evidenced`
+- Declared status: `primary`
+
+### health-intelligence-system
+- Lane: `health`
+- Role: Public health evidence and protocol source.
+- Declared evidence basis: `repo-evidenced`
+- Declared status: `primary`
+
+### Starlight-Intelligence-System
+- Lane: `substrate`
+- Role: Memory, provenance, and validation substrate.
+- Declared evidence basis: `repo-evidenced`
+- Declared status: `supporting`
+
+## Operating loops
+
+### Daily Command Loop
+- Cadence: daily
+- Owner: human-operator
+- Purpose: Select one bounded objective, authorize it, execute it, and retain evidence.
+- Inputs: private queue, current authority, public runtime
+- Outputs: bounded task, decision receipt, handoff
+- Safety gate: No external, financial, clinical, destructive, or sensitive-data action without explicit authority.
+
+### Health And Excellence Loop
+- Cadence: private daily log plus weekly review
+- Owner: human-operator
+- Purpose: Organize wellness signals and clinician questions without replacing professional care.
+- Inputs: encrypted local vault descriptors, pinned public health artifacts
+- Outputs: report-only structured review validation, clinician-question templates, planned private-adapter export controls
+- Safety gate: No diagnosis, treatment, medication, result interpretation, or emergency reassurance.

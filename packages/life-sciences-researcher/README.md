@@ -1,14 +1,25 @@
 # @frankx-ai/life-sciences-researcher-is
 
-Research-only biomedical intelligence package for Agentic Life OS.
+Descriptor-only public boundary for separately operated biomedical research
+adapters.
 
-This package owns scientific database and literature gateway behavior:
+The package does not query dbSNP, ClinVar, ChEMBL, ClinicalTrials.gov, AlphaFold,
+PDB, or literature services. It returns no variant significance, assay value,
+trial status, treatment inference, provider timestamp, or fabricated fixture
+that could be mistaken for current evidence.
 
-- dbSNP and ClinVar-style variant evidence lookup;
-- ChEMBL-style drug-target assay lookup;
-- ClinicalTrials.gov-style trial search;
-- AlphaFold and PDB-style structure lookup.
+```ts
+import { LifeSciencesResearchGateway } from '@frankx-ai/life-sciences-researcher-is';
 
-## Boundary
+const gateway = new LifeSciencesResearchGateway();
+const plan = gateway.planResearchQuery(
+  'clinical-trial-literature',
+  'research_0123456789abcdef0123456789abcdef',
+);
+```
 
-Life Sciences Researcher IS does not provide personal medical advice. It returns research envelopes with source, retrieved date, limitations, and `researchOnly: true`. Agentic Health OS may route research questions here, but patient-specific interpretation goes to clinicians.
+The plan is non-executable, contains no query text or scientific data, and is
+always marked `unverified-public-plan`. A private adapter must minimize the
+query, resolve live authoritative providers, preserve provider timestamps and
+citations, enforce rights, and require human scientific review. Patient-specific
+interpretation remains outside this package and belongs with qualified care.

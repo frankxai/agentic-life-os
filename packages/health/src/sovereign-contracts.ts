@@ -1,27 +1,27 @@
-export const HEALTH_SENSITIVITIES = ['public', 'personal', 'clinical', 'genomic'] as const;
+export const HEALTH_SENSITIVITIES = Object.freeze(['public', 'personal', 'clinical', 'genomic'] as const);
 export type HealthSensitivity = (typeof HEALTH_SENSITIVITIES)[number];
 
-export const HEALTH_PURPOSES = [
+export const HEALTH_PURPOSES = Object.freeze([
   'self-tracking',
   'wellness-planning',
   'clinician-handoff',
   'personal-research',
-] as const;
+] as const);
 export type HealthPurpose = (typeof HEALTH_PURPOSES)[number];
 
-export const HEALTH_ACTIONS = [
+export const HEALTH_ACTIONS = Object.freeze([
   'read-vault-metadata',
   'create-second-brain-projection',
   'prepare-clinician-export',
   'prepare-encrypted-local-export',
-] as const;
+] as const);
 export type HealthAction = (typeof HEALTH_ACTIONS)[number];
 
-export const HEALTH_EGRESS_DESTINATIONS = [
+export const HEALTH_EGRESS_DESTINATIONS = Object.freeze([
   'second-brain',
   'clinician-handoff',
   'encrypted-local-export',
-] as const;
+] as const);
 export type HealthEgressDestination = (typeof HEALTH_EGRESS_DESTINATIONS)[number];
 
 export interface HealthCapabilityGrant {
@@ -78,51 +78,16 @@ export interface HealthHumanApproval {
   revokedAt?: string;
 }
 
-export interface HealthApprovalClaimRequest {
-  approvalId: string;
-  tenantId: string;
-  subjectId: string;
-  actorId: string;
-  destination: HealthEgressDestination;
-  operationDigest: string;
-  payloadDigest: string;
-}
-
-export type HealthApprovalClaimFailureReason =
-  | 'not-found'
-  | 'inactive'
-  | 'binding-mismatch'
-  | 'already-claimed';
-
-export type HealthApprovalClaimResult =
-  | ({
-      claimed: true;
-      claimId: string;
-      claimedAt: string;
-    } & HealthApprovalClaimRequest)
-  | {
-      claimed: false;
-      reason: HealthApprovalClaimFailureReason;
-    };
-
 /**
- * Implementations are part of the trusted local control plane. Request payloads,
- * prompts, files, and agents must never be allowed to implement this interface.
+ * Caller-supplied policy snapshot used only for deterministic conformance
+ * simulation. It is not an authenticated authority repository and cannot grant
+ * execution or egress in the public package.
  */
-export interface HealthAuthorityRepository {
+export interface HealthPolicySimulationRepository {
   resolveCapability(id: string): HealthCapabilityGrant | undefined;
   resolveConsent(id: string): HealthConsentGrant | undefined;
   resolveEgressPolicy(id: string): HealthEgressPolicy | undefined;
   resolveHumanApproval(id: string): HealthHumanApproval | undefined;
-
-  /**
-   * Atomically re-resolve the canonical approval, verify that it is active and
-   * exactly bound to every supplied field, verify activity against an
-   * authority-owned clock, then durably mark it consumed before returning
-   * success. Implementations must never split validation and consume into
-   * separate transactions or permit a second claim across processes.
-   */
-  claimHumanApproval(request: HealthApprovalClaimRequest): Promise<HealthApprovalClaimResult>;
 }
 
 export interface HealthRuntimeClock {
@@ -164,13 +129,14 @@ export type HealthAdmissionBlockCode =
   | 'human-approval-binding-mismatch'
   | 'payload-digest-required'
   | 'payload-binding-mismatch'
-  | 'human-approval-already-claimed'
-  | 'human-approval-claim-failed'
-  | 'sensitivity-ceiling-denied';
+  | 'sensitivity-ceiling-denied'
+  | 'public-runtime-report-only';
 
-export interface HealthAdmissionAllowed {
-  allowed: true;
-  code: 'allowed';
+export interface HealthPolicyConforms {
+  conforms: true;
+  code: 'policy-conforms';
+  authorityStatus: 'unverified-policy-simulation';
+  executionPermitted: false;
   requestId: string;
   evaluatedAt: string;
   operationDigest: string;
@@ -179,24 +145,25 @@ export interface HealthAdmissionAllowed {
   egressPolicyId?: string;
   humanApprovalId?: string;
   payloadDigest?: string;
-  approvalClaimId?: string;
 }
 
-export interface HealthAdmissionBlocked {
-  allowed: false;
+export interface HealthPolicyDoesNotConform {
+  conforms: false;
   code: HealthAdmissionBlockCode;
+  authorityStatus: 'unverified-policy-simulation';
+  executionPermitted: false;
   requestId: string;
   reason: string;
 }
 
-export type HealthAdmissionDecision = HealthAdmissionAllowed | HealthAdmissionBlocked;
+export type HealthPolicyConformanceReport = HealthPolicyConforms | HealthPolicyDoesNotConform;
 
 /**
  * The public runtime sees descriptors only. Decryption and raw bytes stay behind
  * a separately encrypted, local adapter owned by the private instance.
  */
 export interface HealthRecordDescriptor {
-  recordId: string;
+  opaqueRecordRef: string;
   tenantId: string;
   subjectId: string;
   sensitivity: HealthSensitivity;
@@ -214,104 +181,28 @@ export interface EncryptedLocalHealthVault {
   }): Promise<readonly HealthRecordDescriptor[]>;
 }
 
-export interface SafeExportRecord {
-  opaqueRecordRef: string;
-  sensitivity: HealthSensitivity;
-  contentSha256: string;
-  byteLength: number;
-  mediaType: string;
-  sourceReceiptIds: readonly string[];
-}
+export type SafeExportPreparation = { ok: false; decision: HealthPolicyDoesNotConform };
 
-export interface SafeExportManifest {
-  schemaVersion: '1.0.0';
-  exportId: string;
-  createdAt: string;
-  purpose: HealthPurpose;
-  destination: Exclude<HealthEgressDestination, 'second-brain'>;
-  records: readonly SafeExportRecord[];
-  capabilityId: string;
-  consentId: string;
-  egressPolicyId: string;
-  humanApprovalId: string;
-  approvalClaimId: string;
-  payloadSha256: string;
-  manifestSha256: string;
-  rawBytesIncluded: false;
-  transportPerformed: false;
-}
+export const WELLNESS_PATTERN_KEYS = Object.freeze([
+  'sleep-consistency',
+  'training-consistency',
+  'meal-consistency',
+  'recovery-self-rating',
+  'stress-self-rating',
+] as const);
+export type WellnessPatternKey = (typeof WELLNESS_PATTERN_KEYS)[number];
 
-export type SafeExportPreparation =
-  | { ok: false; decision: HealthAdmissionBlocked }
-  | { ok: true; decision: HealthAdmissionAllowed; manifest: SafeExportManifest };
+export const WELLNESS_PATTERN_TRENDS = Object.freeze(['improving', 'stable', 'declining', 'unknown'] as const);
+export type WellnessPatternTrend = (typeof WELLNESS_PATTERN_TRENDS)[number];
+
+export interface SecondBrainWellnessPattern {
+  key: WellnessPatternKey;
+  trend: WellnessPatternTrend;
+}
 
 export interface SecondBrainProjectionDraft {
-  title: string;
-  summary: string;
   period: string;
-  tags: readonly string[];
-  sourceRecordDigests: readonly string[];
-  sensitivity: Extract<HealthSensitivity, 'public' | 'personal'>;
+  patterns: readonly SecondBrainWellnessPattern[];
 }
 
-export interface SecondBrainProjectionPayload {
-  schemaVersion: '1.0.0';
-  kind: 'second-brain-projection-plan';
-  title: string;
-  summary: string;
-  period: string;
-  tags: readonly string[];
-  sourceRecordDigests: readonly string[];
-  sensitivity: Extract<HealthSensitivity, 'public' | 'personal'>;
-}
-
-export interface SecondBrainProjectionPlan {
-  payload: SecondBrainProjectionPayload;
-  payloadSha256: string;
-}
-
-export interface SafeExportPayload {
-  schemaVersion: '1.0.0';
-  kind: 'safe-export-plan';
-  purpose: HealthPurpose;
-  destination: Exclude<HealthEgressDestination, 'second-brain'>;
-  requestSensitivity: HealthSensitivity;
-  records: readonly SafeExportRecord[];
-}
-
-export interface SafeExportPlan {
-  payload: SafeExportPayload;
-  payloadSha256: string;
-}
-
-export interface SanitizedSecondBrainProjection {
-  schemaVersion: '1.0.0';
-  projectionId: string;
-  createdAt: string;
-  title: string;
-  summary: string;
-  period: string;
-  tags: readonly string[];
-  sensitivity: Extract<HealthSensitivity, 'public' | 'personal'>;
-  sourceRecordDigests: readonly string[];
-  payloadSha256: string;
-  projectionSha256: string;
-  direction: 'health-vault-to-second-brain-only';
-  containsRawRecords: false;
-  containsVaultLocation: false;
-}
-
-export interface OneWaySecondBrainSink {
-  writeProjection(projection: SanitizedSecondBrainProjection): Promise<{
-    receiptId: string;
-    projectionSha256: string;
-  }>;
-}
-
-export type SecondBrainProjectionPreparation =
-  | { ok: false; decision: HealthAdmissionBlocked }
-  | {
-      ok: true;
-      decision: HealthAdmissionAllowed;
-      projection: SanitizedSecondBrainProjection;
-    };
+export type SecondBrainProjectionPreparation = { ok: false; decision: HealthPolicyDoesNotConform };

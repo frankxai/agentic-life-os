@@ -1,87 +1,73 @@
-export interface ResearchEnvelope<T> {
-  researchOnly: true;
-  source: string;
-  retrievedAt: string;
-  limitations: string[];
-  data: T;
+export const RESEARCH_QUERY_KINDS = Object.freeze([
+  'variant-literature',
+  'compound-bioactivity-literature',
+  'clinical-trial-literature',
+  'protein-structure-literature',
+] as const);
+
+export type ResearchQueryKind = (typeof RESEARCH_QUERY_KINDS)[number];
+
+export interface PrivateResearchQueryPlan {
+  operation: 'resolve-research-query';
+  kind: ResearchQueryKind;
+  opaqueQueryRef: string;
+  target: 'private-external-research-adapter';
+  dataIncluded: false;
+  networkRequestPermitted: false;
+  executionPermitted: false;
+  authorityStatus: 'unverified-public-plan';
+  requiredControls: readonly [
+    'private-adapter-issued-reference',
+    'query-minimization',
+    'live-provider-resolution',
+    'provider-retrieval-timestamp',
+    'citation-and-provenance',
+    'rights-and-license-review',
+    'human-scientific-review',
+    'no-patient-specific-interpretation',
+  ];
 }
 
-export interface VariantEvidenceQuery {
-  geneSymbol: string;
-  variantId?: string; // e.g. rsID
-  clinicalSignificance?: string; // Pathogenic / Benign / VUS
-}
-
-export interface DrugBioactivity {
-  chemblId: string;
-  moleculeName: string;
-  targetProtein: string;
-  ic50Value: number; // in nM
-}
-
-export interface ClinicalTrialMetadata {
-  nctId: string;
-  condition: string;
-  phase: string;
-  recruitmentStatus: string;
-}
+const OPAQUE_RESEARCH_QUERY_REF = /^research_[a-f0-9]{32}$/;
+const RESEARCH_QUERY_KIND_SET = new Set<string>(RESEARCH_QUERY_KINDS);
+const SET_HAS = Set.prototype.has;
+const REQUIRED_CONTROLS = Object.freeze([
+  'private-adapter-issued-reference',
+  'query-minimization',
+  'live-provider-resolution',
+  'provider-retrieval-timestamp',
+  'citation-and-provenance',
+  'rights-and-license-review',
+  'human-scientific-review',
+  'no-patient-specific-interpretation',
+] as const);
 
 /**
- * Research gateway maps workstation science plugins/databases into research-only endpoints.
+ * Public descriptor-only research boundary.
+ *
+ * It never performs a lookup, accepts free-text biomedical input, fabricates a
+ * result, or returns scientific data. A private adapter must resolve the opaque
+ * query against live authoritative sources and attach provenance.
  */
 export class LifeSciencesResearchGateway {
-  /**
-   * Resolves a variant ID (rsID) from dbSNP/ClinVar-style sources.
-   */
-  async resolveVariantSignificance(rsId: string): Promise<ResearchEnvelope<VariantEvidenceQuery>> {
-    return {
-      researchOnly: true,
-      source: 'synthetic-variant-fixture',
-      retrievedAt: new Date().toISOString(),
-      limitations: ['Synthetic fixture only; not a patient-specific interpretation.'],
-      data: {
-        geneSymbol: 'TEST1',
-        variantId: rsId,
-        clinicalSignificance: 'synthetic-fixture-only',
-      },
-    };
-  }
+  planResearchQuery(kind: ResearchQueryKind, opaqueQueryRef: string): PrivateResearchQueryPlan {
+    if (typeof kind !== 'string' || !Reflect.apply(SET_HAS, RESEARCH_QUERY_KIND_SET, [kind])) {
+      throw new Error('Research query kind is not supported.');
+    }
+    if (typeof opaqueQueryRef !== 'string' || !OPAQUE_RESEARCH_QUERY_REF.test(opaqueQueryRef)) {
+      throw new Error('Research query reference must use the reserved opaque reference syntax.');
+    }
 
-  /**
-   * Queries ChEMBL database for drug bioactivity targets
-   */
-  async queryChEMBL(chemicalName: string): Promise<ResearchEnvelope<DrugBioactivity>> {
-    return {
-      researchOnly: true,
-      source: 'synthetic-chembl-fixture',
-      retrievedAt: new Date().toISOString(),
-      limitations: ['Synthetic fixture only; bioactivity does not imply safety, efficacy, or treatment fit.'],
-      data: {
-        chemblId: 'CHEMBL-SYNTHETIC-123',
-        moleculeName: chemicalName,
-        targetProtein: 'TARGET-SYNTHETIC',
-        ic50Value: 12.5,
-      },
-    };
-  }
-
-  /**
-   * Retrieves active clinical trials for a specific condition
-   */
-  async fetchTrials(condition: string): Promise<ResearchEnvelope<ClinicalTrialMetadata[]>> {
-    return {
-      researchOnly: true,
-      source: 'synthetic-clinicaltrials-fixture',
-      retrievedAt: new Date().toISOString(),
-      limitations: ['Synthetic fixture only; trial eligibility must be verified against the live record and care team.'],
-      data: [
-        {
-          nctId: 'NCT00000000',
-          condition,
-          phase: 'Phase III',
-          recruitmentStatus: 'RECRUITING',
-        },
-      ],
-    };
+    return Object.freeze({
+      operation: 'resolve-research-query',
+      kind,
+      opaqueQueryRef,
+      target: 'private-external-research-adapter',
+      dataIncluded: false,
+      networkRequestPermitted: false,
+      executionPermitted: false,
+      authorityStatus: 'unverified-public-plan',
+      requiredControls: REQUIRED_CONTROLS,
+    });
   }
 }

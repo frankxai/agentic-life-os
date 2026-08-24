@@ -2,21 +2,31 @@
   "name": "@frankx-ai/agentic-life-os",
   "version": "0.3.0",
   "private": true,
-  "description": "Open-source, local-first agent runtime with private-instance overlays and sovereign health-data boundaries.",
+  "description": "Publication-candidate local-first agent runtime with private-instance overlays and sovereign health-data boundaries.",
   "license": "MIT",
   "type": "module",
   "engines": { "node": ">=24" },
   "packageManager": "pnpm@9.12.0",
   "scripts": {
     "check:public": "node scripts/check-public-safety.mjs",
+    "check:licenses": "node scripts/check-dependency-licenses.mjs",
+    "check:projection": "node scripts/verify-public-projection.mjs --worktree",
+    "check:projection:commit": "node scripts/verify-public-projection.mjs --commit=HEAD",
+    "verify:initial-public-history": "node scripts/verify-public-projection.mjs --commit=HEAD --require-single-commit",
+    "release:export-public": "node scripts/export-public-projection.mjs",
+    "release:verify-remote": "node scripts/verify-public-remote.mjs",
+    "generate": "pnpm --filter @frankx-ai/alos-core build && node scripts/generate-alos-assets.mjs",
+    "check:generated": "pnpm --filter @frankx-ai/alos-core build && node scripts/generate-alos-assets.mjs --check",
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run",
-    "build": "pnpm -r build && node scripts/generate-alos-assets.mjs",
-    "health": "node scripts/alos-health.mjs"
+    "build": "pnpm -r build && node scripts/smoke-package-imports.mjs && node scripts/generate-alos-assets.mjs --check",
+    "check:package-imports": "node scripts/smoke-package-imports.mjs",
+    "health": "pnpm --filter @frankx-ai/alos-core build && node scripts/alos-health.mjs"
   },
   "devDependencies": {
     "typescript": "5.6.2",
-    "vitest": "2.1.1",
+    "vitest": "4.1.11",
+    "vite": "6.4.3",
     "@types/node": "24.0.0"
   }
 }

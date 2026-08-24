@@ -1,0 +1,100 @@
+{
+  "version": "2026-08-24",
+  "task": "Create a truthful, read-only architecture explainer for the Agentic Life OS publication candidate.",
+  "surface": "Static architecture dashboard",
+  "audience": "Developers, researchers, practitioners, and future private-instance operators",
+  "first_read": "A local-first life OS is useful because it knows where public code stops and private authority begins.",
+  "standards": [
+    "Design Taste Kernel: WEB_EXPERIENCE_STANDARD.md",
+    "Premium Asset Gate: PREMIUM_ASSET_STANDARD.md",
+    "WCAG-oriented semantic and keyboard review"
+  ],
+  "references": [
+    {
+      "label": "Agentic Life OS public/private boundary",
+      "source": "README.md",
+      "reason": "Canonical release state and system boundary."
+    },
+    {
+      "label": "Manrope and IBM Plex Mono",
+      "source": "WORLD_CLASS_FONT_AND_TYPOGRAPHY_MATRIX.json pair-08-manrope-ibm-plex",
+      "reason": "Selected for calm operational intelligence; local-only sources preserve the no-subresource boundary."
+    },
+    {
+      "label": "Independent accessibility audit",
+      "source": "read-only accessibility-auditor review on 2026-08-24",
+      "reason": "Drove truthfulness, semantics, focus, contrast, and deployment-header corrections."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Quiet high-trust editorial hierarchy",
+      "Static read-only architecture",
+      "Explicit stop conditions",
+      "Visible publication-candidate state"
+    ],
+    "avoid": [
+      "Operational controls",
+      "Fake live data",
+      "Medical authority theater",
+      "Decorative mascot authority",
+      "Unverified public-state claims"
+    ],
+    "signature": "Five governed layers presented as an inspectable safety boundary, not a command center.",
+    "system": [
+      "Dark mineral surface with restrained amber and teal signals",
+      "Semantic ordered architecture stack",
+      "No scripts, forms, analytics, client storage, or application subresources",
+      "Responsive single-column collapse and reduced-motion-safe static behavior"
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "unknown",
+    "provenance": "owned",
+    "why_premium": "An exact semantic interface is the correct primary asset for a technical architecture explainer.",
+    "shortcut_risk": "low",
+    "context_tested": false
+  },
+  "artifacts": [
+    {
+      "path_or_url": "dashboard/index.html",
+      "kind": "static-web",
+      "inspected": false,
+      "notes": "Source and accessibility semantics reviewed; actual desktop/mobile browser export inspection remains blocked by the current machine/storage gate."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier C exact interface selected; decorative media is not needed for the architecture surface."
+    },
+    {
+      "name": "accessibility-source-review",
+      "status": "pass",
+      "evidence": "Independent review corrections include semantic ol/li ordering, skip-target focus, high-contrast focus-visible, stronger boundaries, larger labels, and truthful role wording."
+    },
+    {
+      "name": "export-inspection",
+      "status": "blocked",
+      "evidence": "No desktop/mobile browser capture was produced under the current resource gate."
+    },
+    {
+      "name": "visual-qa",
+      "status": "blocked",
+      "evidence": "Visual, forced-colors, zoom, and screen-reader runtime inspection remain release gates."
+    }
+  ],
+  "score": {
+    "total": 24,
+    "max": 30,
+    "notes": "Strong truthfulness, hierarchy, semantics, and boundary design; runtime visual inspection and host-header verification are still outstanding."
+  },
+  "decision": "blocked",
+  "known_risks": [
+    "The dashboard is not approved for public hosting.",
+    "Anti-framing and other defense-in-depth headers must be configured and inspected at the host.",
+    "Actual desktop, mobile, keyboard, forced-colors, zoom, and screen-reader QA remain incomplete."
+  ]
+}

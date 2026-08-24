@@ -1,31 +1,42 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { CreatorOSManager } from '../src/engine.js';
 
-describe('Creator OS Engine', () => {
-  it('should draft a script with estimated durations based on outline length', () => {
+describe('public Creator OS boundary', () => {
+  it('returns a non-executable descriptor without source content', () => {
     const manager = new CreatorOSManager();
-    const script = manager.draftScript(
-      'Getting Started with Starlight OS',
-      'YouTube',
-      ['Introduction', 'Deep dive into SIP', 'Conclusion']
-    );
+    const plan = manager.planDraft('creator_0123456789abcdef0123456789abcdef', 'YouTube');
 
-    expect(script.status).toBe('draft');
-    expect(script.outline).toHaveLength(3);
-    expect(script.estimatedMinutes).toBe(9);
-    expect(script.rawText).toContain('1. Introduction');
+    expect(plan).toMatchObject({
+      operation: 'draft-content',
+      channel: 'YouTube',
+      target: 'private-external-creator-adapter',
+      contentIncluded: false,
+      executionPermitted: false,
+      authorityStatus: 'unverified-public-plan',
+    });
+    expect(manager.getAssetsCount()).toBe(0);
   });
 
-  it('should register and filter visual/music assets correctly', () => {
+  it('rejects raw health, family, transcript, and traversal-shaped content', () => {
     const manager = new CreatorOSManager();
-    manager.registerAsset('intro_vfx', 'HyperFrame', 'compositions/intro.html', { duration: 15 });
-    manager.registerAsset('theme_song', 'SunoTrack', 'audio/suno_theme.mp3');
+    const unsafeValues = [
+      'BRCA1 pathogenic family result',
+      'private transcript title',
+      '../source',
+      'C:\\records\\source',
+      'creator_0123',
+    ];
 
-    const hyperframes = manager.getAssets('HyperFrame');
-    expect(hyperframes).toHaveLength(1);
-    expect(hyperframes[0]?.key).toBe('intro_vfx');
-
-    const all = manager.getAssets();
-    expect(all).toHaveLength(2);
+    for (const unsafeValue of unsafeValues) {
+      expect(() => manager.planDraft(unsafeValue, 'Substack')).toThrow(/reserved opaque reference syntax/i);
+    }
+    const coercionObject = {
+      secret: 'private transcript',
+      toString: () => 'creator_0123456789abcdef0123456789abcdef',
+    };
+    expect(() => manager.planDraft(
+      coercionObject as unknown as string,
+      'Substack',
+    )).toThrow(/reserved opaque reference syntax/i);
   });
 });
