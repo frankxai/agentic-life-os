@@ -1,102 +1,25 @@
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
+  "@type": "SoftwareSourceCode",
   "name": "Agentic Life OS (ALOS)",
-  "description": "Unified multi-agent operating system.",
-  "operatingSystem": "Windows",
-  "applicationCategory": "DeveloperApplication",
+  "description": "Open-source, local-first agent runtime with private-instance overlays and sovereign data boundaries.",
+  "codeRepository": "https://github.com/frankxai/agentic-life-os",
+  "programmingLanguage": "TypeScript",
+  "license": "https://opensource.org/license/mit",
   "creator": {
     "@type": "Person",
     "name": "Frank Riemer"
   },
   "hasPart": [
     {
-      "@type": "SoftwareApplication",
-      "name": "agentic-business-os",
-      "description": "Business operations, legal corporate compliance, Dutch BV ops (Arcanea Labs BV), and claim safeguards."
+      "@type": "SoftwareSourceCode",
+      "name": "Agentic Health OS",
+      "description": "Default-deny health bridge and local sovereign-data contracts."
     },
     {
-      "@type": "SoftwareApplication",
-      "name": "agentic-creator-os",
-      "description": "Multi-agent content engine, workshops OS, visual assets design, and Suno AI music production pipelines."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "second-brain-os",
-      "description": "Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "agentic-orchestration-os",
-      "description": "Ecosystem orchestration, package dependency checks, custom ZSH/PowerShell toolkits, and command grids."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "agentic-investor-os",
-      "description": "Sovereign wealth calculation, capital allocation, deal scouting, due diligence, and investment tracking."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "agentic-health-os",
-      "description": "Private personal-health operating system for nutrition, training, sleep, recovery, medical-record prep, clinician handoff, and Health Intelligence System protocol packets."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "life-sciences-researcher-is",
-      "description": "Research-only biomedical gateway for OpenFDA, dbSNP, ClinVar, ChEMBL, ClinicalTrials, AlphaFold, and literature lookup. Never patient-specific medical advice."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "agentic-family-os",
-      "description": "Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Starlight Intelligence System",
-      "description": "Memory, provenance, taxonomy, validation, release artifacts, and proof for agentic systems.",
-      "applicationSubCategory": "substrate"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Starlight Agent Config",
-      "description": "Cross-agent skills, policies, task ledgers, install projection, and machine-local operating rules.",
-      "applicationSubCategory": "agent-governance"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Agentic Ops Hub",
-      "description": "Agent instruction control plane, coordination rules, ASPH handoffs, and repo fleet operating doctrine.",
-      "applicationSubCategory": "agent-governance"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Starlight Swarm Runtime",
-      "description": "Queen-worker topology, dry-run safety spine, escalation ladders, and bounded loop execution.",
-      "applicationSubCategory": "swarm-runtime"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "AI Capability Registry",
-      "description": "Index of skills, plugins, activation routes, and agent capability surfaces.",
-      "applicationSubCategory": "capability-index"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Hermes Cockpit",
-      "description": "Operational cockpit for progress reports, Railway-aware estate state, and agent work evidence.",
-      "applicationSubCategory": "orchestration"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Health Intelligence System",
-      "description": "Safety-gated personal health and clinician-prep patterns separated from research-only workflows.",
-      "applicationSubCategory": "domain-vertical"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Design and Visual Intelligence",
-      "description": "Design taste, visual QA, motion rubrics, and premium experience validation.",
-      "applicationSubCategory": "quality-gate"
+      "@type": "SoftwareSourceCode",
+      "name": "Health Intelligence System bridge",
+      "description": "Immutable provenance receipts for versioned public health artifacts."
     }
   ]
 }

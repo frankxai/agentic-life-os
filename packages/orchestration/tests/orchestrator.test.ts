@@ -7,9 +7,9 @@ import { type LifeOSProfile } from '@frankx-ai/alos-core';
 
 describe('Agentic Life OS (ALOS) Interconnectivity', () => {
   const entity: BusinessEntity = {
-    name: 'Arcanea Labs BV',
-    kvkNumber: 'KVK12345678',
-    vatNumber: 'NL123456789B01',
+    name: 'Example Cooperative',
+    kvkNumber: '00000000',
+    vatNumber: 'NL000000000B00',
     jurisdiction: 'NL',
     taxReservesRatio: 0.25,
   };
@@ -56,14 +56,14 @@ describe('Agentic Life OS (ALOS) Interconnectivity', () => {
     const orchestrator = new ALOSOrchestrator(businessManager);
 
     const nodes: FamilyNode[] = [
-      { id: '1', name: 'Grandpa Frank', relationship: 'ancestor', birthYear: 1920 },
-      { id: '2', name: 'Papa Frank', relationship: 'parent', birthYear: 1955 },
+      { id: '1', name: 'Example Ancestor', relationship: 'ancestor', birthYear: 1920 },
+      { id: '2', name: 'Example Parent', relationship: 'parent', birthYear: 1955 },
     ];
 
     const result = await orchestrator.syncBiographicResearchToCreator(
       nodes,
       'rs12345',
-      'The Frank Lineage Trait'
+      'The Synthetic Lineage Trait'
     );
 
     expect(result.scriptId).toBeDefined();
@@ -72,8 +72,8 @@ describe('Agentic Life OS (ALOS) Interconnectivity', () => {
     // Verify memory indexing
     const memoryNode = orchestrator.getMemoryManager().semanticSearch('rs12345')[0];
     expect(memoryNode).toBeDefined();
-    expect(memoryNode?.label).toContain('The Frank Lineage Trait');
-    expect(memoryNode?.content).toContain('Grandpa Frank');
+    expect(memoryNode?.label).toContain('The Synthetic Lineage Trait');
+    expect(memoryNode?.content).toContain('Example Ancestor');
     expect(memoryNode?.content).toContain('TEST1');
     expect(memoryNode?.content.toLowerCase()).toContain('research-only');
 
@@ -101,13 +101,13 @@ describe('Agentic Life OS (ALOS) Interconnectivity', () => {
       version: '1.0.0',
       sipVersion: '1.1.1',
       workstation: {
-        machineName: 'Yoga Laptop Workstation',
-        os: 'Windows',
+        machineName: 'local-instance',
+        os: 'Cross-platform',
       },
       modules: {
         business: {
           repoName: 'agentic-business-os',
-          path: 'C:\\Users\\frank\\agentic-business-os',
+          path: 'packages/business',
           status: 'live',
           riskLevel: 'production',
           healthCommand: 'pnpm test',

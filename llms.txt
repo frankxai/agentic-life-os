@@ -1,234 +1,28 @@
-# Agentic Life OS (ALOS) — Discoverability Spec
+# Agentic Life OS (ALOS)
 
-This file defines the active modules, substrates, and agent capabilities of Frank's unified Life Operating System.
+Open-source, local-first agent runtime with private-instance overlays.
 
-## Architecture
-- Machine: Yoga Laptop Workstation (Windows)
-- SIP Version: 1.1.1
-- System Version: 1.2.0
+## Public boundary
 
-## Interconnected Modules
+- Public repository: code, contracts, docs, synthetic fixtures, generic templates.
+- Private instance: preferences, local policy identifiers, live authority, sanitized notes.
+- Encrypted local vault: raw personal, clinical, genomic, family, and financial data.
 
-### agentic-business-os (`business`)
-- Path: `C:\Users\frank\starlight\repos\agentic-life-os\packages\business`
-- Status: `in-development`
-- Risk Level: `production`
-- Health Command: `vitest run`
-- Active Agents: Claude Code, Codex
-- Description: Business operations, legal corporate compliance, Dutch BV ops (Arcanea Labs BV), and claim safeguards.
+## Core modules
 
-### agentic-creator-os (`creator`)
-- Path: `C:\Users\frank\starlight\repos\agentic-life-os\packages\creator`
-- Status: `in-development`
-- Risk Level: `production`
-- Health Command: `vitest run`
-- Active Agents: Claude Code, Cursor, Antigravity
-- Description: Multi-agent content engine, workshops OS, visual assets design, and Suno AI music production pipelines.
+- `packages/core`: strict profile schema and loader.
+- `packages/health`: sovereign health bridge, admission, projection, and export contracts.
+- `packages/memory`: local memory primitives.
+- `packages/orchestration`: bounded cross-module composition.
+- Other packages are experimental synthetic workflow primitives.
 
-### second-brain-os (`memory`)
-- Path: `C:\Users\frank\starlight\repos\agentic-life-os\packages\memory`
-- Status: `in-development`
-- Risk Level: `private`
-- Health Command: `vitest run`
-- Active Agents: Claude Code, Codex
-- Description: Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations.
+## Health source
 
-### agentic-orchestration-os (`orchestration`)
-- Path: `C:\Users\frank\starlight\repos\agentic-life-os\packages\orchestration`
-- Status: `in-development`
-- Risk Level: `production`
-- Health Command: `vitest run`
-- Active Agents: Claude Code, Antigravity
-- Description: Ecosystem orchestration, package dependency checks, custom ZSH/PowerShell toolkits, and command grids.
+Public Health Intelligence System artifacts must be pinned to
+`frankxai/health-intelligence-system` by immutable commit, semantic version,
+repository-relative path, byte length, and SHA-256. Integrity is not clinical validity.
 
-### agentic-investor-os (`investor`)
-- Path: `C:\Users\frank\starlight\repos\agentic-life-os\packages\investor`
-- Status: `in-development`
-- Risk Level: `private`
-- Health Command: `vitest run`
-- Active Agents: Claude Code
-- Description: Sovereign wealth calculation, capital allocation, deal scouting, due diligence, and investment tracking.
+## Safety
 
-### agentic-health-os (`health`)
-- Path: `C:\Users\frank\starlight\repos\agentic-life-os\packages\health`
-- Status: `in-development`
-- Risk Level: `private`
-- Health Command: `vitest run`
-- Active Agents: Claude Code, Gemini
-- Description: Private personal-health operating system for nutrition, training, sleep, recovery, medical-record prep, clinician handoff, and Health Intelligence System protocol packets.
-
-### life-sciences-researcher-is (`lifeSciencesResearcher`)
-- Path: `C:\Users\frank\starlight\repos\agentic-life-os\packages\life-sciences-researcher`
-- Status: `in-development`
-- Risk Level: `private`
-- Health Command: `vitest run`
-- Active Agents: Claude Code, Gemini
-- Description: Research-only biomedical gateway for OpenFDA, dbSNP, ClinVar, ChEMBL, ClinicalTrials, AlphaFold, and literature lookup. Never patient-specific medical advice.
-
-### agentic-family-os (`family`)
-- Path: `C:\Users\frank\starlight\repos\agentic-life-os\packages\family`
-- Status: `in-development`
-- Risk Level: `private`
-- Health Command: `vitest run`
-- Active Agents: Claude Code
-- Description: Heritage preservation, life story transcription and narration, family vaults mapping, and genealogy compilation.
-
-## Master Offering
-- Name: Agentic Life OS
-- Audience: Founder-operators, creators, and high-agency teams who want one AI-native command spine for work, learning, growth, success, and personal excellence.
-- Promise: Turn the repo estate into a private operating system that routes decisions, memories, proof, agent swarms, and recurring loops into visible outcomes.
-- Status: private-operator-suite
-- Delivery Mode: Git-backed system package, implementation sprint, agent runbooks, and proof-gated operating cadence.
-- Public Boundary: Public wrappers may describe the model and starter workflows. Private memory, health, finance, family, unreleased IP, strategy, credentials, and client data stay out of public assets.
-
-### Package: Public Blueprint
-- Audience: Builders evaluating the Agentic Life OS model.
-- Promise: Understand the architecture, module map, and first workflow without exposing private operating data.
-- Delivery Mode: Sanitized docs, examples, and install notes.
-- Commercial Status: free
-- Support Boundary: Self-serve only.
-
-### Package: Starter Operator Kit
-- Audience: Solo founders and creators who want a local command spine.
-- Promise: Fork the core profile, run the health checks, and start the daily command loop.
-- Delivery Mode: Template repo plus setup checklist.
-- Commercial Status: proposed-not-priced
-- Support Boundary: Setup support only; no private-data handling.
-
-### Package: Private Life OS Implementation
-- Audience: Frank's own operating layer and selected high-trust clients.
-- Promise: Connect business, creator, memory, health, wealth, family, and learning loops with bounded agent execution.
-- Delivery Mode: Guided implementation sprint with private runbooks.
-- Commercial Status: private-only
-- Support Boundary: Explicit scope, approval gates, and privacy boundaries required.
-
-### Package: Enterprise Intelligence System
-- Audience: Teams needing agent governance, memory, evals, and repo-operating discipline.
-- Promise: Deploy the Starlight intelligence substrate and operating doctrine without personal-life modules.
-- Delivery Mode: Architecture engagement, repo harness, and validation gates.
-- Commercial Status: proposed-not-priced
-- Support Boundary: Architecture and enablement; production mutations require named approval.
-
-## Intelligence Systems
-
-### Starlight Intelligence System
-- Repo: `Starlight-Intelligence-System`
-- Layer: `substrate`
-- Public Status: `hybrid`
-- Purpose: Memory, provenance, taxonomy, validation, release artifacts, and proof for agentic systems.
-- Proof Gate: Run SIS health checks, keep public/private boundaries explicit, and attach evidence paths to releases.
-
-### Starlight Agent Config
-- Repo: `starlight-agent-config`
-- Layer: `agent-governance`
-- Public Status: `private`
-- Purpose: Cross-agent skills, policies, task ledgers, install projection, and machine-local operating rules.
-- Proof Gate: Run installer doctor before handoff when config projection changes.
-
-### Agentic Ops Hub
-- Repo: `agentic-ops-hub`
-- Layer: `agent-governance`
-- Public Status: `hybrid`
-- Purpose: Agent instruction control plane, coordination rules, ASPH handoffs, and repo fleet operating doctrine.
-- Proof Gate: Sync/check generated agent rules before release-quality changes.
-
-### Starlight Swarm Runtime
-- Repo: `starlight-swarm`
-- Layer: `swarm-runtime`
-- Public Status: `hybrid`
-- Purpose: Queen-worker topology, dry-run safety spine, escalation ladders, and bounded loop execution.
-- Proof Gate: Run dry-run, typecheck, and tests; no autonomous live money or production actions.
-
-### AI Capability Registry
-- Repo: `ai-capability-registry`
-- Layer: `capability-index`
-- Public Status: `hybrid`
-- Purpose: Index of skills, plugins, activation routes, and agent capability surfaces.
-- Proof Gate: Regenerate the capability index after route or plugin changes.
-
-### Hermes Cockpit
-- Repo: `hermes-cockpit`
-- Layer: `orchestration`
-- Public Status: `private`
-- Purpose: Operational cockpit for progress reports, Railway-aware estate state, and agent work evidence.
-- Proof Gate: Progress collector writes latest evidence without reading secrets.
-
-### Health Intelligence System
-- Repo: `health-intelligence-system`
-- Layer: `domain-vertical`
-- Public Status: `hybrid`
-- Purpose: Safety-gated personal health and clinician-prep patterns separated from research-only workflows.
-- Proof Gate: Health work keeps human clinical authority and evidence dates explicit.
-
-### Design and Visual Intelligence
-- Repo: `starlight-design-intelligence`
-- Layer: `quality-gate`
-- Public Status: `hybrid`
-- Purpose: Design taste, visual QA, motion rubrics, and premium experience validation.
-- Proof Gate: Visual work passes screenshots, responsive checks, and the taste rubric before handoff.
-
-## Operating Loops
-
-### Daily Command Loop
-- Cadence: daily
-- Owner: chief-operator
-- Purpose: Select the highest-leverage work, route it to one bounded execution lane, and end with evidence.
-- Inputs: global-progress-ledger.json, hermes-cockpit progress reports, repo status
-- Outputs: one active priority, bounded task queue, handoff note
-- Safety Gate: No production, billing, DNS, secret, or destructive mutation without explicit named approval.
-
-### Business Ops Loop
-- Cadence: daily plus weekly review
-- Owner: business-command
-- Purpose: Turn offers, client delivery, invoices, proof, and launch blockers into a visible operating cadence.
-- Inputs: business module, FrankX docs, public site/download surfaces
-- Outputs: offer backlog, delivery tasks, proof and revenue blockers
-- Safety Gate: Payment setup, public claims, and client commitments require human review.
-
-### Learning And Mastery Loop
-- Cadence: weekly
-- Owner: learning-systems
-- Purpose: Convert research, courses, repos, and experiments into skill upgrades and reusable playbooks.
-- Inputs: ai-architect-academy, prompt-library, Starlight memory
-- Outputs: learning sprint, skill update, evidence-backed notes
-- Safety Gate: Separate source-backed learning from unsupported claims.
-
-### Growth And Distribution Loop
-- Cadence: weekly
-- Owner: growth-ops
-- Purpose: Move audience attention into useful downloads, demos, trust proof, and follow-up workflows.
-- Inputs: frankx.ai-vercel-website, analytics reports, release artifacts
-- Outputs: campaign brief, download/update checklist, conversion evidence
-- Safety Gate: Public pages need claim, privacy, attribution, and checkout readiness checks.
-
-### Creator Production Loop
-- Cadence: weekly
-- Owner: creator-ops
-- Purpose: Turn ideas, music, video, articles, and visual systems into publishable creative assets.
-- Inputs: agentic-creator-os, visual-intelligence, Arcanea media repos
-- Outputs: asset backlog, publication packet, quality score
-- Safety Gate: Rights, attribution, taste, and platform policy checks run before publishing.
-
-### Health And Excellence Loop
-- Cadence: daily private log plus weekly review
-- Owner: health-intelligence-ops
-- Purpose: Support energy, training, nutrition, sleep, recovery, and clinician preparation without replacing professionals.
-- Inputs: health package, health-intelligence-system, private records
-- Outputs: wellness plan, clinician questions, evidence ledger
-- Safety Gate: No diagnosis, treatment, or medication decisions; clinician authority stays explicit.
-
-### Wealth And Capital Loop
-- Cadence: weekly
-- Owner: investor-ops
-- Purpose: Track capital allocation, due diligence, portfolio state, and business cashflow connections.
-- Inputs: investor package, business receivables, deal notes
-- Outputs: portfolio snapshot, due-diligence queue, decision memo
-- Safety Gate: No financial advice or autonomous capital movement.
-
-### Swarm And Evals Loop
-- Cadence: per coherent work wave
-- Owner: starlight-substrate-ops
-- Purpose: Route bounded worker lanes, collect handoffs, validate evidence, and preserve context for the next run.
-- Inputs: starlight-swarm, starlight-agent-config, ai-capability-registry
-- Outputs: worker queue, eval report, progress ledger update
-- Safety Gate: One coordinator owns synthesis; every worker has allowed tools, stop condition, and handoff format.
+No diagnosis, treatment, medication changes, result interpretation, emergency
+reassurance, autonomous transport, or public storage of private records.

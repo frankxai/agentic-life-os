@@ -1,126 +1,112 @@
-# 🏛️ Agentic Life OS (ALOS)
+# Agentic Life OS
 
-> The private multi-agent operating system for Business, Creator, Memory, Orchestration, Investor, Health, Life Sciences Research, and Family modules. Built on the Starlight Intelligence Protocol (SIP).
+Agentic Life OS (ALOS) is an open-source, local-first runtime for bounded AI
+agents across life domains. The reusable runtime is public; each person's data,
+authority state, and operating configuration stay in a separate private instance.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Built on SIP](https://img.shields.io/badge/Built%20on-SIP%20v1.1.1-blue.svg)](https://github.com/frankxai/Starlight-Intelligence-System)
-[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%23007ACC.svg)](https://www.typescriptlang.org/)
-[![Model Context Protocol](https://img.shields.io/badge/MCP-Active-green.svg)](https://modelcontextprotocol.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6.svg)](https://www.typescriptlang.org/)
 
----
+## The boundary
 
-## 🌌 The Vision & Architecture
-
-ALOS is a master-orchestration framework that connects all aspects of life, business, and creation into a unified cognitive architecture. It operates at the intersection of **capabilities** (what agents can do), **memories** (what agents remember), and **enforcements** (what agents are allowed to do), utilizing a single source of truth configuration.
-
-```
-                     ┌────────────────────────────────────────┐
-                     │      Starlight Intelligence System     │
-                     │          (SIP Memory Substrate)        │
-                     └───────────────────┬────────────────────┘
-                                         │
-                   ┌─────────────────────┼─────────────────────┐
-                   ▼                     ▼                     ▼
-┌─────────────────────────────┐ ┌───────────────────┐ ┌─────────────────────────────┐
-│       agentic-creator-os    │ │  second-brain-os  │ │     agentic-business-os     │
-│   (Content, Suno, Workshop) │ │  (Obsidian Vault) │ │  (Corporate Ops, Claim Gate)│
-└─────────────────────────────┘ └───────────────────┘ └─────────────────────────────┘
-                   ┌─────────────────────┼─────────────────────┐
-                   ▼                     ▼                     ▼
-┌─────────────────────────────┐ ┌───────────────────┐ ┌─────────────────────────────┐
-│      agentic-investor-os    │ │  agentic-health-os│ │      agentic-family-os      │
-│  (Sovereign Wealth Fund, DL)│ │(Personal Health)  │ │ (Genealogy, Heritage Vault) │
-└─────────────────────────────┘ └───────────────────┘ └─────────────────────────────┘
-                              ┌───────────────────────┐
-                              │ life-sciences-        │
-                              │ researcher-is         │
-                              │ (Research Only)       │
-                              └───────────────────────┘
-                                         ▲
-                                         │
-                     ┌───────────────────┴────────────────────┐
-                     │                  Arcanea               │
-                     │         (Orchestration Subsystem)      │
-                     └────────────────────────────────────────┘
+```text
+Public Health Intelligence System artifacts
+                  |
+                  | immutable commit + version + SHA-256 receipt
+                  v
+Public Agentic Life OS runtime  <----  private instance policy overlay
+                  |
+                  | descriptor-only local adapter
+                  v
+Separately encrypted local vault
+                  |
+                  +---- one-way sanitized Second Brain projection
+                  +---- manifest-only clinician or encrypted-local export
 ```
 
----
+The public runtime contains contracts, admission logic, synthetic fixtures, and
+generic workflows. It contains no raw health records, secrets, live consent,
+personal metrics, family data, financial data, or private memory.
 
-## Ultimate Offering Spine
+## Health runtime
 
-The current packaging map lives in [`docs/ultimate-offering-spine.md`](docs/ultimate-offering-spine.md). It defines the master offer, public/private boundary, intelligence-system substrate, repo lanes, operating loops, swarm lanes, validation gates, and next execution wave.
+[`@frankx-ai/agentic-health-os`](packages/health/README.md) now provides:
 
-The machine-readable source is [`alos-profile.yaml`](alos-profile.yaml). `pnpm build` regenerates [`llms.txt`](llms.txt), [`agents.json`](agents.json), and [`jsonld.json`](jsonld.json) from that profile.
+- immutable receipts for versioned artifacts from
+  `frankxai/health-intelligence-system`;
+- a separately encrypted local-vault boundary that exposes descriptors, not bytes;
+- default-deny capability, consent, purpose, sensitivity, and egress admission;
+- exact-payload-bound, single-use human approval claimed atomically from trusted
+  local authority state;
+- one-way, sanitized Second Brain projection contracts;
+- manifest-only clinician and encrypted-local export contracts;
+- adversarial cross-tenant, revocation, path, sensitivity, and egress tests.
 
----
+This is organizational and developer infrastructure. It does not diagnose,
+interpret results, recommend treatment or medication changes, or replace a
+licensed clinician. Artifact integrity does not establish clinical validity.
 
-## 🏛️ Interconnected Modules & Visions
+## Public and private products
 
-| Module | Purpose | Status | Stance & Verification |
-| :--- | :--- | :--- | :--- |
-| **`core`** | **System Configuration:** Core schema rules, Zod models, YAML loaders. | **Active** | Core harness. Health: `vitest run` |
-| **`business`** | **Corporate Ops:** Legal compliance, Dutch BV ops (Arcanea Labs BV), claims-guard checks, invoice balances. | **Active** | Billing harness. Health: `vitest run` |
-| **`creator`** | **Creative Substrate:** Content compilation pipelines, YouTube drafts, workshops, and asset registries. | **Active** | Creator harness. Health: `vitest run` |
-| **`memory`** | **Starlight Memory Palace:** Obsidian vault stubs, semantic vector search, and SIP compliance graph storage. | **Active** | Memory harness. Health: `vitest run` |
-| **`orchestration`** | **Control Grid:** Aggregates cashflow to investor portfolio, coordinates health audits and lineage creators. | **Active** | Orchestration harness. Health: `vitest run` |
-| **`investor`** | **Sovereign Wealth:** Deals pipeline, capital allocation, valuations, due diligence, and net worth calculations. | **Active** | Wealth harness. Health: `vitest run` |
-| **`health`** | **Agentic Health OS:** Private personal-health loops for nutrition, training, sleep, recovery, records, clinician handoff, and protocol packets. | **Active** | Safety-gated personal health harness. Health: `vitest run` |
-| **`lifeSciencesResearcher`** | **Life Sciences Researcher IS:** Research-only gateway for biomedical databases and literature. | **Active** | Research envelope harness. Health: `vitest run` |
-| **`family`** | **Heritage Vault:** Lineage charts, genealogy timelines, and family tree compilation. | **Active** | Family harness. Health: `vitest run` |
+- **Agentic Life OS** is the public developer/runtime name.
+- **Health Intelligence System** is the public evidence, protocol, privacy, and
+  clinician-preparation source.
+- **Training Intelligence Pack** is the descriptive public movement and recovery module.
+- **Vitalis** is held from public health-product use because exact-name AI health and
+  health-OS products already operate in the category. It may remain a private memorial
+  steward codename inside a private instance.
+- **Velora** is held from public fitness-product use and remains reserved for Arcanea's
+  established courage/action Executor persona.
+- A private instance such as `frankx-life-os` configures the public runtime and
+  owns local data. It should not duplicate reusable product code.
 
----
+Neither held name may appear as a released app, product, marketplace agent, package, or
+service without a new qualified legal clearance decision. An agent persona never becomes an authority boundary: the runtime
+grants tools through capabilities, current consent, and human approval.
 
-## 📦 Monorepo Structure
+## Packages
 
-* **[`packages/core`](file:///C:/Users/frank/agentic-life-os/packages/core/README.md)**: Parses and validates the unified [alos-profile.yaml](file:///C:/Users/frank/agentic-life-os/alos-profile.yaml) configuration.
-* **[`packages/business`](file:///C:/Users/frank/agentic-life-os/packages/business)**: Manages invoicing status and BV compliance limits.
-* **[`packages/creator`](file:///C:/Users/frank/agentic-life-os/packages/creator)**: Powers script generation and visual media templates.
-* **[`packages/memory`](file:///C:/Users/frank/agentic-life-os/packages/memory)**: Implements Starlight Intelligence Protocol (SIP) semantic nodes.
-* **[`packages/orchestration`](file:///C:/Users/frank/agentic-life-os/packages/orchestration)**: Cross-module pipeline triggers linking cashflow and heritage databases.
-* **[`packages/investor`](file:///C:/Users/frank/agentic-life-os/packages/investor/README.md)**: Sovereign wealth calculations.
-* **[`packages/health`](file:///C:/Users/frank/starlight/repos/agentic-life-os/packages/health/README.md)**: Private Agentic Health OS for personal health workflows.
-* **[`packages/life-sciences-researcher`](file:///C:/Users/frank/starlight/repos/agentic-life-os/packages/life-sciences-researcher/README.md)**: Research-only biomedical lookup gateway.
-* **[`packages/family`](file:///C:/Users/frank/agentic-life-os/packages/family/README.md)**: Genealogy lineage compiler.
-* **`Agentic_Ecosystem.canvas`**: Visual whiteboard connecting workspace modules, substrates, agent command wrappers, and science database plugins.
-* **`scripts/generate-alos-assets.mjs`**: Compiles discovery sitemaps (`llms.txt`, `agents.json`, and `jsonld.json`).
+| Package | Purpose | Maturity |
+|---|---|---|
+| [`core`](packages/core/README.md) | Strict profile schema and loader | Experimental |
+| `business` | Synthetic business workflow primitives | Experimental |
+| `creator` | Synthetic creator workflow primitives | Experimental |
+| `memory` | Local memory-node primitives | Experimental |
+| `orchestration` | Cross-package composition | Experimental |
+| `investor` | Synthetic wealth-calculation primitives | Experimental |
+| [`health`](packages/health/README.md) | Sovereign health boundary and wellness organization | Experimental, safety-gated |
+| [`life-sciences-researcher`](packages/life-sciences-researcher/README.md) | Research-only synthetic gateway fixtures | Experimental; not a truth source |
+| [`family`](packages/family/README.md) | Synthetic heritage primitives | Experimental |
 
----
+The static [`dashboard`](dashboard/index.html) is a development demonstration,
+not a live medical, financial, or operational console.
 
-## 🖥️ Local Control Center Dashboard
+## Get started
 
-A premium, glassmorphic visual interface is available directly inside the repository. To access the control center:
-
-1. Open [dashboard/index.html](file:///C:/Users/frank/agentic-life-os/dashboard/index.html) in your browser.
-2. Monitor all 8 active packages, run real-time net worth calculations, query search nodes in the Starlight Memory Palace, and compile automated creator draft outlines from family nodes.
-
----
-
-## 🛠️ Getting Started
-
-### Prerequisites
-
-* Node.js >= 20
-* PNPM 9.x
-
-### Setup
+Requirements: Node.js 24 or newer and pnpm 9.
 
 ```bash
-# Clone the repository
 git clone https://github.com/frankxai/agentic-life-os.git
 cd agentic-life-os
-
-# Install workspace dependencies
-pnpm install
-
-# Build the TS packages & compile discovery formats
-pnpm build
-
-# Run unit & integration tests across all packages
-pnpm test
+pnpm install --frozen-lockfile
+pnpm check:public
+pnpm --filter @frankx-ai/agentic-health-os typecheck
+pnpm --filter @frankx-ai/agentic-health-os test
 ```
 
----
+For a private deployment, start with the
+[`private-instance-overlay`](templates/private-instance-overlay/README.md). Never
+copy raw records or secrets into this repository.
 
-## 📜 License
+## Trust, privacy, and contributions
 
-MIT License — see the [LICENSE](file:///C:/Users/frank/agentic-life-os/LICENSE) file for details.
+- [Open-core architecture](docs/open-core-architecture.md)
+- [Privacy boundary](PRIVACY.md)
+- [Security policy](SECURITY.md)
+- [Contributing](CONTRIBUTING.md)
+- [Offering and release spine](docs/ultimate-offering-spine.md)
+- [Public release checklist](docs/public-release-checklist.md)
+
+The repository is licensed under the [MIT License](LICENSE). Health sources,
+books, papers, media, datasets, and imported artifacts retain their own licenses;
+the MIT license does not relicense third-party content.

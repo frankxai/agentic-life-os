@@ -1,13 +1,14 @@
 {
   "name": "@frankx-ai/agentic-life-os",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Agentic Life OS (ALOS) — The private multi-agent operating system for Business, Creator, Memory, Orchestration, Investor, Health, Life Sciences Research, and Family modules. Built on the Starlight Intelligence Protocol (SIP).",
+  "description": "Open-source, local-first agent runtime with private-instance overlays and sovereign health-data boundaries.",
   "license": "MIT",
   "type": "module",
   "engines": { "node": ">=24" },
   "packageManager": "pnpm@9.12.0",
   "scripts": {
+    "check:public": "node scripts/check-public-safety.mjs",
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run",
     "build": "pnpm -r build && node scripts/generate-alos-assets.mjs",

@@ -28,7 +28,7 @@
       "width": 260,
       "height": 160,
       "color": "4",
-      "text": "### 💼 Business OS\n`@frankx-ai/agentic-business-os`\n\n- **Corporate Ops:** Dutch BV operations (Arcanea Labs BV).\n- **Invoice Pipeline:** Outstanding receivables tracking.\n- **Compliance Safeguards:** Automatic quarterly VAT calculations."
+      "text": "### 💼 Business OS\n`@frankx-ai/agentic-business-os`\n\n- **Corporate Ops:** Synthetic organization fixtures.\n- **Invoice Pipeline:** Example receivables tracking.\n- **Boundary:** Not legal, tax, or financial advice."
     },
     {
       "id": "c7ea000000000003",
@@ -118,7 +118,7 @@
       "width": 350,
       "height": 200,
       "color": "6",
-      "text": "# ☄️ Starlight Intelligence System (SIS)\n`Starlight-Intelligence-System`\n\n- **Memory Substrate:** Core repository containing memory palace vaults, SIP operator rules, and voice controller endpoints.\n- **Protocol version:** 1.1.1 (Standard for ALOS).\n- **Path:** `C:\\Users\\frank\\Starlight-Intelligence-System`"
+      "text": "# ☄️ Starlight Intelligence System (SIS)\n`Starlight-Intelligence-System`\n\n- **Memory Substrate:** Core repository containing memory, provenance, and validation contracts.\n- **Protocol version:** 1.1.1 (Standard for ALOS).\n- **Location:** sibling repository"
     },
     {
       "id": "ac05000000000011",
@@ -128,7 +128,7 @@
       "width": 350,
       "height": 200,
       "color": "6",
-      "text": "# 🎭 Agentic Creator OS Primitives (ACOS)\n`agentic-creator-os`\n\n- **ACOS Engine:** Primary code runtime driving the hooks and creator utilities of FrankX.\n- **Package:** NPM `@frankx/acos`.\n- **Path:** `C:\\Users\\frank\\agentic-creator-os`"
+      "text": "# 🎭 Agentic Creator OS Primitives (ACOS)\n`agentic-creator-os`\n\n- **ACOS Engine:** Reusable creator workflow primitives.\n- **Location:** sibling repository"
     },
     {
       "id": "a7ca000000000012",
@@ -138,7 +138,7 @@
       "width": 350,
       "height": 200,
       "color": "6",
-      "text": "# 🕸️ Arcanea Ecosystem Orchestrator\n`Arcanea`\n\n- **Workspace Router:** Master dependency checking routines, package validations, and deployment routing grids.\n- **Release:** `@arcanea/orchestrator@1.2.1`.\n- **Path:** `C:\\Users\\frank\\Arcanea`"
+      "text": "# 🕸️ Ecosystem Orchestrator\n\n- **Workspace Router:** Bounded dependency checks, package validation, and human-gated deployment routing.\n- **Location:** external orchestration boundary"
     },
     {
       "id": "04a7000000000013",
@@ -148,7 +148,7 @@
       "width": 350,
       "height": 200,
       "color": "6",
-      "text": "# 🐚 oh-my-arcanea Toolkit\n`oh-my-arcanea`\n\n- **Terminal Wrappers:** ZSH/PowerShell toolset supplying environment variables and cockpit subcommands on the Yoga laptop.\n- **Path:** `C:\\Users\\frank\\oh-my-arcanea`"
+      "text": "# 🐚 Local Toolkit\n\n- **Terminal Wrappers:** Optional shell helpers owned by the private instance.\n- **Location:** outside the public runtime"
     },
     {
       "id": "group_agents",
@@ -168,7 +168,7 @@
       "width": 300,
       "height": 200,
       "color": "2",
-      "text": "# 🏛️ Workstation Harness\n`C:\\Users\\frank\\AGENTS.md`\n\nCanonical control mappings describing which coding agents are authorized to execute command loops on specified workspaces.\n\n- **Target Copy:** `claude-code-config/harness`.\n- **Audit commands:** `agent-audit`, `repo-audit`, `agent-push-status`."
+      "text": "# 🏛️ Local Agent Harness\n\nPrivate control mappings determine which agents may execute bounded workflows. Prompt text is not authority."
     },
     {
       "id": "c1ad000000000015",

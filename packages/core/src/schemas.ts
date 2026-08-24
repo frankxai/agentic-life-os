@@ -1,14 +1,23 @@
 import { z } from 'zod';
 
+const RepoRelativePathSchema = z.string().min(1).max(240).refine(
+  (value) =>
+    !value.includes('\\') &&
+    !value.startsWith('/') &&
+    !/^[A-Za-z]:/.test(value) &&
+    value.split('/').every((segment) => segment !== '' && segment !== '.' && segment !== '..'),
+  'path must be normalized and repository-relative'
+);
+
 export const OSModuleSchema = z.object({
   repoName: z.string(),
-  path: z.string(),
+  path: RepoRelativePathSchema,
   status: z.enum(['live', 'in-development', 'dormant', 'archive']),
   riskLevel: z.enum(['production', 'private', 'library', 'template', 'backup-sensitive']),
   healthCommand: z.string(),
   activeAgents: z.array(z.string()),
   purpose: z.string(),
-});
+}).strict();
 
 export type OSModule = z.infer<typeof OSModuleSchema>;
 
@@ -19,7 +28,7 @@ export const OfferPackageSchema = z.object({
   deliveryMode: z.string(),
   commercialStatus: z.enum(['free', 'proposed-not-priced', 'priced', 'private-only']),
   supportBoundary: z.string(),
-});
+}).strict();
 
 export type OfferPackage = z.infer<typeof OfferPackageSchema>;
 
@@ -31,7 +40,7 @@ export const AgenticLifeOSOfferingSchema = z.object({
   deliveryMode: z.string(),
   publicBoundary: z.string(),
   packages: z.array(OfferPackageSchema),
-});
+}).strict();
 
 export type AgenticLifeOSOffering = z.infer<typeof AgenticLifeOSOfferingSchema>;
 
@@ -52,7 +61,7 @@ export const IntelligenceSystemSchema = z.object({
   publicStatus: z.enum(['public-safe', 'private', 'hybrid']),
   purpose: z.string(),
   proofGate: z.string(),
-});
+}).strict();
 
 export type IntelligenceSystem = z.infer<typeof IntelligenceSystemSchema>;
 
@@ -78,7 +87,7 @@ export const EstateRepoSchema = z.object({
   role: z.string(),
   source: z.enum(['verified', 'repo-evidenced', 'doc-evidenced', 'inferred']),
   status: z.enum(['primary', 'supporting', 'candidate', 'watch', 'archive']),
-});
+}).strict();
 
 export type EstateRepo = z.infer<typeof EstateRepoSchema>;
 
@@ -90,7 +99,7 @@ export const OperatingLoopSchema = z.object({
   inputs: z.array(z.string()),
   outputs: z.array(z.string()),
   safetyGate: z.string(),
-});
+}).strict();
 
 export type OperatingLoop = z.infer<typeof OperatingLoopSchema>;
 
@@ -101,12 +110,12 @@ export const LifeOSProfileSchema = z.object({
   workstation: z.object({
     machineName: z.string(),
     os: z.string(),
-  }),
+  }).strict(),
   modules: z.record(z.string(), OSModuleSchema),
   offering: AgenticLifeOSOfferingSchema.optional(),
   intelligenceSystems: z.array(IntelligenceSystemSchema).default([]),
   estateRepos: z.array(EstateRepoSchema).default([]),
   operatingLoops: z.array(OperatingLoopSchema).default([]),
-});
+}).strict();
 
 export type LifeOSProfile = z.infer<typeof LifeOSProfileSchema>;

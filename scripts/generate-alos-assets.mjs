@@ -18,10 +18,10 @@ function main() {
     // 1. Generate llms.txt
     let llmsText = `# Agentic Life OS (ALOS) — Discoverability Spec
 
-This file defines the active modules, substrates, and agent capabilities of Frank's unified Life Operating System.
+This file defines the public modules, substrates, and bounded agent capabilities of Agentic Life OS.
 
 ## Architecture
-- Machine: ${profile.workstation.machineName} (${profile.workstation.os})
+- Runtime target: ${profile.workstation.os}
 - SIP Version: ${profile.sipVersion}
 - System Version: ${profile.version}
 
@@ -109,7 +109,11 @@ This file defines the active modules, substrates, and agent capabilities of Fran
         systemName: profile.systemName,
         version: profile.version,
         sip: profile.sipVersion,
-        workstation: profile.workstation,
+        runtime: {
+          mode: 'local-open-core',
+          operatingSystem: profile.workstation.os,
+          defaultAdmission: 'deny',
+        },
         modules: Object.entries(profile.modules).map(([name, m]) => ({
           key: name,
           repo: m.repoName,
@@ -134,9 +138,9 @@ This file defines the active modules, substrates, and agent capabilities of Fran
     const jsonLd = JSON.stringify(
       {
         '@context': 'https://schema.org',
-        '@type': 'SoftwareApplication',
+        '@type': 'SoftwareSourceCode',
         name: 'Agentic Life OS (ALOS)',
-        description: 'Unified multi-agent operating system.',
+        description: 'Open-source, local-first agent runtime with private-instance overlays.',
         operatingSystem: profile.workstation.os,
         applicationCategory: 'DeveloperApplication',
         creator: {

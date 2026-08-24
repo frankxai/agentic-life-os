@@ -10,18 +10,26 @@ const __dirname = path.dirname(__filename);
 describe('ALOS Profile Loader', () => {
   const mockYamlPath = path.join(__dirname, 'mock-alos-profile.yaml');
 
+  it('loads the repository public profile through the strict schema', () => {
+    const repositoryProfilePath = path.resolve(__dirname, '../../../alos-profile.yaml');
+    const profile = loadLifeOSProfile(repositoryProfilePath);
+    expect(profile.version).toBe('1.3.0');
+    expect(profile.workstation.machineName).toBe('local-instance');
+    expect(profile.modules['health']?.path).toBe('packages/health');
+  });
+
   it('should successfully load and validate a well-formed ALOS profile', () => {
     const validProfileContent = `
 systemName: "Agentic Life OS"
 version: "1.0.0"
 sipVersion: "1.1.1"
 workstation:
-  machineName: "Yoga Laptop"
-  os: "Windows"
+  machineName: "local-instance"
+  os: "Cross-platform"
 modules:
   business:
     repoName: "agentic-business-os"
-    path: "C:\\\\Users\\\\frank\\\\agentic-business-os"
+    path: "packages/business"
     status: "live"
     riskLevel: "production"
     healthCommand: "pnpm test"
@@ -49,12 +57,12 @@ systemName: "Agentic Life OS"
 version: "1.1.0"
 sipVersion: "1.1.1"
 workstation:
-  machineName: "Yoga Laptop"
-  os: "Windows"
+  machineName: "local-instance"
+  os: "Cross-platform"
 modules:
   health:
     repoName: "agentic-health-os"
-    path: "C:\\\\Users\\\\frank\\\\starlight\\\\repos\\\\agentic-life-os\\\\packages\\\\health"
+    path: "packages/health"
     status: "in-development"
     riskLevel: "private"
     healthCommand: "vitest run"
@@ -63,7 +71,7 @@ modules:
     purpose: "Private personal health workflows"
   lifeSciencesResearcher:
     repoName: "life-sciences-researcher-is"
-    path: "C:\\\\Users\\\\frank\\\\starlight\\\\repos\\\\agentic-life-os\\\\packages\\\\life-sciences-researcher"
+    path: "packages/life-sciences-researcher"
     status: "in-development"
     riskLevel: "private"
     healthCommand: "vitest run"
@@ -90,12 +98,12 @@ systemName: "Agentic Life OS"
 version: "1.2.0"
 sipVersion: "1.1.1"
 workstation:
-  machineName: "Yoga Laptop"
-  os: "Windows"
+  machineName: "local-instance"
+  os: "Cross-platform"
 modules:
   business:
     repoName: "agentic-business-os"
-    path: "C:\\\\Users\\\\frank\\\\starlight\\\\repos\\\\agentic-life-os\\\\packages\\\\business"
+    path: "packages/business"
     status: "in-development"
     riskLevel: "production"
     healthCommand: "vitest run"
@@ -162,14 +170,44 @@ systemName: "Agentic Life OS"
 version: "1.0.0"
 sipVersion: "1.1.1"
 workstation:
-  machineName: "Yoga Laptop"
-  os: "Windows"
+  machineName: "local-instance"
+  os: "Cross-platform"
 modules:
   business:
     repoName: "agentic-business-os"
     status: "unknown-status-value" # Invalid enum value
 `;
     fs.writeFileSync(mockYamlPath, invalidProfileContent);
+
+    try {
+      expect(() => loadLifeOSProfile(mockYamlPath)).toThrow(/ALOS Profile validation failed/);
+    } finally {
+      if (fs.existsSync(mockYamlPath)) {
+        fs.unlinkSync(mockYamlPath);
+      }
+    }
+  });
+
+  it('rejects machine-absolute module paths and unknown profile keys', () => {
+    const unsafeProfileContent = `
+systemName: "Agentic Life OS"
+version: "1.3.0"
+sipVersion: "1.1.1"
+workstation:
+  machineName: "local-instance"
+  os: "Cross-platform"
+modules:
+  health:
+    repoName: "agentic-health-os"
+    path: "/private/health-vault"
+    status: "in-development"
+    riskLevel: "private"
+    healthCommand: "vitest run"
+    activeAgents: ["local-agent"]
+    purpose: "Synthetic fixture"
+unexpectedAuthority: true
+`;
+    fs.writeFileSync(mockYamlPath, unsafeProfileContent);
 
     try {
       expect(() => loadLifeOSProfile(mockYamlPath)).toThrow(/ALOS Profile validation failed/);

@@ -3,9 +3,9 @@ import { BusinessOSManager, type BusinessEntity } from '../src/operations.js';
 
 describe('Business OS Operations', () => {
   const mockEntity: BusinessEntity = {
-    name: 'Arcanea Labs BV',
-    kvkNumber: '88888888',
-    vatNumber: 'NL888888888B01',
+    name: 'Example Cooperative',
+    kvkNumber: '00000000',
+    vatNumber: 'NL000000000B00',
     jurisdiction: 'NL',
     taxReservesRatio: 0.20,
   };
