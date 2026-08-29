@@ -1,49 +1,100 @@
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
+  "@type": "SoftwareSourceCode",
   "name": "Agentic Life OS (ALOS)",
-  "description": "Unified multi-agent operating system.",
-  "operatingSystem": "Windows",
+  "description": "Publication-candidate local-first agent runtime with private-instance overlays and sovereign data boundaries.",
+  "codeRepository": "https://github.com/frankxai/agentic-life-os",
+  "programmingLanguage": "TypeScript",
+  "license": "https://opensource.org/license/mit",
+  "version": "0.3.0",
+  "operatingSystem": "Portable Node.js 24 target; Windows verified, Linux CI pending",
   "applicationCategory": "DeveloperApplication",
+  "conditionsOfAccess": "Publication-candidate code and synthetic data only; live records, secrets, authority, and metrics stay private.",
+  "additionalProperty": {
+    "@type": "PropertyValue",
+    "name": "Profile assertion status",
+    "value": "unverified-declarative-configuration"
+  },
   "creator": {
     "@type": "Person",
     "name": "Frank Riemer"
   },
   "hasPart": [
     {
-      "@type": "SoftwareApplication",
+      "@type": "SoftwareSourceCode",
       "name": "agentic-business-os",
-      "description": "Business operations, legal corporate compliance, Dutch BV ops (Arcanea Labs BV), and claim safeguards."
+      "alternateName": "business",
+      "description": "Descriptor-only private business-adapter planning; public code accepts no entities, clients, invoices, dates, or amounts.",
+      "applicationSubCategory": "template"
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "SoftwareSourceCode",
       "name": "agentic-creator-os",
-      "description": "Multi-agent content engine, workshops OS, visual assets design, and Suno AI music production pipelines."
+      "alternateName": "creator",
+      "description": "Descriptor-only private creator-adapter planning; public code accepts no titles, outlines, paths, metadata, or raw content.",
+      "applicationSubCategory": "template"
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "SoftwareSourceCode",
       "name": "second-brain-os",
-      "description": "Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations."
+      "alternateName": "memory",
+      "description": "Descriptor-only private memory-adapter planning; public code accepts no labels, transcripts, metadata, paths, or raw content.",
+      "applicationSubCategory": "private"
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "SoftwareSourceCode",
       "name": "agentic-orchestration-os",
-      "description": "Ecosystem orchestration, package dependency checks, custom ZSH/PowerShell toolkits, and command grids."
+      "alternateName": "orchestration",
+      "description": "Bounded cross-module orchestration with explicit stop conditions.",
+      "applicationSubCategory": "library"
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "SoftwareSourceCode",
       "name": "agentic-investor-os",
-      "description": "Sovereign wealth calculation, capital allocation, deal scouting, due diligence, and investment tracking."
+      "alternateName": "investor",
+      "description": "Descriptor-only private wealth-adapter planning; public code accepts no holdings, values, deals, or financial identifiers and provides no advice.",
+      "applicationSubCategory": "template"
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "SoftwareSourceCode",
       "name": "agentic-health-os",
-      "description": "Biomedical research query gateways integrating OpenFDA, dbSNP, ChEMBL, ClinicalTrials, and AlphaFold structure lookups."
+      "alternateName": "health",
+      "description": "Sovereign health-data boundary, wellness organization, and clinician preparation.",
+      "applicationSubCategory": "private"
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "SoftwareSourceCode",
+      "name": "life-sciences-researcher-is",
+      "alternateName": "lifeSciencesResearcher",
+      "description": "Descriptor-only private research-adapter planning; public code performs no lookup and returns no scientific data.",
+      "applicationSubCategory": "template"
+    },
+    {
+      "@type": "SoftwareSourceCode",
       "name": "agentic-family-os",
-      "description": "Evidence-backed private family research, human-governed relationship claims, audience-scoped ancestor projections, preservation, and stewardship."
+      "alternateName": "family",
+      "description": "Descriptor-only private family-adapter planning; public code accepts no people, relationships, evidence, reviewer claims, genetics, or publication payloads.",
+      "applicationSubCategory": "private"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Starlight Intelligence System",
+      "alternateName": "Starlight-Intelligence-System",
+      "description": "Memory, provenance, taxonomy, and validation substrate.",
+      "applicationSubCategory": "substrate"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Health Intelligence System",
+      "alternateName": "health-intelligence-system",
+      "description": "Evidence, protocols, privacy patterns, and clinician-preparation templates.",
+      "applicationSubCategory": "domain-vertical"
     }
-  ]
+  ],
+  "isBasedOn": {
+    "@type": "SoftwareSourceCode",
+    "name": "Health Intelligence System",
+    "codeRepository": "https://github.com/frankxai/health-intelligence-system",
+    "description": "Immutable provenance receipts for versioned public health artifacts."
+  }
 }

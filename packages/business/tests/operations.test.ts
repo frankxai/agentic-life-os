@@ -1,62 +1,37 @@
-import { describe, it, expect } from 'vitest';
-import { BusinessOSManager, type BusinessEntity } from '../src/operations.js';
+import { describe, expect, it } from 'vitest';
+import { BusinessOSManager } from '../src/operations.js';
 
-describe('Business OS Operations', () => {
-  const mockEntity: BusinessEntity = {
-    name: 'Arcanea Labs BV',
-    kvkNumber: '88888888',
-    vatNumber: 'NL888888888B01',
-    jurisdiction: 'NL',
-    taxReservesRatio: 0.20,
-  };
+describe('public Business OS boundary', () => {
+  it('returns only a non-executable private-adapter descriptor', () => {
+    const manager = new BusinessOSManager();
+    const plan = manager.planPrivateLedgerReview('business_0123456789abcdef0123456789abcdef');
 
-  it('should calculate realized income and outstanding receivables correctly', () => {
-    const manager = new BusinessOSManager(mockEntity);
-    
-    manager.addInvoice({
-      id: 'INV-001',
-      clientName: 'Client 1',
-      amount: 2000,
-      vatRate: 0.21,
-      status: 'paid',
-      issueDate: '2026-06-01',
-      dueDate: '2026-06-15',
+    expect(plan).toMatchObject({
+      target: 'private-external-business-adapter',
+      financialDataIncluded: false,
+      executionPermitted: false,
+      authorityStatus: 'unverified-public-plan',
     });
-
-    manager.addInvoice({
-      id: 'INV-002',
-      clientName: 'Client 2',
-      amount: 3000,
-      vatRate: 0.21,
-      status: 'sent',
-      issueDate: '2026-06-02',
-      dueDate: '2026-06-16',
-    });
-
-    expect(manager.getRealizedIncome()).toBe(2000);
-    expect(manager.getOutstandingReceivables()).toBe(3000);
+    expect(manager.getFinancialRecordsCount()).toBe(0);
   });
 
-  it('should run a compliance audit to verify tax reserves are met', () => {
-    const manager = new BusinessOSManager(mockEntity);
-    
-    manager.addInvoice({
-      id: 'INV-001',
-      clientName: 'Client 1',
-      amount: 10000,
-      vatRate: 0.21,
-      status: 'paid',
-      issueDate: '2026-06-01',
-      dueDate: '2026-06-15',
-    });
+  it('rejects client names, invoice identifiers, values, and paths', () => {
+    const manager = new BusinessOSManager();
+    for (const unsafeValue of ['Client A', 'INV-001', 'EUR 4200', '../ledger', 'C:\\finance', 'business_0123']) {
+      expect(() => manager.planPrivateLedgerReview(unsafeValue)).toThrow(/reserved opaque reference syntax/i);
+    }
+    const coercionObject = {
+      secret: 'private invoice values',
+      toString: () => 'business_0123456789abcdef0123456789abcdef',
+    };
+    expect(() => manager.planPrivateLedgerReview(coercionObject as unknown as string)).toThrow(/reserved opaque reference syntax/i);
+  });
 
-    // 10000 realized * 0.20 ratio = 2000 corporate tax reserve required.
-    const auditPass = manager.runComplianceAudit(2500);
-    expect(auditPass.kvkActive).toBe(true);
-    expect(auditPass.minimumTaxReserveMet).toBe(true);
-    expect(auditPass.corporateTaxReserveEUR).toBe(2000);
-
-    const auditFail = manager.runComplianceAudit(1500);
-    expect(auditFail.minimumTaxReserveMet).toBe(false);
+  it('exposes no mutable invoice or calculation surface', () => {
+    const manager = new BusinessOSManager();
+    expect('addInvoice' in manager).toBe(false);
+    expect('getInvoices' in manager).toBe(false);
+    expect('getOutstandingReceivables' in manager).toBe(false);
+    expect('getRealizedIncome' in manager).toBe(false);
   });
 });

@@ -1,102 +1,119 @@
-import { BusinessOSManager, type Invoice } from '@frankx-ai/agentic-business-os';
+import { BusinessOSManager, type PrivateBusinessReviewPlan } from '@frankx-ai/agentic-business-os';
 import { CreatorOSManager } from '@frankx-ai/agentic-creator-os';
 import { MemoryOSManager } from '@frankx-ai/second-brain-os';
-import { calculateNetWorth, type WealthPortfolio } from '@frankx-ai/agentic-investor-os';
-import { HealthScienceGateway } from '@frankx-ai/agentic-health-os';
-import { type FamilyNode } from '@frankx-ai/agentic-family-os';
+import { InvestorOSManager, type PrivateWealthReviewPlan } from '@frankx-ai/agentic-investor-os';
+import { AgenticHealthOS } from '@frankx-ai/agentic-health-os';
+import {
+  LifeSciencesResearchGateway,
+  type PrivateResearchQueryPlan,
+  type ResearchQueryKind,
+} from '@frankx-ai/life-sciences-researcher-is';
+import { FamilyResearchBoundary, type PrivateFamilyProjectionPlan } from '@frankx-ai/agentic-family-os';
 import { type LifeOSProfile } from '@frankx-ai/alos-core';
 
-export interface EcosystemHealthReport {
-  timestamp: string;
-  totalModulesChecked: number;
-  unresolvedReceivablesEUR: number;
-  projectedNetWorthEUR: number;
-  memoryNodesCount: number;
-  status: 'healthy' | 'warning' | 'degraded';
+export const BLOCKED_SENSITIVE_ROUTES = Object.freeze([
+  'family-to-memory',
+  'family-to-creator',
+  'genetic-to-memory',
+  'genetic-to-creator',
+] as const);
+export type BlockedSensitiveRoute = (typeof BLOCKED_SENSITIVE_ROUTES)[number];
+const BLOCKED_SENSITIVE_ROUTE_SET = new Set<string>(BLOCKED_SENSITIVE_ROUTES);
+const SET_HAS = Set.prototype.has;
+
+export interface SensitiveRouteDecision {
+  route: BlockedSensitiveRoute;
+  conforms: false;
+  code: 'sensitive-cross-domain-route-disabled';
+  inputIncluded: false;
+  executionPermitted: false;
+  authorityStatus: 'public-static-denial';
+  reason: string;
 }
 
+export interface EcosystemStatusReport {
+  generatedAt: string;
+  totalModulesDeclared: number;
+  memoryNodesCount: 0;
+  creatorAssetsCount: 0;
+  financialDataIncluded: false;
+  personalDataIncluded: false;
+  configurationStatus: 'unverified-profile-configuration';
+  status: 'informational';
+}
+
+/** Composes public descriptor-only packages without exposing their managers or sensitive state. */
 export class ALOSOrchestrator {
-  private businessManager: BusinessOSManager;
-  private creatorManager: CreatorOSManager;
-  private memoryManager: MemoryOSManager;
-  private healthGateway: HealthScienceGateway;
+  readonly #businessManager = new BusinessOSManager();
+  readonly #creatorManager = new CreatorOSManager();
+  readonly #memoryManager = new MemoryOSManager();
+  readonly #investorManager = new InvestorOSManager();
+  readonly #healthOS = new AgenticHealthOS();
+  readonly #lifeSciencesGateway = new LifeSciencesResearchGateway();
+  readonly #familyBoundary = new FamilyResearchBoundary();
+  readonly #clock: () => Date;
 
-  constructor(businessManager: BusinessOSManager) {
-    this.businessManager = businessManager;
-    this.creatorManager = new CreatorOSManager();
-    this.memoryManager = new MemoryOSManager();
-    this.healthGateway = new HealthScienceGateway();
+  constructor(clock: () => Date = () => new Date()) {
+    this.#clock = clock;
   }
 
-  getBusinessManager(): BusinessOSManager {
-    return this.businessManager;
+  getHealthOS(): AgenticHealthOS {
+    return this.#healthOS;
   }
 
-  getCreatorManager(): CreatorOSManager {
-    return this.creatorManager;
+  getDataFlowStatus(): Readonly<{ memoryNodesCount: 0; creatorAssetsCount: 0 }> {
+    return Object.freeze({
+      memoryNodesCount: this.#memoryManager.getNodesCount(),
+      creatorAssetsCount: this.#creatorManager.getAssetsCount(),
+    });
   }
 
-  getMemoryManager(): MemoryOSManager {
-    return this.memoryManager;
+  planPrivateBusinessReview(opaqueLedgerRef: string): PrivateBusinessReviewPlan {
+    return this.#businessManager.planPrivateLedgerReview(opaqueLedgerRef);
   }
 
-  getHealthGateway(): HealthScienceGateway {
-    return this.healthGateway;
+  planPrivateWealthReview(opaquePortfolioRef: string): PrivateWealthReviewPlan {
+    return this.#investorManager.planPrivatePortfolioReview(opaquePortfolioRef);
   }
 
-  /**
-   * Pipeline 1: Connect Business OS cashflow projections with Investor OS wealth portfolios
-   */
-  aggregateProjectedWealth(portfolio: WealthPortfolio): number {
-    const cash = portfolio.cash;
-    const realizedIncome = this.businessManager.getRealizedIncome();
-    const outstandingReceivables = this.businessManager.getOutstandingReceivables();
-
-    // Adjust portfolio cash to incorporate real business OS flows
-    const updatedPortfolio: WealthPortfolio = {
-      ...portfolio,
-      cash: cash + realizedIncome + outstandingReceivables,
-    };
-
-    return calculateNetWorth(updatedPortfolio);
+  planPrivateResearchQuery(kind: ResearchQueryKind, opaqueQueryRef: string): PrivateResearchQueryPlan {
+    return this.#lifeSciencesGateway.planResearchQuery(kind, opaqueQueryRef);
   }
 
-  /**
-   * Disabled fail-closed boundary.
-   *
-   * Family records and genetic/health results must not flow into generic memory or
-   * creator systems until the private deployment has server-resolved consent,
-   * purpose limitation, audience authorization, minimization/redaction, audit,
-   * withdrawal, and recipient controls. Keeping the legacy signature prevents a
-   * silent API substitution while making every attempted transfer fail closed.
-   */
-  async syncBiographicResearchToCreator(
-    familyNodes: FamilyNode[],
-    rsId: string,
-    topicTitle: string
-  ): Promise<{ scriptId: string; memoryNodeId: string }> {
-    void familyNodes;
-    void rsId;
-    void topicTitle;
-    throw new Error(
-      'Family-to-health, memory, and creator synchronization is disabled pending trusted consent and publication authorization.'
-    );
+  planPrivateFamilyProjection(opaqueRegistryRef: string): PrivateFamilyProjectionPlan {
+    return this.#familyBoundary.planPrivateProjection(opaqueRegistryRef);
   }
 
-  /**
-   * Generates a unified ecosystem health dashboard report
-   */
-  generateHealthReport(profile: LifeOSProfile, portfolio: WealthPortfolio): EcosystemHealthReport {
-    const outstanding = this.businessManager.getOutstandingReceivables();
-    const netWorth = this.aggregateProjectedWealth(portfolio);
+  evaluateSensitiveRoute(route: BlockedSensitiveRoute): SensitiveRouteDecision {
+    if (typeof route !== 'string' || !Reflect.apply(SET_HAS, BLOCKED_SENSITIVE_ROUTE_SET, [route])) {
+      throw new Error('Sensitive route is not recognized.');
+    }
+    return Object.freeze({
+      route,
+      conforms: false,
+      code: 'sensitive-cross-domain-route-disabled',
+      inputIncluded: false,
+      executionPermitted: false,
+      authorityStatus: 'public-static-denial',
+      reason: 'Family and genetic data cannot enter generic Memory or Creator paths.',
+    });
+  }
 
-    return {
-      timestamp: new Date().toISOString(),
-      totalModulesChecked: Object.keys(profile.modules).length,
-      unresolvedReceivablesEUR: outstanding,
-      projectedNetWorthEUR: netWorth,
-      memoryNodesCount: this.memoryManager.getNodesCount(),
-      status: 'healthy',
-    };
+  generateStatusReport(profile: LifeOSProfile): EcosystemStatusReport {
+    const observed = this.#clock();
+    if (!(observed instanceof Date)) throw new Error('Orchestrator clock must return a Date.');
+    const instant = Date.prototype.getTime.call(observed);
+    if (!Number.isFinite(instant)) throw new Error('Orchestrator clock returned an invalid time.');
+    const generatedAt = new Date(instant).toISOString();
+    return Object.freeze({
+      generatedAt,
+      totalModulesDeclared: Object.keys(profile.modules).length,
+      memoryNodesCount: this.#memoryManager.getNodesCount(),
+      creatorAssetsCount: this.#creatorManager.getAssetsCount(),
+      financialDataIncluded: false,
+      personalDataIncluded: false,
+      configurationStatus: 'unverified-profile-configuration',
+      status: 'informational',
+    });
   }
 }

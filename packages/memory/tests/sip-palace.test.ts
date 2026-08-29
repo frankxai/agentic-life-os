@@ -1,52 +1,49 @@
-import { describe, it, expect } from 'vitest';
-import { MemoryOSManager, type MemoryNode } from '../src/sip-palace.js';
+import { describe, expect, it } from 'vitest';
+import { MemoryOSManager } from '../src/sip-palace.js';
 
-describe('Memory OS Starlight Memory Palace (SIP)', () => {
-  it('should index semantic nodes and retrieve them via semantic search matching', () => {
+describe('public Second Brain boundary', () => {
+  it('returns only a non-executable descriptor for a private-adapter memory reference', () => {
     const manager = new MemoryOSManager();
+    const plan = manager.planExternalIndex('mem_0123456789abcdef0123456789abcdef');
 
-    const node1: MemoryNode = {
-      id: 'entity_001',
-      label: 'Starlight Intelligence System',
-      category: 'entity',
-      content: 'Core substrate containing memory palace databases and visual operators.',
-      metadata: { repo: 'Starlight-Intelligence-System' },
-      createdAt: '2026-06-14T03:00:00Z',
-    };
-
-    const node2: MemoryNode = {
-      id: 'agent_002',
-      label: 'Antigravity Code Agent',
-      category: 'agent',
-      content: 'Autonomous code engineering agent designed by Google DeepMind.',
-      metadata: { model: 'Gemini' },
-      createdAt: '2026-06-14T03:05:00Z',
-    };
-
-    manager.indexNode(node1);
-    manager.indexNode(node2);
-
-    expect(manager.getNodesCount()).toBe(2);
-
-    const searchResult = manager.semanticSearch('Starlight');
-    expect(searchResult).toHaveLength(1);
-    expect(searchResult[0]?.id).toBe('entity_001');
-
-    const searchAgent = manager.semanticSearch('agent');
-    expect(searchAgent).toHaveLength(1);
-    expect(searchAgent[0]?.id).toBe('agent_002');
+    expect(plan).toMatchObject({
+      operation: 'index-descriptor',
+      target: 'private-external-memory-adapter',
+      contentIncluded: false,
+      executionPermitted: false,
+      authorityStatus: 'unverified-public-plan',
+    });
+    expect(manager.getNodesCount()).toBe(0);
   });
 
-  it('should distill chat history into a structured Obsidian note', () => {
+  it('plans transcript handling without accepting titles, snippets, or paths', () => {
     const manager = new MemoryOSManager();
-    const note = manager.distillChatHistory('Workshop Session 1', [
-      'Discussed workspace structures.',
-      'Completed installation of the orchestration module.',
-    ]);
+    const plan = manager.planChatDistillation('session_0123456789abcdef0123456789abcdef');
 
-    expect(note.filePath).toContain('vaults/second-brain/Archive/Distillations/Workshop_Session_1.md');
-    expect(note.title).toBe('Workshop Session 1');
-    expect(note.tags).toContain('life-os');
-    expect(note.body).toContain('Discussed workspace structures.');
+    expect(plan.operation).toBe('distill-chat');
+    expect(JSON.stringify(plan)).not.toMatch(/title|snippet|transcript|vault|[A-Za-z]:[\\/]/i);
+  });
+
+  it('rejects caller content and traversal-shaped values instead of treating them as references', () => {
+    const manager = new MemoryOSManager();
+    const unsafeValues = [
+      'BRCA1 pathogenic family result',
+      '../escape',
+      '..\\escape',
+      'C:\\private',
+      '/private',
+      'session_0123',
+      'mem_0123456789abcdef0123456789abcdeg',
+    ];
+
+    for (const unsafeValue of unsafeValues) {
+      expect(() => manager.planExternalIndex(unsafeValue)).toThrow(/reserved opaque reference syntax/i);
+      expect(() => manager.planChatDistillation(unsafeValue)).toThrow(/reserved opaque reference syntax/i);
+    }
+    const coercionObject = {
+      secret: 'private memory content',
+      toString: () => 'mem_0123456789abcdef0123456789abcdef',
+    };
+    expect(() => manager.planExternalIndex(coercionObject as unknown as string)).toThrow(/reserved opaque reference syntax/i);
   });
 });

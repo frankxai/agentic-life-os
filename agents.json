@@ -1,68 +1,263 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.3.0",
   "systemName": "Agentic Life OS (ALOS)",
-  "version": "1.0.0",
-  "sip": "1.1.1",
-  "workstation": {
-    "machineName": "Local Development Workstation",
-    "os": "Windows"
+  "runtimeVersion": "0.3.0",
+  "profileVersion": "1.4.0",
+  "sipVersion": "1.1.1",
+  "profileAssertionStatus": "unverified-declarative-configuration",
+  "runtime": {
+    "mode": "local-open-core",
+    "authority": "private-runtime-authority-store",
+    "defaultAdmission": "deny",
+    "operatingSystem": "Portable Node.js 24 target; Windows verified, Linux CI pending"
   },
   "modules": [
     {
       "key": "business",
       "repo": "agentic-business-os",
-      "status": "in-development",
-      "risk": "production",
-      "verify": "vitest run",
-      "purpose": "Business operations, legal corporate compliance, Dutch BV ops (Arcanea Labs BV), and claim safeguards."
+      "path": "packages/business",
+      "declaredStatus": "in-development",
+      "declaredRisk": "template",
+      "healthCheck": "vitest-module",
+      "declaredAgentRoles": [
+        "local-agent"
+      ],
+      "purpose": "Descriptor-only private business-adapter planning; public code accepts no entities, clients, invoices, dates, or amounts."
     },
     {
       "key": "creator",
       "repo": "agentic-creator-os",
-      "status": "in-development",
-      "risk": "production",
-      "verify": "vitest run",
-      "purpose": "Multi-agent content engine, workshops OS, visual assets design, and Suno AI music production pipelines."
+      "path": "packages/creator",
+      "declaredStatus": "in-development",
+      "declaredRisk": "template",
+      "healthCheck": "vitest-module",
+      "declaredAgentRoles": [
+        "local-agent"
+      ],
+      "purpose": "Descriptor-only private creator-adapter planning; public code accepts no titles, outlines, paths, metadata, or raw content."
     },
     {
       "key": "memory",
       "repo": "second-brain-os",
-      "status": "in-development",
-      "risk": "private",
-      "verify": "vitest run",
-      "purpose": "Persistent knowledge storage, double-vault air-gapped Obsidian summaries, and chat history distillations."
+      "path": "packages/memory",
+      "declaredStatus": "in-development",
+      "declaredRisk": "private",
+      "healthCheck": "vitest-module",
+      "declaredAgentRoles": [
+        "local-agent"
+      ],
+      "purpose": "Descriptor-only private memory-adapter planning; public code accepts no labels, transcripts, metadata, paths, or raw content."
     },
     {
       "key": "orchestration",
       "repo": "agentic-orchestration-os",
-      "status": "in-development",
-      "risk": "production",
-      "verify": "vitest run",
-      "purpose": "Ecosystem orchestration, package dependency checks, custom ZSH/PowerShell toolkits, and command grids."
+      "path": "packages/orchestration",
+      "declaredStatus": "in-development",
+      "declaredRisk": "library",
+      "healthCheck": "vitest-module",
+      "declaredAgentRoles": [
+        "local-agent"
+      ],
+      "purpose": "Bounded cross-module orchestration with explicit stop conditions."
     },
     {
       "key": "investor",
       "repo": "agentic-investor-os",
-      "status": "in-development",
-      "risk": "private",
-      "verify": "vitest run",
-      "purpose": "Sovereign wealth calculation, capital allocation, deal scouting, due diligence, and investment tracking."
+      "path": "packages/investor",
+      "declaredStatus": "in-development",
+      "declaredRisk": "template",
+      "healthCheck": "vitest-module",
+      "declaredAgentRoles": [
+        "local-agent"
+      ],
+      "purpose": "Descriptor-only private wealth-adapter planning; public code accepts no holdings, values, deals, or financial identifiers and provides no advice."
     },
     {
       "key": "health",
       "repo": "agentic-health-os",
-      "status": "in-development",
-      "risk": "private",
-      "verify": "vitest run",
-      "purpose": "Biomedical research query gateways integrating OpenFDA, dbSNP, ChEMBL, ClinicalTrials, and AlphaFold structure lookups."
+      "path": "packages/health",
+      "declaredStatus": "in-development",
+      "declaredRisk": "private",
+      "healthCheck": "vitest-module",
+      "declaredAgentRoles": [
+        "local-agent"
+      ],
+      "purpose": "Sovereign health-data boundary, wellness organization, and clinician preparation."
+    },
+    {
+      "key": "lifeSciencesResearcher",
+      "repo": "life-sciences-researcher-is",
+      "path": "packages/life-sciences-researcher",
+      "declaredStatus": "in-development",
+      "declaredRisk": "template",
+      "healthCheck": "vitest-module",
+      "declaredAgentRoles": [
+        "local-agent"
+      ],
+      "purpose": "Descriptor-only private research-adapter planning; public code performs no lookup and returns no scientific data."
     },
     {
       "key": "family",
       "repo": "agentic-family-os",
-      "status": "in-development",
-      "risk": "private",
-      "verify": "pnpm exec vitest run packages/family/tests",
-      "purpose": "Evidence-backed private family research, human-governed relationship claims, audience-scoped ancestor projections, preservation, and stewardship."
+      "path": "packages/family",
+      "declaredStatus": "in-development",
+      "declaredRisk": "private",
+      "healthCheck": "vitest-module",
+      "declaredAgentRoles": [
+        "local-agent"
+      ],
+      "purpose": "Descriptor-only private family-adapter planning; public code accepts no people, relationships, evidence, reviewer claims, genetics, or publication payloads."
+    }
+  ],
+  "healthKnowledgeSource": {
+    "repository": "frankxai/health-intelligence-system",
+    "requiredBindings": [
+      "pinVersion",
+      "repository",
+      "commitSha",
+      "artifactVersion",
+      "artifactPath",
+      "mediaType",
+      "byteLength",
+      "sha256"
+    ]
+  },
+  "prohibitedPublicData": [
+    "raw-health-records",
+    "clinical-data",
+    "genomic-data",
+    "family-records",
+    "secrets",
+    "authority-state",
+    "personal-metrics"
+  ],
+  "prohibitedAgentActions": [
+    "diagnosis",
+    "treatment",
+    "medication-change",
+    "result-interpretation",
+    "emergency-reassurance",
+    "autonomous-transport",
+    "public-storage-of-private-records"
+  ],
+  "familyDataGate": {
+    "dataClasses": [
+      "family-records",
+      "genomic-data"
+    ],
+    "deniedDestinations": [
+      "memory",
+      "creator"
+    ],
+    "requiredControls": [
+      "private-encrypted-deployment",
+      "consent",
+      "audit",
+      "backup-restore",
+      "audience-authorization",
+      "succession-controls"
+    ]
+  },
+  "offering": {
+    "name": "Agentic Life OS",
+    "audience": "Builders who want a local-first, bounded agent runtime for life domains.",
+    "promise": "Compose reusable agents without placing personal data or authority in public code.",
+    "status": "draft",
+    "deliveryMode": "Planned clean-history public projection with synthetic examples and a private-instance overlay template.",
+    "publicBoundary": "Publication-candidate code and synthetic data only; live records, secrets, authority, and metrics stay private.",
+    "packages": [
+      {
+        "name": "Public Runtime",
+        "audience": "Developers and researchers",
+        "promise": "Use bounded contracts, tests, and templates under an open-source license.",
+        "deliveryMode": "Self-hosted source code",
+        "commercialStatus": "free",
+        "supportBoundary": "Community and self-serve; no personal-data processing."
+      },
+      {
+        "name": "Private Instance Overlay",
+        "audience": "Individuals and trusted local operators",
+        "promise": "Configure the public runtime without forking personal data into product code.",
+        "deliveryMode": "Generic local-first template",
+        "commercialStatus": "free",
+        "supportBoundary": "The operator owns storage, consent, clinical decisions, and backups."
+      }
+    ]
+  },
+  "intelligenceSystems": [
+    {
+      "name": "Starlight Intelligence System",
+      "repoName": "Starlight-Intelligence-System",
+      "layer": "substrate",
+      "declaredPublicStatus": "hybrid",
+      "purpose": "Memory, provenance, taxonomy, and validation substrate.",
+      "proofGate": "Keep public and private state separate and attach deterministic evidence."
+    },
+    {
+      "name": "Health Intelligence System",
+      "repoName": "health-intelligence-system",
+      "layer": "domain-vertical",
+      "declaredPublicStatus": "publication-candidate",
+      "purpose": "Evidence, protocols, privacy patterns, and clinician-preparation templates.",
+      "proofGate": "Pin artifacts by immutable commit, version, path, length, and SHA-256."
+    }
+  ],
+  "estateRepos": [
+    {
+      "name": "agentic-life-os",
+      "lane": "master-offer",
+      "role": "Private hardening source for a clean-history public runtime projection and private-instance overlay contract.",
+      "declaredEvidenceBasis": "repo-evidenced",
+      "declaredStatus": "primary"
+    },
+    {
+      "name": "health-intelligence-system",
+      "lane": "health",
+      "role": "Public health evidence and protocol source.",
+      "declaredEvidenceBasis": "repo-evidenced",
+      "declaredStatus": "primary"
+    },
+    {
+      "name": "Starlight-Intelligence-System",
+      "lane": "substrate",
+      "role": "Memory, provenance, and validation substrate.",
+      "declaredEvidenceBasis": "repo-evidenced",
+      "declaredStatus": "supporting"
+    }
+  ],
+  "operatingLoops": [
+    {
+      "name": "Daily Command Loop",
+      "cadence": "daily",
+      "owner": "human-operator",
+      "purpose": "Select one bounded objective, authorize it, execute it, and retain evidence.",
+      "inputs": [
+        "private queue",
+        "current authority",
+        "public runtime"
+      ],
+      "outputs": [
+        "bounded task",
+        "decision receipt",
+        "handoff"
+      ],
+      "safetyGate": "No external, financial, clinical, destructive, or sensitive-data action without explicit authority."
+    },
+    {
+      "name": "Health And Excellence Loop",
+      "cadence": "private daily log plus weekly review",
+      "owner": "human-operator",
+      "purpose": "Organize wellness signals and clinician questions without replacing professional care.",
+      "inputs": [
+        "encrypted local vault descriptors",
+        "pinned public health artifacts"
+      ],
+      "outputs": [
+        "report-only structured review validation",
+        "clinician-question templates",
+        "planned private-adapter export controls"
+      ],
+      "safetyGate": "No diagnosis, treatment, medication, result interpretation, or emergency reassurance."
     }
   ]
 }

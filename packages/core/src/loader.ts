@@ -2,6 +2,15 @@ import fs from 'node:fs';
 import yaml from 'js-yaml';
 import { LifeOSProfileSchema, type LifeOSProfile } from './schemas.js';
 
+const CONTROL_CHARACTERS = /[\p{Cc}\p{Cf}\u2028\u2029]/gu;
+
+function safeDiagnostic(value: unknown, maxLength = 500): string {
+  return String(value)
+    .normalize('NFC')
+    .replace(CONTROL_CHARACTERS, '?')
+    .slice(0, maxLength);
+}
+
 export function loadLifeOSProfile(filePath: string): LifeOSProfile {
   if (!fs.existsSync(filePath)) {
     throw new Error(`ALOS Profile file not found at path: ${filePath}`);
@@ -18,7 +27,10 @@ export function loadLifeOSProfile(filePath: string): LifeOSProfile {
 
   if (!result.success) {
     const errorDetails = result.error.errors
-      .map((err) => `  - [${err.path.join('.')}] ${err.message}`)
+      .map((err) => {
+        const safePath = err.path.map((segment) => safeDiagnostic(segment, 80)).join('.');
+        return `  - [${safePath}] ${safeDiagnostic(err.message)}`;
+      })
       .join('\n');
     throw new Error(`ALOS Profile validation failed:\n${errorDetails}`);
   }

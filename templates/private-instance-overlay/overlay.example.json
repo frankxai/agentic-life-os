@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0.0",
+  "instanceId": "private-life-instance",
+  "publicRuntime": {
+    "repository": "frankxai/agentic-life-os",
+    "activationGate": "approved-clean-history-projection-required",
+    "version": "0.3.0",
+    "commitSha": null,
+    "treeSha": null,
+    "projectionDigest": null
+  },
+  "health": {
+    "publicKnowledgeSource": {
+      "enabled": false,
+      "repository": "frankxai/health-intelligence-system",
+      "activationGate": "approved-release-manifest-required",
+      "requiredReceiptFields": [
+        "pinVersion",
+        "repository",
+        "commitSha",
+        "artifactVersion",
+        "artifactPath",
+        "mediaType",
+        "byteLength",
+        "sha256"
+      ]
+    },
+    "vault": {
+      "adapter": "separately-encrypted-local-vault",
+      "rootFromEnvironment": "LIFE_OS_HEALTH_VAULT_ROOT"
+    },
+    "secondBrainProjection": {
+      "enabled": false,
+      "direction": "health-vault-to-second-brain-only",
+      "maximumSensitivity": "unverified-private",
+      "requiresHumanApproval": true
+    },
+    "exports": {
+      "transportEnabled": false,
+      "requiresHumanApproval": true
+    }
+  },
+  "trackedDataPolicy": {
+    "allowSyntheticFixturesOnly": true,
+    "excludeRawRecords": true,
+    "excludeSecrets": true,
+    "excludeAuthorityState": true
+  }
+}

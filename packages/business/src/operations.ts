@@ -1,74 +1,49 @@
-export interface BusinessEntity {
-  name: string;
-  kvkNumber: string; // Dutch chamber of commerce ID
-  vatNumber: string;
-  jurisdiction: 'NL' | 'EU' | 'US' | 'Global';
-  taxReservesRatio: number; // e.g. 0.25 (25% held back for corp/vat tax)
+export interface PrivateBusinessReviewPlan {
+  operation: 'review-private-business-ledger';
+  opaqueLedgerRef: string;
+  target: 'private-external-business-adapter';
+  financialDataIncluded: false;
+  executionPermitted: false;
+  authorityStatus: 'unverified-public-plan';
+  requiredControls: readonly [
+    'private-adapter-issued-reference',
+    'private-encrypted-financial-store',
+    'purpose-limitation',
+    'human-authorization',
+    'audit-receipt',
+    'accounting-and-legal-review',
+  ];
 }
 
-export interface Invoice {
-  id: string;
-  clientName: string;
-  amount: number; // net amount in EUR
-  vatRate: number; // e.g. 0.21 for 21%
-  status: 'draft' | 'sent' | 'paid' | 'overdue';
-  issueDate: string;
-  dueDate: string;
-}
+const OPAQUE_LEDGER_REF = /^business_[a-f0-9]{32}$/;
+const BUSINESS_REQUIRED_CONTROLS = Object.freeze([
+  'private-adapter-issued-reference',
+  'private-encrypted-financial-store',
+  'purpose-limitation',
+  'human-authorization',
+  'audit-receipt',
+  'accounting-and-legal-review',
+] as const);
 
-export interface BVComplianceCheck {
-  kvkActive: boolean;
-  quarterlyVatSubmitted: boolean;
-  minimumTaxReserveMet: boolean;
-  corporateTaxReserveEUR: number;
-}
-
+/** Public descriptor-only boundary; it stores no entities, clients, invoices, or amounts. */
 export class BusinessOSManager {
-  private entity: BusinessEntity;
-  private invoices: Invoice[] = [];
+  planPrivateLedgerReview(opaqueLedgerRef: string): PrivateBusinessReviewPlan {
+    if (typeof opaqueLedgerRef !== 'string' || !OPAQUE_LEDGER_REF.test(opaqueLedgerRef)) {
+      throw new Error('Business ledger reference must use the reserved opaque reference syntax.');
+    }
 
-  constructor(entity: BusinessEntity) {
-    this.entity = entity;
+    return Object.freeze({
+      operation: 'review-private-business-ledger',
+      opaqueLedgerRef,
+      target: 'private-external-business-adapter',
+      financialDataIncluded: false,
+      executionPermitted: false,
+      authorityStatus: 'unverified-public-plan',
+      requiredControls: BUSINESS_REQUIRED_CONTROLS,
+    });
   }
 
-  addInvoice(invoice: Invoice): void {
-    this.invoices.push(invoice);
-  }
-
-  getInvoices(): Invoice[] {
-    return [...this.invoices];
-  }
-
-  /**
-   * Calculates total outstanding receivables (sent but unpaid/overdue)
-   */
-  getOutstandingReceivables(): number {
-    return this.invoices
-      .filter((inv) => inv.status === 'sent' || inv.status === 'overdue')
-      .reduce((sum, inv) => sum + inv.amount, 0);
-  }
-
-  /**
-   * Calculates total realized (paid) income
-   */
-  getRealizedIncome(): number {
-    return this.invoices
-      .filter((inv) => inv.status === 'paid')
-      .reduce((sum, inv) => sum + inv.amount, 0);
-  }
-
-  /**
-   * Run compliance health checks for Dutch BV
-   */
-  runComplianceAudit(cashBalanceEUR: number): BVComplianceCheck {
-    const totalRevenue = this.getRealizedIncome();
-    const expectedTaxReserve = totalRevenue * this.entity.taxReservesRatio;
-    
-    return {
-      kvkActive: this.entity.kvkNumber.length > 0,
-      quarterlyVatSubmitted: true, // Mocked status for gateway
-      minimumTaxReserveMet: cashBalanceEUR >= expectedTaxReserve,
-      corporateTaxReserveEUR: expectedTaxReserve,
-    };
+  getFinancialRecordsCount(): 0 {
+    return 0;
   }
 }

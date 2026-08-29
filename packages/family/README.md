@@ -1,50 +1,35 @@
 # @frankx-ai/agentic-family-os
 
-Private Family Intelligence integration for Agentic Life OS.
+Descriptor-only public boundary for private family research.
 
 ## Current capability
 
-- Evidence records with provenance, rights class, archive/source reference, access date, and fixity digest.
-- Relationship claims with proposal/review/acceptance/dispute/rejection states.
-- Human-review and evidence requirements before a relationship can be accepted.
-- Fail-closed detection of missing references, duplicate IDs, impossible self-parenting, excessive biological-parent claims, invalid confidence, and ancestry cycles.
-- Deterministic private, family, and public ancestor projections.
-- Public projection excludes living people, unknown life status, and non-public records.
-- Every rendered relationship retains claim, confidence, and evidence references.
-
-The legacy `compileLineageChain` helper remains for compatibility but is only a formatter. It is not historical validation and must not be used as the canonical archive.
-
-## Usage
+The package accepts one private-adapter-issued opaque registry reference and
+returns a frozen, non-executable plan. It accepts and returns no names,
+relationships, evidence, citations, reviewer claims, dates, genetics, media,
+tree nodes, or publication payloads.
 
 ```ts
-import {
-  buildAncestorProjection,
-  validateResearchRegistry,
-  type FamilyResearchRegistry,
-} from '@frankx-ai/agentic-family-os';
+import { FamilyResearchBoundary } from '@frankx-ai/agentic-family-os';
 
-validateResearchRegistry(privateRegistry);
-const privateTree = buildAncestorProjection(privateRegistry, { audience: 'private' });
+const boundary = new FamilyResearchBoundary();
+const plan = boundary.planPrivateProjection(
+  'family_0123456789abcdef0123456789abcdef',
+);
 ```
 
-Real tenant records do not belong in this repository. The private runtime root is:
+`authorityStatus: 'unverified-public-plan'` and
+`executionPermitted: false` are fixed. The public package does not prove that a
+reference was privately minted; it only enforces the reserved syntax.
 
-`<private-family-data-root>/`
+## Private adapter responsibility
 
-Research and stewardship process:
+A separately deployed private adapter must own authentication, encrypted
+records, evidence resolution, source rights, exact-registry digests,
+authority-issued review receipts, consent and revocation, audience
+authorization, audit, backup/restore, and succession. It must not accept a
+caller-authored `accepted` flag or reviewer label as authority.
 
-[`../../docs/family-research-operating-system.md`](../../docs/family-research-operating-system.md)
-
-## Production gates
-
-This package is an integration kernel, not yet a production vault. Real ingestion remains blocked pending:
-
-- authenticated private sessions;
-- encrypted database and object storage;
-- malware and file-type validation;
-- append-only persistent audit;
-- consent/steward onboarding;
-- fixity monitoring;
-- encrypted backup and verified restore;
-- succession and emergency access controls;
-- independent privacy/security review.
+The research method is documented as a private-adapter design guide in the
+[family research operating system](../../docs/family-research-operating-system.md).
+No real family or genetic data belongs in this repository.
