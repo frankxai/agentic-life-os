@@ -18,6 +18,7 @@
     "generate": "pnpm --filter @frankx-ai/alos-core build && node scripts/generate-alos-assets.mjs",
     "check:generated": "pnpm --filter @frankx-ai/alos-core build && node scripts/generate-alos-assets.mjs --check",
     "typecheck": "pnpm -r typecheck",
+    "pretest": "pnpm --filter @frankx-ai/alos-core build",
     "test": "vitest run",
     "build": "pnpm -r build && node scripts/smoke-package-imports.mjs && node scripts/generate-alos-assets.mjs --check",
     "check:package-imports": "node scripts/smoke-package-imports.mjs",
