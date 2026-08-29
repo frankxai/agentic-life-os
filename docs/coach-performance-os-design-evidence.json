@@ -1,0 +1,107 @@
+{
+  "version": "2026-08-29",
+  "task": "Design a premium synthetic Coach Performance OS proof and reusable member-to-coach review contract.",
+  "surface": "Public product story, member today view, coach review view, and one GSAP review scene",
+  "audience": "Premium coaches, performance teams, members, and implementation partners",
+  "first_read": "One place to understand the person, guide the program, and prove progress.",
+  "standards": [
+    "design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "design-agent-standards/OUTCOMES.md",
+    "design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "_intelligence/quality-gates.md",
+    "GSAP core, timeline, ScrollTrigger, and performance skills"
+  ],
+  "references": [
+    {
+      "label": "Agentic Life OS public/private boundary",
+      "source": "README.md and docs/open-core-architecture.md",
+      "reason": "Defines the non-executable public contract and separately governed private runtime."
+    },
+    {
+      "label": "Health Intelligence System product boundary",
+      "source": "frankxai/health-intelligence-system docs/product-boundary.md",
+      "reason": "Prevents a second health-data silo and preserves evidence and clinical boundaries."
+    },
+    {
+      "label": "v0 Performance Constellation",
+      "source": "https://v0.app/chat/tQvftxrdHby",
+      "reason": "Private static-composition exploration; first direction was rejected for orbit/node cliché and the iteration awaits valid screenshot inspection."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Editorial first read and quiet dark-mineral composition",
+      "Synthetic three-frame workflow",
+      "Visible evidence, consent, and audit boundaries"
+    ],
+    "avoid": [
+      "Orbit and node diagrams",
+      "Fake biometric scores and clinical authority theater",
+      "Generic glass-card grids and decorative bubbles",
+      "Motion-dependent meaning and squeezed mobile graphs"
+    ],
+    "signature": "Five semantic liquid lenses resolve a structured check-in into one coach-reviewed, member-agreed action receipt.",
+    "system": [
+      "Tier C exact product UI until real product capture becomes Tier A",
+      "Dark mineral base with warm ivory, restrained teal, and amber roles",
+      "One hero timeline and one earned review narrative",
+      "Static, coarse-pointer, mobile, and reduced-motion routes",
+      "No PII, clinical data, live network submission, or backend claims"
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "vector-diagram",
+    "provenance": "owned",
+    "why_premium": "An exact, readable synthetic product mechanism is the correct proof asset; decorative media cannot demonstrate the governed review workflow.",
+    "shortcut_risk": "medium",
+    "context_tested": false
+  },
+  "artifacts": [
+    {
+      "path_or_url": "docs/coach-performance-os-page-spec.md",
+      "kind": "ui-spec",
+      "inspected": true,
+      "notes": "Static, responsive, motion, product, and safety contracts reviewed in source."
+    },
+    {
+      "path_or_url": "https://v0.app/chat/tQvftxrdHby",
+      "kind": "web",
+      "inspected": false,
+      "notes": "First screenshot was inspected and rejected; the materially different iteration has no trustworthy version-specific screenshot yet."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier C exact product interface chosen; decorative Tier D visuals are explicitly blocked."
+    },
+    {
+      "name": "product-boundary",
+      "status": "pass",
+      "evidence": "Public graph and review plans exclude PII, raw health data, clinical interpretation, execution, and egress."
+    },
+    {
+      "name": "export-inspection",
+      "status": "blocked",
+      "evidence": "The v0 iteration screenshot endpoint returned the earlier rejected image; no local browser run is admitted under the current machine gate."
+    },
+    {
+      "name": "visual-qa",
+      "status": "blocked",
+      "evidence": "Desktop, mobile, keyboard, coarse-pointer, and reduced-motion inspection require the canonical consumer implementation."
+    }
+  ],
+  "score": {
+    "total": 23,
+    "max": 30,
+    "notes": "The product, safety, and scene direction are specific; final craft, responsive behavior, and motion remain unverified. Iterate after implementation."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "The v0 iteration includes unsafe generated defaults such as ignored TypeScript errors and globally unoptimized images; these must not be imported.",
+    "The public runtime cannot establish current authority, consent, or data isolation.",
+    "The visual implementation and browser evidence are not complete."
+  ]
+}

@@ -96,6 +96,7 @@ runtime only simulates conformance and always denies execution.
 | `orchestration` | Composition of non-executable plans and static denials | Experimental |
 | `investor` | Descriptor-only private wealth-adapter planning | Experimental; no advice or values |
 | [`health`](packages/health/README.md) | Sovereign health boundary and wellness organization | Experimental, safety-gated |
+| [`coaching`](packages/coaching/README.md) | Synthetic coach knowledge graph and non-executable check-in review planning | Experimental, privacy- and scope-gated |
 | [`life-sciences-researcher`](packages/life-sciences-researcher/README.md) | Descriptor-only private research-adapter planning | Experimental; no lookup or scientific data |
 | [`family`](packages/family/README.md) | Descriptor-only private family-adapter planning | Experimental; no records or projection payloads |
 
