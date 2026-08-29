@@ -77,10 +77,12 @@ bubble field, fake terminal, or unreadable dashboard is allowed.
 
 ## Deployment routing
 
-- `agentic-gym-os` is an existing Vercel project and a possible product-family target,
-  but it is not yet an approved deployment target for this consumer.
-- Its current production artifact is an unlinked, dirty-checkout Velora prototype and
-  the project is absent from `starlight/ecosystem.json`.
-- Before reuse: register the project and canonical repository relationship in the
-  estate control plane, verify ownership and build settings, then create a preview
-  from the reviewed PR head. Production remains a separate human decision.
+- `agentic-life-os` is the dedicated Vercel project for this canonical consumer.
+- Deployment `dpl_5uKyNyfqueHFPmKBFrjzY2VBHGEo` is a READY, protected preview;
+  it is not a public release and has no production target or custom-domain alias.
+- The current project protection mode is `all_except_custom_domains`, with Git fork
+  protection enabled and no automation-bypass entry configured.
+- Before automated rendered QA, choose a least-privilege preview-access method and
+  store any bypass value only as a secret. Production promotion, a custom domain,
+  and public access remain separate release decisions after the 26/30 visual gate.
+- Do not route this consumer through the unrelated `agentic-gym-os` project.

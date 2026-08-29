@@ -7,7 +7,7 @@ Implementation: `packages/coach-experience/src/App.tsx` and
 `packages/coach-experience/src/styles.css`.
 Brand: Agentic Life OS
 Repo: `frankxai/agentic-life-os`
-Page / route: future synthetic product proof
+Page / route: `packages/coach-experience` at `/` in the protected preview
 Scene name: Reviewed action
 Pattern state: product
 
@@ -87,6 +87,7 @@ Implementation must use `gsap.matchMedia()` and revert cleanly.
 
 ## Evidence
 
-The canonical visual consumer and motion contract are implemented. Desktop, mobile,
-reduced-motion, short capture, console, performance, and preview evidence remain
-blocked until the machine preflight admits browser/build work.
+The canonical visual consumer and motion contract are implemented, its focused tests
+and typecheck pass, and the protected preview is READY. Desktop, mobile,
+reduced-motion, short capture, console, and performance evidence remain blocked until
+the machine preflight admits browser work.
