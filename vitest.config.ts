@@ -13,6 +13,7 @@ export default defineConfig({
       '@frankx-ai/second-brain-os': path.join(root, 'packages/memory/src/index.ts'),
       '@frankx-ai/agentic-investor-os': path.join(root, 'packages/investor/src/index.ts'),
       '@frankx-ai/agentic-health-os': path.join(root, 'packages/health/src/index.ts'),
+      '@frankx-ai/agentic-coaching-os': path.join(root, 'packages/coaching/src/index.ts'),
       '@frankx-ai/life-sciences-researcher-is': path.join(root, 'packages/life-sciences-researcher/src/index.ts'),
       '@frankx-ai/agentic-family-os': path.join(root, 'packages/family/src/index.ts'),
       '@frankx-ai/agentic-orchestration-os': path.join(root, 'packages/orchestration/src/index.ts'),
