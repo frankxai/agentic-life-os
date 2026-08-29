@@ -1,5 +1,7 @@
 # Coach Performance OS page specification
 
+Canonical consumer: `packages/coach-experience`.
+
 ## Outcome contract
 
 - Audience: independent premium coaches, performance teams, and their members.

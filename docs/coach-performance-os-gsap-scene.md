@@ -2,6 +2,9 @@
 
 Date: 2026-08-29
 Owner: Coach Performance OS build lane
+
+Implementation: `packages/coach-experience/src/App.tsx` and
+`packages/coach-experience/src/styles.css`.
 Brand: Agentic Life OS
 Repo: `frankxai/agentic-life-os`
 Page / route: future synthetic product proof

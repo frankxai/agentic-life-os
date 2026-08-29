@@ -29,6 +29,17 @@ packages/business/src/index.ts
 packages/business/src/operations.ts
 packages/business/tests/operations.test.ts
 packages/business/tsconfig.json
+packages/coach-experience/README.md
+packages/coach-experience/index.html
+packages/coach-experience/package.json
+packages/coach-experience/src/App.tsx
+packages/coach-experience/src/demo-data.ts
+packages/coach-experience/src/main.tsx
+packages/coach-experience/src/styles.css
+packages/coach-experience/tests/experience-contract.test.ts
+packages/coach-experience/tsconfig.json
+packages/coach-experience/vercel.json
+packages/coach-experience/vite.config.ts
 packages/coaching/README.md
 packages/coaching/package.json
 packages/coaching/src/contracts.ts

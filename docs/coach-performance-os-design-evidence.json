@@ -65,6 +65,12 @@
       "notes": "Static, responsive, motion, product, and safety contracts reviewed in source."
     },
     {
+      "path_or_url": "packages/coach-experience",
+      "kind": "web",
+      "inspected": false,
+      "notes": "Canonical React/Vite consumer is implemented and contract-tested; desktop, mobile, and reduced-motion export inspection awaits an admitted browser QA window."
+    },
+    {
       "path_or_url": "https://v0.app/chat/tQvftxrdHby",
       "kind": "web",
       "inspected": false,
@@ -83,25 +89,35 @@
       "evidence": "Public graph and review plans exclude PII, raw health data, clinical interpretation, execution, and egress."
     },
     {
+      "name": "implementation-contract",
+      "status": "pass",
+      "evidence": "The consumer imports the canonical coaching package, validates the synthetic graph, and renders member and coach surfaces from one five-lens review request."
+    },
+    {
+      "name": "anti-slop",
+      "status": "pass",
+      "evidence": "The canonical verifier scores the experience 100/100 with bundled fonts, grain, semantic liquid glass, and interaction states."
+    },
+    {
       "name": "export-inspection",
       "status": "blocked",
-      "evidence": "The v0 iteration screenshot endpoint returned the earlier rejected image; no local browser run is admitted under the current machine gate."
+      "evidence": "The final code-rendered consumer has not yet been inspected because browser-qa preflight is HOLD under system memory pressure."
     },
     {
       "name": "visual-qa",
       "status": "blocked",
-      "evidence": "Desktop, mobile, keyboard, coarse-pointer, and reduced-motion inspection require the canonical consumer implementation."
+      "evidence": "Desktop, mobile, keyboard, coarse-pointer, reduced-motion, and console inspection await an admitted browser-qa window."
     }
   ],
   "score": {
-    "total": 23,
+    "total": 24,
     "max": 30,
-    "notes": "The product, safety, and scene direction are specific; final craft, responsive behavior, and motion remain unverified. Iterate after implementation."
+    "notes": "The contract-backed product implementation and safety boundaries are specific; final browser craft, responsive behavior, and motion remain unverified. Iterate after export inspection."
   },
   "decision": "iterate",
   "known_risks": [
     "The v0 iteration includes unsafe generated defaults such as ignored TypeScript errors and globally unoptimized images; these must not be imported.",
     "The public runtime cannot establish current authority, consent, or data isolation.",
-    "The visual implementation and browser evidence are not complete."
+    "The visual implementation is present, but final browser evidence is not complete."
   ]
 }
