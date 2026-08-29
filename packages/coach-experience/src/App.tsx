@@ -4,11 +4,13 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { simulateCoachReview } from '@frankx-ai/agentic-coaching-os';
 import {
+  coachDecisionOptions,
   coachCapabilities,
   knowledgeGraph,
   lensPresentations,
   memberCapabilities,
   reviewRequest,
+  type CoachDecisionKey,
   type LensPresentation,
 } from './demo-data';
 
@@ -272,39 +274,8 @@ function EvidenceFlow() {
 }
 
 function CoachView() {
-  const decisions = {
-    adjust: {
-      label: 'Prepare adjustment',
-      title: 'Protect recovery. Keep one focused practice.',
-      proposedAction: reviewRequest.proposedAction,
-    },
-    continue: {
-      label: 'Continue phase',
-      title: 'Continue the phase with one deliberate repetition.',
-      proposedAction: {
-        ...reviewRequest.proposedAction,
-        actionId: 'action_continue_phase',
-        actionTemplateId: 'template_continue_focused_practice',
-        domain: 'performance' as const,
-        kind: 'continue-program' as const,
-        evidenceNodeIds: ['node_deliberate_repetition'],
-      },
-    },
-    referral: {
-      label: 'Request referral',
-      title: 'Stop the coaching action and prepare a qualified-care handoff.',
-      proposedAction: {
-        ...reviewRequest.proposedAction,
-        actionId: 'action_referral_handoff',
-        actionTemplateId: 'template_qualified_care_handoff',
-        domain: 'context' as const,
-        kind: 'referral-handoff' as const,
-        evidenceNodeIds: ['node_context_window'],
-      },
-    },
-  } as const;
-  const [selectedDecision, setSelectedDecision] = useState<keyof typeof decisions>('adjust');
-  const activeDecision = decisions[selectedDecision];
+  const [selectedDecision, setSelectedDecision] = useState<CoachDecisionKey>('adjust');
+  const activeDecision = coachDecisionOptions[selectedDecision];
   const reviewResult = useMemo(
     () => simulateCoachReview({ ...reviewRequest, proposedAction: activeDecision.proposedAction }),
     [activeDecision],
@@ -345,13 +316,13 @@ function CoachView() {
             <h4>{activeDecision.title}</h4>
             <p>This draft is non-executable and remains incomplete until coach and member agreement.</p>
             <div className="decision-actions" role="group" aria-label="Synthetic decision options">
-              {Object.entries(decisions).map(([key, decision]) => (
+              {Object.entries(coachDecisionOptions).map(([key, decision]) => (
                 <button
                   key={key}
                   type="button"
                   className={selectedDecision === key ? 'selected' : undefined}
                   aria-pressed={selectedDecision === key}
-                  onClick={() => setSelectedDecision(key as keyof typeof decisions)}
+                  onClick={() => setSelectedDecision(key as CoachDecisionKey)}
                 >
                   {decision.label}
                 </button>

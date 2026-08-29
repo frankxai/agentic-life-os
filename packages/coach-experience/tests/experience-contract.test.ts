@@ -2,7 +2,12 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { simulateCoachReview, validateCoachingKnowledgeGraph } from '@frankx-ai/agentic-coaching-os';
-import { knowledgeGraph, lensPresentations, reviewRequest } from '../src/demo-data';
+import {
+  coachDecisionOptions,
+  knowledgeGraph,
+  lensPresentations,
+  reviewRequest,
+} from '../src/demo-data';
 
 const packageRoot = resolve(import.meta.dirname, '..');
 
@@ -26,6 +31,22 @@ describe('Coach Performance OS experience', () => {
       executionPermitted: false,
       agreementRequired: ['coach', 'member'],
     });
+  });
+
+  it('keeps every visible coach decision evidence-bound and non-executable', () => {
+    for (const decision of Object.values(coachDecisionOptions)) {
+      expect(
+        simulateCoachReview({
+          ...reviewRequest,
+          proposedAction: decision.proposedAction,
+        }),
+      ).toMatchObject({
+        conforms: true,
+        code: 'review-plan-conforms',
+        executionPermitted: false,
+        agreementRequired: ['coach', 'member'],
+      });
+    }
   });
 
   it('keeps the GSAP scene responsive, scoped, and reduced-motion safe', () => {

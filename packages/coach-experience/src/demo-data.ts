@@ -157,6 +157,40 @@ export const reviewRequest: CoachReviewSimulationRequest = {
   },
 };
 
+export const coachDecisionOptions = {
+  adjust: {
+    label: 'Prepare adjustment',
+    title: 'Protect recovery. Keep one focused practice.',
+    proposedAction: reviewRequest.proposedAction,
+  },
+  continue: {
+    label: 'Continue phase',
+    title: 'Continue the phase with one deliberate repetition.',
+    proposedAction: {
+      ...reviewRequest.proposedAction,
+      actionId: 'action_continue_phase',
+      actionTemplateId: 'template_continue_focused_practice',
+      domain: 'performance' as const,
+      kind: 'continue-program' as const,
+      evidenceNodeIds: ['node_deliberate_repetition'],
+    },
+  },
+  referral: {
+    label: 'Request referral',
+    title: 'Stop the coaching action and prepare a qualified-care handoff.',
+    proposedAction: {
+      ...reviewRequest.proposedAction,
+      actionId: 'action_referral_handoff',
+      actionTemplateId: 'template_qualified_care_handoff',
+      domain: 'context' as const,
+      kind: 'referral-handoff' as const,
+      evidenceNodeIds: ['node_context_window'],
+    },
+  },
+} as const;
+
+export type CoachDecisionKey = keyof typeof coachDecisionOptions;
+
 export const memberCapabilities = [
   ['Program', 'View the current phase, method, practices, and coach-curated knowledge.'],
   ['Check-in', 'Share five structured, non-clinical signals for an assigned coach to review.'],
