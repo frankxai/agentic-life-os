@@ -29,7 +29,7 @@ Pattern state: product
 - Primary action visible: inspect how review works.
 - What stays still: headline, body copy, navigation, primary action, clinical boundary.
 - What is removed: orbit paths, node cloud, ambient bubble field, fake scores.
-- Static verdict: pending implementation and browser inspection.
+- Static verdict: implemented and source-reviewed; browser inspection remains pending.
 
 ## Story beats
 
@@ -87,6 +87,6 @@ Implementation must use `gsap.matchMedia()` and revert cleanly.
 
 ## Evidence
 
-Desktop, mobile, reduced-motion, short capture, console, performance, and preview
-evidence remain blocked until a canonical visual consumer is implemented and the
-machine preflight admits browser/build work.
+The canonical visual consumer and motion contract are implemented. Desktop, mobile,
+reduced-motion, short capture, console, performance, and preview evidence remain
+blocked until the machine preflight admits browser/build work.

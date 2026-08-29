@@ -38,8 +38,11 @@ describe('Coach Performance OS experience', () => {
     expect(app).toContain('ScrollTrigger');
     expect(app).toContain("pin: '.review-stage'");
     expect(app).toContain("event.key !== 'ArrowLeft'");
+    expect(app).toContain("tabIndex={activeView === 'member' ? 0 : -1}");
+    expect(app).toContain('role="progressbar"');
     expect(app).toContain('aria-expanded={receiptOpen}');
     expect(app).toContain('aria-pressed={selectedDecision === key}');
+    expect(app).not.toContain('className="queue-item" aria-pressed');
     expect(styles).toContain('@media (prefers-reduced-motion: reduce)');
     expect(styles).not.toContain('text-transform: uppercase');
   });

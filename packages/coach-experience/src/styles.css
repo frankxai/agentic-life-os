@@ -855,7 +855,7 @@ main > section { padding-block: var(--section); }
   border: 1px solid transparent;
   border-radius: 0.55rem;
   background: transparent;
-  cursor: pointer;
+  cursor: default;
 }
 
 .queue-item.active { border-color: var(--line); background: rgba(154, 216, 200, 0.05); }

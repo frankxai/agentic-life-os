@@ -74,3 +74,13 @@ bubble field, fake terminal, or unreadable dashboard is allowed.
 - Typecheck, tests, build, anti-slop scanner, accessibility, and visual QA pass.
 - No ignored TypeScript errors, globally unoptimized images, fake claims, or unknown assets.
 - A preview may be created only after local gates, deploy-race check, and draft PR review.
+
+## Deployment routing
+
+- `agentic-gym-os` is an existing Vercel project and a possible product-family target,
+  but it is not yet an approved deployment target for this consumer.
+- Its current production artifact is an unlinked, dirty-checkout Velora prototype and
+  the project is absent from `starlight/ecosystem.json`.
+- Before reuse: register the project and canonical repository relationship in the
+  estate control plane, verify ownership and build settings, then create a preview
+  from the reviewed PR head. Production remains a separate human decision.

@@ -112,6 +112,7 @@ function ViewSwitch({ activeView, onChange }: { activeView: WorkspaceView; onCha
         type="button"
         aria-selected={activeView === 'member'}
         aria-controls="member-panel"
+        tabIndex={activeView === 'member' ? 0 : -1}
         onClick={() => onChange('member')}
       >
         Member view
@@ -122,6 +123,7 @@ function ViewSwitch({ activeView, onChange }: { activeView: WorkspaceView; onCha
         type="button"
         aria-selected={activeView === 'coach'}
         aria-controls="coach-panel"
+        tabIndex={activeView === 'coach' ? 0 : -1}
         onClick={() => onChange('coach')}
       >
         Coach studio
@@ -179,7 +181,17 @@ function MemberView() {
           <article className="phase-card" id="member-program">
             <span className="meta-label">Current phase</span>
             <h4>Build capacity without losing signal.</h4>
-            <div className="progress-track"><span /></div>
+            <div
+              className="progress-track"
+              role="progressbar"
+              aria-label="Foundation phase progress"
+              aria-valuemin={0}
+              aria-valuemax={6}
+              aria-valuenow={3}
+              aria-valuetext="Week 3 of 6"
+            >
+              <span />
+            </div>
             <div className="progress-copy"><span>Week 3 of 6</span><span>50%</span></div>
           </article>
           <article className="action-card">
@@ -302,21 +314,21 @@ function CoachView() {
     <div id="coach-panel" role="tabpanel" aria-labelledby="coach-tab" className="workspace-panel coach-panel">
       <div className="coach-queue">
         <div className="queue-head"><span className="meta-label">Review inbox</span><strong>3 assigned</strong></div>
-        <button type="button" className="queue-item active" aria-pressed="true">
+        <div className="queue-item active" aria-current="true">
           <span className="queue-avatar">01</span>
           <span><strong>Member 001</strong><small>Foundation · submitted 08:00</small></span>
           <span className="queue-signal">Review</span>
-        </button>
-        <button type="button" className="queue-item" aria-pressed="false">
+        </div>
+        <div className="queue-item">
           <span className="queue-avatar">02</span>
           <span><strong>Member 002</strong><small>Build · agreed yesterday</small></span>
           <span className="queue-signal quiet">Clear</span>
-        </button>
-        <button type="button" className="queue-item" aria-pressed="false">
+        </div>
+        <div className="queue-item">
           <span className="queue-avatar">03</span>
           <span><strong>Member 003</strong><small>Reset · referral boundary</small></span>
           <span className="queue-signal referral">Handoff</span>
-        </button>
+        </div>
       </div>
       <div className="coach-review">
         <div className="workspace-head">

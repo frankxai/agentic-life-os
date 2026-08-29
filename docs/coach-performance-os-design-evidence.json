@@ -25,7 +25,7 @@
     {
       "label": "v0 Performance Constellation",
       "source": "https://v0.app/chat/tQvftxrdHby",
-      "reason": "Private static-composition exploration; first direction was rejected for orbit/node cliché and the iteration awaits valid screenshot inspection."
+      "reason": "Private static-composition exploration. Version b_xBHA9DFEkQr was inspected and rejected because its primary proof panels render clipped and partially empty; no generated code is accepted as canonical."
     }
   ],
   "direction": {
@@ -73,8 +73,8 @@
     {
       "path_or_url": "https://v0.app/chat/tQvftxrdHby",
       "kind": "web",
-      "inspected": false,
-      "notes": "First screenshot was inspected and rejected; the materially different iteration has no trustworthy version-specific screenshot yet."
+      "inspected": true,
+      "notes": "Version b_xBHA9DFEkQr screenshot inspected at 1920x1080 and rejected: the right-side proof stack is clipped, under-populated, and does not meet the readable product-mechanism gate."
     }
   ],
   "checks": [
