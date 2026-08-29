@@ -11,6 +11,10 @@ alos-profile.yaml
 dashboard/DEPLOYMENT.md
 dashboard/design-loop-evidence.json
 dashboard/index.html
+docs/coach-performance-os-design-evidence.json
+docs/coach-performance-os-gsap-scene.md
+docs/coach-performance-os-page-spec.md
+docs/coach-performance-os.md
 docs/family-research-operating-system.md
 docs/open-core-architecture.md
 docs/public-projection-release.md
@@ -25,6 +29,16 @@ packages/business/src/index.ts
 packages/business/src/operations.ts
 packages/business/tests/operations.test.ts
 packages/business/tsconfig.json
+packages/coaching/README.md
+packages/coaching/package.json
+packages/coaching/src/contracts.ts
+packages/coaching/src/index.ts
+packages/coaching/src/knowledge-graph.ts
+packages/coaching/src/review-workflow.ts
+packages/coaching/tests/fixtures.ts
+packages/coaching/tests/knowledge-graph.test.ts
+packages/coaching/tests/review-workflow.test.ts
+packages/coaching/tsconfig.json
 packages/core/README.md
 packages/core/package.json
 packages/core/src/index.ts
