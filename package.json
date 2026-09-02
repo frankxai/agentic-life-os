@@ -10,6 +10,8 @@
   "scripts": {
     "check:public": "node scripts/check-public-safety.mjs",
     "check:licenses": "node scripts/check-dependency-licenses.mjs",
+    "check:history": "node scripts/scan-history-personal-data.mjs",
+    "check:isolation": "vitest run packages/core/tests/authority-isolation.test.ts packages/core/tests/public-projection-leak.test.ts",
     "check:projection": "node scripts/verify-public-projection.mjs --worktree",
     "check:projection:commit": "node scripts/verify-public-projection.mjs --commit=HEAD",
     "verify:initial-public-history": "node scripts/verify-public-projection.mjs --commit=HEAD --require-single-commit",

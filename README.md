@@ -140,6 +140,8 @@ copy raw records or secrets into this repository.
 ## Trust, privacy, and contributions
 
 - [Open-core architecture](docs/open-core-architecture.md)
+- [Kernel versus domain packs](docs/kernel-vs-packs.md)
+- [Threat model](THREAT-MODEL.md)
 - [Privacy boundary](PRIVACY.md)
 - [Security policy](SECURITY.md)
 - [Contributing](CONTRIBUTING.md)
