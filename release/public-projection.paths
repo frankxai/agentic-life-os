@@ -16,6 +16,7 @@ docs/coach-performance-os-gsap-scene.md
 docs/coach-performance-os-page-spec.md
 docs/coach-performance-os.md
 docs/family-research-operating-system.md
+docs/follow-through-review.md
 docs/open-core-architecture.md
 docs/public-projection-release.md
 docs/public-release-checklist.md
@@ -30,8 +31,10 @@ packages/business/src/operations.ts
 packages/business/tests/operations.test.ts
 packages/business/tsconfig.json
 packages/coaching/README.md
+packages/coaching/checks/follow-through.mjs
 packages/coaching/package.json
 packages/coaching/src/contracts.ts
+packages/coaching/src/follow-through.ts
 packages/coaching/src/index.ts
 packages/coaching/src/knowledge-graph.ts
 packages/coaching/src/review-workflow.ts
