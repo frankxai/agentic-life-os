@@ -53,6 +53,10 @@ This is organizational and developer infrastructure. It does not diagnose,
 interpret results, recommend treatment or medication changes, or replace a
 licensed clinician. Artifact integrity does not establish clinical validity.
 
+## Health Second Brain experience
+
+The [experience specification](docs/health-second-brain-experience.md) defines a source-aware weekly review, food and movement workflows, portable private context, tool choices and a future ChatGPT view. The companion HIS skill includes executable local export analysis. This specification does not activate a connector, change the report-only runtime, or establish a verified production UI.
+
 ## Family research boundary
 
 [`@frankx-ai/agentic-family-os`](packages/family/README.md) accepts only a bounded
