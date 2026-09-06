@@ -27,3 +27,7 @@ raw member records, clinical interpretation, or durable authority store.
 
 See [`docs/coach-performance-os.md`](../../docs/coach-performance-os.md) for the
 product and private-runtime boundary.
+
+## Follow-through review
+
+The enum-only review utility and its bounded pilot contract are documented in [Follow-through review](../../docs/follow-through-review.md). It selects a human-review template and always returns a non-executable simulation result. Run `pnpm --filter @frankx-ai/agentic-coaching-os test:follow-through` for its focused regression suite.
