@@ -34,6 +34,7 @@ jobs:
       - run: pnpm check:projection
       - run: pnpm check:projection:commit
       - run: pnpm test
+      - run: pnpm --filter @frankx-ai/agentic-coaching-os test:follow-through
       - run: pnpm typecheck
       - run: pnpm check:generated
       - name: Build release candidate
